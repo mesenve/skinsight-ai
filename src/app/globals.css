@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #eef2f7;
+  --foreground: #0b1220;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --navy: #0b1220;
+  --navy-soft: #151f33;
+  --medical-blue: #1a4b8c;
+  --medical-blue-light: #2d6cb5;
+  --cyan-accent: #06b6d4;
+  --cyan-glow: #22d3ee;
+  --risk-high: #dc2626;
+  --risk-medium: #d97706;
+  --risk-low: #059669;
+  --muted: #5c6b82;
+  --muted-light: #94a3b8;
+  --border: #dde4ee;
+  --border-subtle: #e8edf4;
+  --shadow-soft: 0 2px 8px rgba(11, 18, 32, 0.04), 0 8px 28px rgba(11, 18, 32, 0.06);
+  --shadow-elevated: 0 4px 14px rgba(11, 18, 32, 0.05), 0 20px 50px rgba(11, 18, 32, 0.09);
+  --shadow-hover: 0 6px 20px rgba(11, 18, 32, 0.07), 0 24px 56px rgba(11, 18, 32, 0.1);
+  --shadow-glow: 0 0 0 1px rgba(6, 182, 212, 0.15), 0 8px 32px rgba(6, 182, 212, 0.12);
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-medical-blue: var(--medical-blue);
+  --color-medical-blue-light: var(--medical-blue-light);
+  --color-cyan-accent: var(--cyan-accent);
+  --color-cyan-glow: var(--cyan-glow);
+  --color-risk-high: var(--risk-high);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-low: var(--risk-low);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-jakarta);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.mesh-bg {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(26, 75, 140, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(6, 182, 212, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(26, 75, 140, 0.04) 0%, transparent 50%);
+}
+
+.card-surface {
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-elevated {
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-elevated);
+}
+
+.smooth-card {
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.smooth-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.smooth-card-elevated {
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-elevated);
+}
+
+.smooth-inset {
+  background: rgba(238, 242, 247, 0.7);
+}
+
+.section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@keyframes scan-beam {
+  0% { transform: translateY(-120%) scaleY(0.6); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(320%) scaleY(0.6); opacity: 0; }
+}
+
+@keyframes scan-ring {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+.animate-scan-beam { animation: scan-beam 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.animate-scan-ring { animation: scan-ring 2s ease-out infinite; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+@media print {
+  .no-print { display: none !important; }
 }
