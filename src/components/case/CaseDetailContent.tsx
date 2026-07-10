@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import type { PatientCase } from "@/lib/types";
+import { useCases } from "@/context/CasesContext";
+import { analyzeLesion } from "@/lib/analyze-lesion";
 import { RiskBadge } from "@/components/shared/RiskBadge";
 import { PatientIdPhoto } from "@/components/shared/PatientIdPhoto";
 import { ClinicalWorkflow } from "./ClinicalWorkflow";
@@ -22,6 +24,11 @@ interface CaseDetailContentProps {
   autoScan?: boolean;
 }
 
+type AnalysisPatch = Pick<
+  PatientCase,
+  "abcd" | "aiRiskScore" | "priority" | "aiObservations" | "analysisPending" | "clinicianAssessment"
+>;
+
 function getWorkflowStep(
   status: PatientCase["status"],
   analysisReady: boolean
@@ -32,41 +39,111 @@ function getWorkflowStep(
 }
 
 export function CaseDetailContent({
-  patientCase,
+  patientCase: initialCase,
   autoScan = true,
 }: CaseDetailContentProps) {
+  const { getCaseById, updateCase } = useCases();
+  const storedCase = getCaseById(initialCase.id) ?? initialCase;
+
   const [isScanning, setIsScanning] = useState(false);
   const [scanKey, setScanKey] = useState(0);
-  const [analysisReady, setAnalysisReady] = useState(!autoScan);
-  const [activeScanId, setActiveScanId] = useState(
-    patientCase.timeline[0]?.id
+  const [scanError, setScanError] = useState<string | null>(null);
+  const [analysisPatch, setAnalysisPatch] = useState<AnalysisPatch | null>(null);
+  const [analysisReady, setAnalysisReady] = useState(() => {
+    if (storedCase.analysisPending) return false;
+    return !autoScan;
+  });
+  const [activeScanId, setActiveScanId] = useState(storedCase.timeline[0]?.id);
+  const analysisRequestRef = useRef<ReturnType<typeof analyzeLesion> | null>(null);
+  const autoScanStartedRef = useRef(false);
+
+  const patientCase = useMemo(
+    () => (analysisPatch ? { ...storedCase, ...analysisPatch } : storedCase),
+    [analysisPatch, storedCase]
   );
-
-  const handleScanComplete = useCallback(() => {
-    setIsScanning(false);
-    setAnalysisReady(true);
-  }, []);
-
-  const handleRunScan = useCallback(() => {
-    setAnalysisReady(false);
-    setScanKey((k) => k + 1);
-    setIsScanning(true);
-  }, []);
-
-  useEffect(() => {
-    if (autoScan) {
-      const timer = setTimeout(() => {
-        setScanKey((k) => k + 1);
-        setIsScanning(true);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [autoScan]);
 
   const activeImage =
     patientCase.timeline.find((e) => e.id === activeScanId)?.imageUrl ??
     patientCase.timeline[0]?.imageUrl ??
     "/lesions/lesion-a.jpg";
+
+  const beginAnalysis = useCallback(() => {
+    const current = getCaseById(initialCase.id) ?? initialCase;
+    const imageUrl =
+      current.timeline.find((e) => e.id === activeScanId)?.imageUrl ??
+      current.timeline[0]?.imageUrl;
+
+    if (!imageUrl) {
+      setScanError("No lesion image available for AI review.");
+      return;
+    }
+
+    setScanError(null);
+    setAnalysisReady(false);
+    setScanKey((k) => k + 1);
+    setIsScanning(true);
+
+    analysisRequestRef.current = analyzeLesion({
+      caseId: current.id,
+      imageUrl,
+      patientContext: {
+        patientName: current.patientName,
+        age: current.age,
+        lesionLocation: current.lesionLocation,
+      },
+    });
+  }, [activeScanId, getCaseById, initialCase]);
+
+  const handleScanComplete = useCallback(async () => {
+    const current = getCaseById(initialCase.id) ?? initialCase;
+
+    try {
+      const request = analysisRequestRef.current;
+      if (!request) {
+        throw new Error("AI review did not start correctly. Try again.");
+      }
+
+      const analysis = await request;
+      const fullPatch: AnalysisPatch = {
+        ...analysis,
+        analysisPending: false,
+        clinicianAssessment:
+          "AI-assisted review complete. Clinician verification and final assessment required.",
+      };
+
+      setAnalysisPatch(fullPatch);
+      if (current.isCustom) {
+        updateCase(current.id, fullPatch);
+      }
+
+      setAnalysisReady(true);
+    } catch (error) {
+      setScanError(
+        error instanceof Error ? error.message : "AI analysis failed. Please try again."
+      );
+      if (!current.analysisPending) {
+        setAnalysisReady(true);
+      }
+    } finally {
+      setIsScanning(false);
+      analysisRequestRef.current = null;
+    }
+  }, [getCaseById, initialCase, updateCase]);
+
+  const handleRunScan = useCallback(() => {
+    beginAnalysis();
+  }, [beginAnalysis]);
+
+  useEffect(() => {
+    if (!autoScan || autoScanStartedRef.current) return;
+
+    autoScanStartedRef.current = true;
+    const timer = setTimeout(() => {
+      beginAnalysis();
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [autoScan, initialCase.id, beginAnalysis]);
 
   const workflowStep = getWorkflowStep(patientCase.status, analysisReady);
 
@@ -146,6 +223,12 @@ export function CaseDetailContent({
           </div>
         </div>
       </motion.div>
+
+      {scanError && (
+        <div className="rounded-2xl border border-risk-high/20 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
+          {scanError}
+        </div>
+      )}
 
       <div className="grid gap-6 xl:grid-cols-5">
         <div className="space-y-6 xl:col-span-3">

@@ -46,7 +46,7 @@ export interface ScanEvent {
 export interface PatientCase {
   id: string;
   patientName: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   age: number;
   mrn: string;
   lesionLocation: string;
@@ -60,6 +60,9 @@ export interface PatientCase {
   doctorNotes: string;
   aiObservations: string[];
   clinicianAssessment: string;
+  /** Custom cases wait for Run AI Review before ABCDE is populated */
+  analysisPending?: boolean;
+  isCustom?: boolean;
 }
 
 export interface DashboardStats {

@@ -2,14 +2,16 @@ import { AppShell } from "@/components/layout/AppShell";
 import { AboutContent } from "@/components/about/AboutContent";
 
 export const metadata = {
-  title: "About — SkinSight AI",
+  title: "Case Study — SkinSight AI",
+  description:
+    "A UI/UX case study on designing a safer AI-assisted dermatology review experience.",
 };
 
 export default function AboutPage() {
   return (
     <AppShell
-      title="About SkinSight AI"
-      subtitle="Portfolio case study — AI-assisted dermatology triage concept"
+      title="Case Study"
+      subtitle="Designing safer AI-assisted dermatology review"
     >
       <AboutContent />
     </AppShell>

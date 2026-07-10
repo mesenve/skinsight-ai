@@ -44,6 +44,11 @@ export function AIScanOverlay({ active, onComplete }: AIScanOverlayProps) {
         setTimeout(() => {
           setCurrentStep(index);
           setProgress(((index + 1) / STEPS.length) * 100);
+          if (index !== 2) {
+            setAbcdeApproved(index > 2 ? 5 : 0);
+          } else {
+            setAbcdeApproved(0);
+          }
         }, index * stepDuration)
       );
     });
@@ -58,18 +63,16 @@ export function AIScanOverlay({ active, onComplete }: AIScanOverlayProps) {
   }, [active, onComplete]);
 
   useEffect(() => {
-    if (currentStep !== 2) {
-      if (currentStep > 2) setAbcdeApproved(5);
-      else setAbcdeApproved(0);
-      return;
-    }
+    if (currentStep !== 2) return;
 
-    setAbcdeApproved(0);
     const timers = ABCDE_MARKERS.map((_, i) =>
       setTimeout(() => setAbcdeApproved(i + 1), 180 + i * 220)
     );
     return () => timers.forEach(clearTimeout);
   }, [currentStep]);
+
+  const displayedAbcdeApproved =
+    currentStep > 2 ? 5 : currentStep < 2 ? 0 : abcdeApproved;
 
   if (!active) return null;
 
@@ -198,7 +201,7 @@ export function AIScanOverlay({ active, onComplete }: AIScanOverlayProps) {
 
               {showAbcde &&
                 ABCDE_MARKERS.map((m, i) => {
-                  const approved = i < abcdeApproved;
+                  const approved = i < displayedAbcdeApproved;
                   return (
                     <motion.g
                       key={m.letter}

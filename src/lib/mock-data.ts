@@ -619,6 +619,8 @@ const cases: PatientCase[] = [
   },
 ];
 
+export { cases as staticCases };
+
 export function getCases(): PatientCase[] {
   return cases;
 }

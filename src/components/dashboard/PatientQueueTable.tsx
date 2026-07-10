@@ -106,6 +106,7 @@ export function PatientQueueTable({ cases }: PatientQueueTableProps) {
                         </p>
                         <p className="text-xs text-muted">
                           Age {patientCase.age} · {patientCase.mrn}
+                          {patientCase.analysisPending ? " · AI pending" : ""}
                         </p>
                       </div>
                     </Link>
@@ -134,16 +135,20 @@ export function PatientQueueTable({ cases }: PatientQueueTableProps) {
                       <span
                         className={cn(
                           "font-display text-sm font-bold",
-                          patientCase.priority === "high"
-                            ? "text-risk-high"
-                            : patientCase.priority === "medium"
-                              ? "text-risk-medium"
-                              : "text-risk-low"
+                          patientCase.analysisPending
+                            ? "text-muted-light"
+                            : patientCase.priority === "high"
+                              ? "text-risk-high"
+                              : patientCase.priority === "medium"
+                                ? "text-risk-medium"
+                                : "text-risk-low"
                         )}
                       >
-                        {patientCase.aiRiskScore}
+                        {patientCase.analysisPending ? "—" : patientCase.aiRiskScore}
                       </span>
-                      <span className="text-xs text-muted-light"> /100</span>
+                      {!patientCase.analysisPending && (
+                        <span className="text-xs text-muted-light"> /100</span>
+                      )}
                     </Link>
                   </td>
 

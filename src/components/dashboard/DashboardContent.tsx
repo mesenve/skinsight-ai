@@ -1,14 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   AlertTriangle,
   CalendarClock,
   ClipboardList,
+  Plus,
   Users,
 } from "lucide-react";
-import { filterCases, getDashboardStats } from "@/lib/mock-data";
+import {
+  filterMergedCases,
+  getDashboardStatsFromCases,
+} from "@/lib/case-repository";
 import type { QueueFilter } from "@/lib/types";
+import { useCases } from "@/context/CasesContext";
+import { buttonStyles } from "@/components/ui/Button";
 import { StatCard } from "./StatCard";
 import { QueueSearch } from "./QueueSearch";
 import { PatientQueueTable } from "./PatientQueueTable";
@@ -23,11 +30,12 @@ const filterLabels: Record<QueueFilter, string> = {
 export function DashboardContent() {
   const [filter, setFilter] = useState<QueueFilter>("all");
   const [search, setSearch] = useState("");
-  const stats = getDashboardStats();
+  const { cases } = useCases();
+  const stats = useMemo(() => getDashboardStatsFromCases(cases), [cases]);
 
-  const cases = useMemo(
-    () => filterCases(search, filter),
-    [search, filter]
+  const queueCases = useMemo(
+    () => filterMergedCases(cases, search, filter),
+    [cases, search, filter]
   );
 
   return (
@@ -96,10 +104,19 @@ export function DashboardContent() {
               {filterLabels[filter]}
             </h2>
           </div>
-          <QueueSearch value={search} onChange={setSearch} />
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <QueueSearch value={search} onChange={setSearch} />
+            <Link
+              href="/cases/new"
+              className={buttonStyles({ variant: "primary", size: "md", className: "w-full sm:w-auto" })}
+            >
+              <Plus className="h-4 w-4" />
+              New case
+            </Link>
+          </div>
         </div>
 
-        <PatientQueueTable cases={cases} />
+        <PatientQueueTable cases={queueCases} />
       </div>
     </div>
   );

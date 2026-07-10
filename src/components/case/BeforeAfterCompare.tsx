@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LesionPhoto } from "@/components/shared/LesionPhoto";
 import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import type { ScanEvent } from "@/lib/types";
@@ -49,7 +49,7 @@ export function BeforeAfterCompare({ events, className }: BeforeAfterCompareProp
 
       <div className="p-4 pt-0">
         <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl shadow-inner">
-          <Image
+          <LesionPhoto
             src={before.imageUrl}
             alt="Before scan"
             fill
@@ -60,7 +60,7 @@ export function BeforeAfterCompare({ events, className }: BeforeAfterCompareProp
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
           >
-            <Image
+            <LesionPhoto
               src={after.imageUrl}
               alt="After scan"
               fill

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LesionPhoto } from "@/components/shared/LesionPhoto";
 import { motion } from "framer-motion";
 import type { ScanEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -45,7 +45,7 @@ export function Timeline({ events, activeId, onSelect, className }: TimelineProp
               )}
             >
               <div className="relative h-[132px] w-full overflow-hidden rounded-lg bg-background shadow-inner">
-                <Image
+                <LesionPhoto
                   src={event.imageUrl}
                   alt={`Scan from ${event.date}`}
                   fill

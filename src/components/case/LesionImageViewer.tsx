@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Scan, ZoomIn } from "lucide-react";
+import { LesionPhoto } from "@/components/shared/LesionPhoto";
 import { Button } from "@/components/ui/Button";
 import { AIScanOverlay } from "./AIScanOverlay";
 
@@ -32,7 +32,7 @@ export function LesionImageViewer({
           </h3>
         </div>
         {!isScanning && (
-          <Button variant="ai" size="md" onClick={onRunScan} className="group">
+          <Button variant="ai" size="md" onClick={onRunScan} disabled={isScanning} className="group">
             <Scan className="h-4 w-4 transition-transform group-hover:rotate-12" />
             Run AI Review
           </Button>
@@ -41,7 +41,7 @@ export function LesionImageViewer({
 
       <div className="p-4">
         <div className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-navy/5 shadow-inner">
-          <Image
+          <LesionPhoto
             src={imageUrl}
             alt={alt}
             fill

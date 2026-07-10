@@ -1,11 +1,10 @@
-import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
-import { CaseDetailContent } from "@/components/case/CaseDetailContent";
-import { getCaseById, getCases } from "@/lib/mock-data";
+import { CasePageClient } from "@/components/cases/CasePageClient";
+import { getCaseById } from "@/lib/mock-data";
 
 export function generateStaticParams() {
-  return getCases().map((patientCase) => ({
-    id: patientCase.id,
+  return Array.from({ length: 10 }, (_, index) => ({
+    id: `case-${String(index + 1).padStart(3, "0")}`,
   }));
 }
 
@@ -17,24 +16,23 @@ interface CasePageProps {
 export default async function CasePage({ params, searchParams }: CasePageProps) {
   const { id } = await params;
   const { analyzing } = await searchParams;
-  const patientCase = getCaseById(id);
-
-  if (!patientCase) {
-    notFound();
-  }
-
-  const autoScan = analyzing === "1" || analyzing === undefined;
+  const staticCase = getCaseById(id);
+  const autoScan = analyzing === "1" || (staticCase !== undefined && analyzing === undefined);
 
   return (
     <AppShell
       title="Case Review"
-      subtitle={`${patientCase.patientName} — ${patientCase.lesionLocation}`}
+      subtitle={
+        staticCase
+          ? `${staticCase.patientName} — ${staticCase.lesionLocation}`
+          : "Clinician review workspace"
+      }
       breadcrumb={[
         { label: "Queue", href: "/" },
-        { label: patientCase.patientName },
+        { label: staticCase?.patientName ?? "Case" },
       ]}
     >
-      <CaseDetailContent patientCase={patientCase} autoScan={autoScan} />
+      <CasePageClient id={id} autoScan={autoScan} />
     </AppShell>
   );
 }
