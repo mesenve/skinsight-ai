@@ -31,7 +31,7 @@ export function SegmentedControl<T extends string>({
           aria-selected={value === opt.value}
           onClick={() => onChange(opt.value)}
           className={cn(
-            "rounded px-3 py-1.5 text-xs font-semibold transition-all duration-150",
+            "cursor-pointer rounded px-3 py-1.5 text-xs font-semibold transition-all duration-150",
             value === opt.value
               ? "bg-white text-navy shadow-sm"
               : "text-muted hover:text-navy"

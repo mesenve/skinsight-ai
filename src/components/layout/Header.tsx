@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { CLINICIAN_PHOTO } from "@/lib/patient-photos";
 
 interface HeaderProps {
   title: string;
@@ -41,14 +43,25 @@ export function Header({ title, subtitle, breadcrumb }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="smooth-card flex items-center gap-3 rounded-xl py-1.5 pl-4 pr-1.5">
-            <div className="hidden text-right sm:block">
+          <div className="smooth-card flex items-center gap-3 rounded-xl px-3 py-1.5">
+            <div className="relative h-9 w-9 shrink-0">
+              <div className="relative h-full w-full overflow-hidden rounded-lg bg-[#cfd8e3] ring-1 ring-border-subtle/80">
+                <Image
+                  src={CLINICIAN_PHOTO}
+                  alt="Dr. Maya Laurent"
+                  fill
+                  className="object-cover object-top"
+                  sizes="36px"
+                />
+              </div>
+              <span
+                className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-risk-high ring-2 ring-white"
+                aria-hidden
+              />
+            </div>
+            <div className="hidden min-w-0 text-left sm:block">
               <p className="text-sm font-semibold text-navy">Dr. Maya Laurent</p>
               <p className="text-[11px] text-muted">Dermatology · On duty</p>
-            </div>
-            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-medical-blue to-medical-blue-light text-xs font-bold text-white">
-              ML
-              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-risk-high ring-2 ring-white" />
             </div>
           </div>
         </div>

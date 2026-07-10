@@ -34,7 +34,7 @@ export function ABCDEAssessmentSection({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-3 p-5 text-left transition-colors hover:bg-background/40"
+        className="interactive-card flex w-full items-center justify-between gap-3 p-5 text-left transition-colors hover:bg-background/40"
       >
         <div>
           <p className="section-label">Pattern Analysis</p>

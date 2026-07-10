@@ -40,9 +40,9 @@ export function ClinicalWorkflow({ currentStep, inline = false }: ClinicalWorkfl
         aria-valuemax={steps.length}
         aria-label={`Workflow progress: ${steps[currentIndex]?.label}`}
       >
-        <div className="smooth-inset rounded-full py-2.5">
-          <div className="relative h-6 px-1">
-            <div className="absolute inset-x-1 top-1/2 h-2 -translate-y-1/2 overflow-hidden rounded-full bg-white/80 shadow-inner">
+        <div className="smooth-inset rounded-full px-5 py-3 sm:px-6">
+          <div className="relative h-6">
+            <div className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 overflow-hidden rounded-full bg-white/80 shadow-inner">
               <motion.div
                 className="absolute inset-y-0 left-0 overflow-hidden rounded-full"
                 initial={false}
@@ -53,32 +53,32 @@ export function ClinicalWorkflow({ currentStep, inline = false }: ClinicalWorkfl
               </motion.div>
             </div>
 
-            <div className="relative z-10 grid h-6 grid-cols-4">
-              {steps.map((step, index) => {
-                const isComplete = index < currentIndex;
-                const isCurrent = index === currentIndex;
+            {steps.map((step, index) => {
+              const isComplete = index < currentIndex;
+              const isCurrent = index === currentIndex;
+              const left = `${((index + 0.5) / steps.length) * 100}%`;
 
-                return (
-                  <div
-                    key={step.id}
-                    className="flex items-center justify-center"
-                    aria-hidden={!isCurrent}
-                  >
-                    {isCurrent ? (
-                      <div className="animate-workflow-pulse flex h-[18px] w-[18px] items-center justify-center rounded-full bg-white">
-                        <span className="h-2.5 w-2.5 animate-pulse-dot rounded-full bg-cyan-accent" />
-                      </div>
-                    ) : isComplete ? (
-                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-medical-blue shadow-sm ring-[2.5px] ring-white">
-                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
-                      </span>
-                    ) : (
-                      <span className="block h-2.5 w-2.5 rounded-full border border-border bg-white/90" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+              return (
+                <div
+                  key={step.id}
+                  className="absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+                  style={{ left }}
+                  aria-hidden={!isCurrent}
+                >
+                  {isCurrent ? (
+                    <div className="animate-workflow-pulse relative h-4 w-4 rounded-full bg-white">
+                      <span className="animate-pulse-dot absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-accent" />
+                    </div>
+                  ) : isComplete ? (
+                    <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-medical-blue shadow-sm ring-[2.5px] ring-white">
+                      <Check className="h-2 w-2 text-white" strokeWidth={3} />
+                    </span>
+                  ) : (
+                    <span className="block h-2.5 w-2.5 rounded-full border border-border bg-white/90" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 

@@ -88,7 +88,7 @@ export function PatientQueueTable({ cases }: PatientQueueTableProps) {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.03, duration: 0.3 }}
-                  className="group border-b border-border-subtle/70 last:border-b-0 transition-colors hover:bg-medical-blue/[0.03]"
+                  className="interactive-card group border-b border-border-subtle/70 last:border-b-0 transition-colors hover:bg-medical-blue/[0.03]"
                 >
                   <td className="px-5 py-4">
                     <Link

@@ -38,7 +38,7 @@ export function Timeline({ events, activeId, onSelect, className }: TimelineProp
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.06 }}
               className={cn(
-                "flex w-[148px] shrink-0 flex-col rounded-xl p-2 text-left transition-all duration-200",
+                "interactive-card flex w-[148px] shrink-0 flex-col rounded-xl p-2 text-left transition-all duration-200",
                 isActive
                   ? "bg-medical-blue/[0.06] shadow-[var(--shadow-soft)]"
                   : "bg-background/60 hover:bg-background hover:shadow-[var(--shadow-soft)]"

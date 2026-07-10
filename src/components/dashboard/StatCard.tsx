@@ -70,7 +70,7 @@ export function StatCard({
       transition={{ delay: index * 0.07, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
       whileHover={{ y: -2, transition: { duration: 0.2 } }}
       className={cn(
-        "group relative w-full overflow-hidden rounded-2xl p-5 text-left",
+        "interactive-card group relative w-full overflow-hidden rounded-2xl p-5 text-left",
         "shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-200",
         "hover:shadow-[var(--shadow-hover)]",
         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-medical-blue/35 focus-visible:ring-offset-1",

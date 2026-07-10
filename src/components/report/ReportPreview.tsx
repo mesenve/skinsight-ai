@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Printer, Shield } from "lucide-react";
 import type { PatientCase } from "@/lib/types";
+import { LogoMark } from "@/components/shared/LogoMark";
 import { RiskBadge } from "@/components/shared/RiskBadge";
 
 interface ReportPreviewProps {
@@ -54,17 +55,20 @@ export function ReportPreview({ patientCase }: ReportPreviewProps) {
 
         <div className="smooth-card-elevated overflow-hidden rounded-2xl">
           <div className="bg-navy px-8 py-6 text-white">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-cyan-accent">
-                  SkinSight AI
-                </p>
-                <h1 className="mt-1 text-2xl font-semibold">
-                  Dermatology Triage Report
-                </h1>
-                <p className="mt-2 text-sm text-white/70">
-                  Case {patientCase.id.toUpperCase()} · {reportDate}
-                </p>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <LogoMark size={44} className="shadow-none ring-1 ring-white/15" />
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-cyan-accent">
+                    SkinSight AI
+                  </p>
+                  <h1 className="mt-1 text-2xl font-semibold">
+                    Dermatology Triage Report
+                  </h1>
+                  <p className="mt-2 text-sm text-white/70">
+                    Case {patientCase.id.toUpperCase()} · {reportDate}
+                  </p>
+                </div>
               </div>
               <div className="rounded-lg bg-white/10 px-4 py-2 text-center">
                 <p className="text-xs text-white/70">Status</p>

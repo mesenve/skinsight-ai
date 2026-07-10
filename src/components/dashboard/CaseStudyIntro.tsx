@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { LogoMark } from "@/components/shared/LogoMark";
 
 const pillars = [
   {
@@ -51,12 +52,17 @@ export function CaseStudyIntro() {
         />
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <p className="section-label text-cyan-glow/80">
-              Portfolio Case Study · Product Design
-            </p>
-            <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              SkinSight AI
-            </h2>
+            <div className="flex items-center gap-3">
+              <LogoMark size={48} className="shadow-medical-blue/30" />
+              <div>
+                <p className="section-label text-cyan-glow/80">
+                  Portfolio Case Study · Product Design
+                </p>
+                <h2 className="font-display mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
+                  SkinSight AI
+                </h2>
+              </div>
+            </div>
             <p className="mt-2 text-lg font-medium text-white/80">
               Dermatology Triage Platform
             </p>

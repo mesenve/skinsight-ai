@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { LogoMark } from "@/components/shared/LogoMark";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -19,100 +20,104 @@ const navItems = [
 
 const aboutItem = { href: "/about", label: "About", icon: Info };
 
+function isNavActive(pathname: string, label: string) {
+  if (label === "Dashboard") return pathname === "/";
+  if (label === "Demo Case") return pathname.startsWith("/cases");
+  return pathname === "/about";
+}
+
+function NavLink({
+  href,
+  label,
+  icon: Icon,
+  isActive,
+  onNavigate,
+}: {
+  href: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  isActive: boolean;
+  onNavigate: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className={cn(
+        "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+        isActive
+          ? "bg-white text-navy shadow-[var(--shadow-soft)] ring-1 ring-border-subtle/80"
+          : "text-muted hover:bg-white/55 hover:text-navy"
+      )}
+    >
+      <Icon
+        className={cn(
+          "h-4 w-4 shrink-0 transition-colors",
+          isActive
+            ? "text-medical-blue"
+            : "text-muted-light group-hover:text-medical-blue/70"
+        )}
+      />
+      {label}
+    </Link>
+  );
+}
+
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobile = () => setMobileOpen(false);
 
   const content = (
     <>
-      <div className="flex items-center gap-3">
-        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-medical-blue to-medical-blue-light text-white shadow-lg shadow-medical-blue/25">
-          <Activity className="h-5 w-5" />
-          <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-navy-soft bg-cyan-accent" />
-        </div>
-        <div>
-          <p className="font-display text-sm font-bold tracking-tight text-white">
-            SkinSight AI
-          </p>
-          <p className="text-[11px] font-medium text-white/40">
-            Dermatology Triage
-          </p>
+      <div className="border-b border-border-subtle/70 pb-6">
+        <div className="flex items-center gap-3">
+          <LogoMark size={40} className="shadow-medical-blue/15" />
+          <div>
+            <p className="font-display text-sm font-bold tracking-tight text-navy">
+              SkinSight AI
+            </p>
+            <p className="text-[11px] font-medium text-muted">
+              Dermatology Triage
+            </p>
+          </div>
         </div>
       </div>
 
-      <nav className="mt-10 flex flex-col gap-1">
-        {navItems.map((item) => {
-          const isActive =
-            item.label === "Dashboard"
-              ? pathname === "/"
-              : item.label === "Demo Case"
-                ? pathname.startsWith("/cases")
-                : pathname === "/about";
-          const Icon = item.icon;
-
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                isActive
-                  ? "bg-white/10 text-white shadow-sm"
-                  : "text-white/50 hover:bg-white/5 hover:text-white/80"
-              )}
-            >
-              <Icon
-                className={cn(
-                  "h-4 w-4 transition-colors",
-                  isActive ? "text-cyan-accent" : "text-white/40 group-hover:text-white/60"
-                )}
-              />
-              {item.label}
-              {isActive && (
-                <span className="ml-auto h-1.5 w-1.5 rounded-full bg-cyan-accent" />
-              )}
-            </Link>
-          );
-        })}
+      <nav className="mt-6 flex flex-col gap-1">
+        <p className="section-label mb-2 px-3">Menu</p>
+        {navItems.map((item) => (
+          <NavLink
+            key={item.label}
+            href={item.href}
+            label={item.label}
+            icon={item.icon}
+            isActive={isNavActive(pathname, item.label)}
+            onNavigate={closeMobile}
+          />
+        ))}
       </nav>
 
-      <div className="mt-auto space-y-3">
-        <Link
+      <div className="mt-auto space-y-3 border-t border-border-subtle/70 pt-4">
+        <NavLink
           href={aboutItem.href}
-          onClick={() => setMobileOpen(false)}
-          className={cn(
-            "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
-            pathname === "/about"
-              ? "bg-white/10 text-white shadow-sm"
-              : "text-white/50 hover:bg-white/5 hover:text-white/80"
-          )}
-        >
-          <Info
-            className={cn(
-              "h-4 w-4 transition-colors",
-              pathname === "/about"
-                ? "text-cyan-accent"
-                : "text-white/40 group-hover:text-white/60"
-            )}
-          />
-          {aboutItem.label}
-          {pathname === "/about" && (
-            <span className="ml-auto h-1.5 w-1.5 rounded-full bg-cyan-accent" />
-          )}
-        </Link>
+          label={aboutItem.label}
+          icon={aboutItem.icon}
+          isActive={pathname === "/about"}
+          onNavigate={closeMobile}
+        />
 
-        <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-accent animate-pulse-dot" />
-          <p className="text-xs font-semibold text-white/70">
-            Decision support only
+        <div className="smooth-inset rounded-xl border border-border-subtle/60 p-4">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-medical-blue animate-pulse-dot" />
+            <p className="text-xs font-semibold text-navy">
+              Decision support only
+            </p>
+          </div>
+          <p className="mt-2 text-[11px] leading-relaxed text-muted">
+            AI-assisted review for clinician verification. Not a substitute for
+            professional medical judgment.
           </p>
-        </div>
-        <p className="mt-2 text-[11px] leading-relaxed text-white/35">
-          AI-assisted review for clinician verification. Not a substitute for
-          professional medical judgment.
-        </p>
         </div>
       </div>
     </>
@@ -123,7 +128,7 @@ export function Sidebar() {
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
-        className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-md lg:hidden"
+        className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-[var(--shadow-soft)] ring-1 ring-border-subtle/60 lg:hidden"
         aria-label="Open menu"
       >
         <Menu className="h-5 w-5 text-navy" />
@@ -131,21 +136,21 @@ export function Sidebar() {
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-navy/60 backdrop-blur-sm lg:hidden"
-          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-40 bg-navy/20 backdrop-blur-sm lg:hidden"
+          onClick={closeMobile}
         />
       )}
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-[17.5rem] flex-col border-r border-white/5 bg-navy p-6 transition-transform duration-300 lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-[14.5rem] flex-col border-r border-border-subtle/80 bg-white/75 px-4 py-6 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <button
           type="button"
-          onClick={() => setMobileOpen(false)}
-          className="absolute right-4 top-4 text-white/40 hover:text-white lg:hidden"
+          onClick={closeMobile}
+          className="absolute right-4 top-4 text-muted-light transition-colors hover:text-navy lg:hidden"
           aria-label="Close menu"
         >
           <X className="h-5 w-5" />

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Brain, ShieldCheck, Stethoscope, Users } from "lucide-react";
 import { CaseStudyIntro } from "@/components/dashboard/CaseStudyIntro";
+import { buttonStyles } from "@/components/ui/Button";
 
 const details = [
   {
@@ -66,7 +67,7 @@ export function AboutContent() {
       <div className="flex justify-center pb-4">
         <Link
           href="/cases/case-001"
-          className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-soft"
+          className={buttonStyles({ variant: "primary", size: "md" })}
         >
           Open sample case
           <ArrowRight className="h-4 w-4" />
