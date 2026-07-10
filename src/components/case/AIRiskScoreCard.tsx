@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import type { RiskLevel } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -79,16 +79,11 @@ export function AIRiskScoreCard({
       )}
     >
       <div className="p-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="section-label">AI Risk Signal</p>
-            <p className="mt-1 text-xs text-muted">
-              Decision-support score
-            </p>
-          </div>
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/80 text-medical-blue shadow-sm">
-            <Activity className="h-4 w-4" />
-          </div>
+        <div>
+          <p className="section-label">AI Risk Signal</p>
+          <p className="mt-1 text-xs text-muted">
+            Decision-support score
+          </p>
         </div>
 
         <div className="relative mx-auto mt-5 flex items-center justify-center" style={{ width: size, height: size }}>

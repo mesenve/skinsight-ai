@@ -19,7 +19,7 @@ export function AppShell({
       <Sidebar />
       <div className="lg:pl-[17.5rem]">
         <Header title={title} subtitle={subtitle} breadcrumb={breadcrumb} />
-        <main className="px-4 py-8 sm:px-6 lg:px-10 lg:py-10">{children}</main>
+        <main className="px-4 py-6 sm:px-6 lg:px-10 lg:py-8">{children}</main>
       </div>
     </div>
   );

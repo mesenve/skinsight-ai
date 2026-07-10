@@ -5,11 +5,14 @@ import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import type { ScanEvent } from "@/lib/types";
 
+import { cn } from "@/lib/utils";
+
 interface BeforeAfterCompareProps {
   events: ScanEvent[];
+  className?: string;
 }
 
-export function BeforeAfterCompare({ events }: BeforeAfterCompareProps) {
+export function BeforeAfterCompare({ events, className }: BeforeAfterCompareProps) {
   const [sliderPos, setSliderPos] = useState(50);
 
   if (events.length < 2) {
@@ -30,7 +33,7 @@ export function BeforeAfterCompare({ events }: BeforeAfterCompareProps) {
   const after = events[0];
 
   return (
-    <div className="smooth-card overflow-hidden rounded-2xl">
+    <div className={cn("smooth-card overflow-hidden rounded-2xl", className)}>
       <div className="flex items-center justify-between px-5 py-4">
         <div>
           <p className="section-label">Evolution Tracking</p>
@@ -45,7 +48,7 @@ export function BeforeAfterCompare({ events }: BeforeAfterCompareProps) {
       </div>
 
       <div className="p-4 pt-0">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-inner">
+        <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl shadow-inner">
           <Image
             src={before.imageUrl}
             alt="Before scan"

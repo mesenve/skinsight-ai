@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Circle } from "lucide-react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type WorkflowStep = "intake" | "ai_review" | "clinician" | "report";
@@ -15,71 +15,116 @@ const steps: { id: WorkflowStep; label: string; description: string }[] = [
 
 interface ClinicalWorkflowProps {
   currentStep: WorkflowStep;
+  /** Renders without outer card — embed inside patient header */
+  inline?: boolean;
 }
 
-export function ClinicalWorkflow({ currentStep }: ClinicalWorkflowProps) {
-  const currentIndex = steps.findIndex((s) => s.id === currentStep);
+function progressWidth(currentIndex: number, total: number) {
+  return ((currentIndex + 1) / total) * 100;
+}
+
+export function ClinicalWorkflow({ currentStep, inline = false }: ClinicalWorkflowProps) {
+  const currentIndex = Math.max(0, steps.findIndex((s) => s.id === currentStep));
+  const fillPercent = progressWidth(currentIndex, steps.length);
+
+  const content = (
+    <div className={cn("flex w-full flex-col justify-center", inline && "h-full")}>
+      <div className="mb-3">
+        <p className="section-label">{inline ? "Clinical Workflow" : "Progress"}</p>
+      </div>
+
+      <div
+        role="progressbar"
+        aria-valuenow={currentIndex + 1}
+        aria-valuemin={1}
+        aria-valuemax={steps.length}
+        aria-label={`Workflow progress: ${steps[currentIndex]?.label}`}
+      >
+        <div className="smooth-inset rounded-full py-2.5">
+          <div className="relative h-6 px-1">
+            <div className="absolute inset-x-1 top-1/2 h-2 -translate-y-1/2 overflow-hidden rounded-full bg-white/80 shadow-inner">
+              <motion.div
+                className="absolute inset-y-0 left-0 overflow-hidden rounded-full"
+                initial={false}
+                animate={{ width: `${fillPercent}%` }}
+                transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <div className="h-full w-full bg-gradient-to-r from-medical-blue via-medical-blue-light to-cyan-accent" />
+              </motion.div>
+            </div>
+
+            <div className="relative z-10 grid h-6 grid-cols-4">
+              {steps.map((step, index) => {
+                const isComplete = index < currentIndex;
+                const isCurrent = index === currentIndex;
+
+                return (
+                  <div
+                    key={step.id}
+                    className="flex items-center justify-center"
+                    aria-hidden={!isCurrent}
+                  >
+                    {isCurrent ? (
+                      <div className="animate-workflow-pulse flex h-[18px] w-[18px] items-center justify-center rounded-full bg-white">
+                        <span className="h-2.5 w-2.5 animate-pulse-dot rounded-full bg-cyan-accent" />
+                      </div>
+                    ) : isComplete ? (
+                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-medical-blue shadow-sm ring-[2.5px] ring-white">
+                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
+                      </span>
+                    ) : (
+                      <span className="block h-2.5 w-2.5 rounded-full border border-border bg-white/90" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-3 grid grid-cols-4">
+          {steps.map((step, index) => {
+            const isComplete = index < currentIndex;
+            const isCurrent = index === currentIndex;
+
+            return (
+              <div key={step.id} className="flex flex-col items-center text-center">
+                <div
+                  className={cn(
+                    "h-2 w-px rounded-full",
+                    isCurrent && "bg-cyan-accent/60",
+                    isComplete && !isCurrent && "bg-medical-blue/30",
+                    !isCurrent && !isComplete && "bg-border-subtle"
+                  )}
+                />
+                <p
+                  className={cn(
+                    "mt-1.5 whitespace-nowrap text-[11px] font-semibold sm:text-xs",
+                    isCurrent && "font-display text-navy",
+                    isComplete && !isCurrent && "text-medical-blue",
+                    !isCurrent && !isComplete && "text-muted-light"
+                  )}
+                >
+                  {step.label}
+                </p>
+                {!inline && !isCurrent && (
+                  <p className="mt-0.5 hidden whitespace-nowrap text-[10px] text-muted sm:block">
+                    {step.description}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+
+  if (inline) return content;
 
   return (
     <div className="smooth-card rounded-2xl p-5">
-      <p className="section-label">Clinical Workflow</p>
-      <div className="mt-4 flex items-center justify-between gap-1">
-        {steps.map((step, index) => {
-          const isComplete = index < currentIndex;
-          const isCurrent = index === currentIndex;
-          const isLast = index === steps.length - 1;
-
-          return (
-            <div key={step.id} className="flex flex-1 items-center">
-              <div className="flex flex-col items-center gap-1.5">
-                <motion.div
-                  initial={false}
-                  animate={{
-                    scale: isCurrent ? 1.05 : 1,
-                  }}
-                  className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
-                    isComplete
-                      ? "bg-medical-blue text-white shadow-sm shadow-medical-blue/25"
-                      : isCurrent
-                        ? "bg-cyan-accent/15 text-cyan-accent shadow-sm shadow-cyan-accent/20"
-                        : "bg-background text-muted-light"
-                  )}
-                >
-                  {isComplete ? (
-                    <Check className="h-3.5 w-3.5" />
-                  ) : isCurrent ? (
-                    <span className="h-2 w-2 rounded-full bg-cyan-accent animate-pulse-dot" />
-                  ) : (
-                    <Circle className="h-3 w-3" />
-                  )}
-                </motion.div>
-                <div className="text-center">
-                  <p
-                    className={cn(
-                      "text-xs font-semibold",
-                      isCurrent ? "text-navy" : isComplete ? "text-medical-blue" : "text-muted-light"
-                    )}
-                  >
-                    {step.label}
-                  </p>
-                  <p className="hidden text-[10px] text-muted sm:block">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-              {!isLast && (
-                <div
-                  className={cn(
-                    "mx-1 mb-5 h-0.5 flex-1 rounded-full transition-colors",
-                    index < currentIndex ? "bg-medical-blue" : "bg-background"
-                  )}
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
+      <div className="mt-1">{content}</div>
     </div>
   );
 }

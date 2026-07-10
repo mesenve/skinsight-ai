@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buttonStyles } from "@/components/ui/Button";
 
 export default function NotFound() {
   return (
@@ -10,7 +11,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-6 rounded-xl bg-medical-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-medical-blue/90"
+        className={buttonStyles({ variant: "primary", size: "md", className: "mt-6" })}
       >
         Return to Dashboard
       </Link>

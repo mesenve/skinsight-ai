@@ -9,6 +9,8 @@ export interface RegionMeta {
   regionGroup: string;
   initialAzimuth: number;
   marker: Marker3D;
+  markerTop: string;
+  markerLeft: string;
 }
 
 export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
@@ -19,6 +21,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Head & neck",
     initialAzimuth: 0,
     marker: [0, 1.72, 0.1],
+    markerTop: "8%",
+    markerLeft: "50%",
   },
   chest: {
     label: "Chest",
@@ -27,6 +31,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Torso",
     initialAzimuth: 0,
     marker: [0, 1.34, 0.14],
+    markerTop: "28%",
+    markerLeft: "50%",
   },
   back: {
     label: "Upper Back",
@@ -35,6 +41,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Torso",
     initialAzimuth: Math.PI,
     marker: [0, 1.34, -0.14],
+    markerTop: "28%",
+    markerLeft: "50%",
   },
   left_shoulder: {
     label: "Left Shoulder",
@@ -43,6 +51,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Upper limb",
     initialAzimuth: Math.PI,
     marker: [-0.2, 1.48, -0.1],
+    markerTop: "22%",
+    markerLeft: "22%",
   },
   right_shoulder: {
     label: "Right Shoulder",
@@ -51,6 +61,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Upper limb",
     initialAzimuth: Math.PI,
     marker: [0.2, 1.48, -0.1],
+    markerTop: "22%",
+    markerLeft: "78%",
   },
   left_forearm: {
     label: "Left Forearm",
@@ -59,6 +71,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Upper limb",
     initialAzimuth: 0,
     marker: [-0.34, 1.12, 0.1],
+    markerTop: "38%",
+    markerLeft: "12%",
   },
   right_forearm: {
     label: "Right Forearm",
@@ -67,6 +81,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Upper limb",
     initialAzimuth: 0,
     marker: [0.34, 1.12, 0.1],
+    markerTop: "38%",
+    markerLeft: "88%",
   },
   abdomen: {
     label: "Abdomen",
@@ -75,6 +91,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Torso",
     initialAzimuth: 0,
     marker: [0, 1.14, 0.13],
+    markerTop: "42%",
+    markerLeft: "50%",
   },
   left_thigh: {
     label: "Left Thigh",
@@ -83,6 +101,8 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Lower limb",
     initialAzimuth: 0,
     marker: [-0.1, 0.72, 0.1],
+    markerTop: "58%",
+    markerLeft: "38%",
   },
   right_thigh: {
     label: "Right Thigh",
@@ -91,5 +111,7 @@ export const regionMeta: Record<BodyMapRegion, RegionMeta> = {
     regionGroup: "Lower limb",
     initialAzimuth: 0,
     marker: [0.1, 0.72, 0.1],
+    markerTop: "58%",
+    markerLeft: "62%",
   },
 };

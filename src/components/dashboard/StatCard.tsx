@@ -8,16 +8,44 @@ interface StatCardProps {
   label: string;
   value: number;
   icon: LucideIcon;
-  accent?: "navy" | "red" | "blue" | "cyan";
+  accent?: "navy" | "red" | "blue" | "cyan" | "green";
   trend?: string;
   index?: number;
+  active?: boolean;
+  onClick?: () => void;
 }
 
 const accentConfig = {
-  navy: { icon: "bg-navy/6 text-navy", bar: "bg-navy", glow: "from-navy/5" },
-  red: { icon: "bg-risk-high/8 text-risk-high", bar: "bg-risk-high", glow: "from-risk-high/5" },
-  blue: { icon: "bg-medical-blue/8 text-medical-blue", bar: "bg-medical-blue", glow: "from-medical-blue/5" },
-  cyan: { icon: "bg-cyan-accent/10 text-cyan-accent", bar: "bg-cyan-accent", glow: "from-cyan-accent/5" },
+  navy: {
+    icon: "bg-navy/6 text-navy",
+    surface: "bg-gradient-to-br from-navy/[0.04] via-white to-white",
+    glow: "bg-navy/10",
+    ring: "ring-navy/20",
+  },
+  red: {
+    icon: "bg-risk-high/6 text-risk-high",
+    surface: "bg-gradient-to-br from-risk-high/[0.05] via-white to-white",
+    glow: "bg-risk-high/10",
+    ring: "ring-risk-high/20",
+  },
+  blue: {
+    icon: "bg-medical-blue/6 text-medical-blue",
+    surface: "bg-gradient-to-br from-medical-blue/[0.05] via-white to-white",
+    glow: "bg-medical-blue/10",
+    ring: "ring-medical-blue/20",
+  },
+  cyan: {
+    icon: "bg-cyan-accent/8 text-cyan-accent",
+    surface: "bg-gradient-to-br from-cyan-accent/[0.05] via-white to-white",
+    glow: "bg-cyan-accent/10",
+    ring: "ring-cyan-accent/20",
+  },
+  green: {
+    icon: "bg-risk-low/6 text-risk-low",
+    surface: "bg-gradient-to-br from-risk-low/[0.05] via-white to-white",
+    glow: "bg-risk-low/10",
+    ring: "ring-risk-low/20",
+  },
 };
 
 export function StatCard({
@@ -27,22 +55,36 @@ export function StatCard({
   accent = "navy",
   trend,
   index = 0,
+  active = false,
+  onClick,
 }: StatCardProps) {
   const config = accentConfig[accent];
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.07, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
       whileHover={{ y: -2, transition: { duration: 0.2 } }}
       className={cn(
-        "smooth-card group relative overflow-hidden rounded-2xl p-5",
-        "bg-gradient-to-br to-white",
-        config.glow
+        "group relative w-full overflow-hidden rounded-2xl p-5 text-left",
+        "shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-200",
+        "hover:shadow-[var(--shadow-hover)]",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-medical-blue/35 focus-visible:ring-offset-1",
+        config.surface,
+        active && cn("ring-1 ring-offset-1 ring-offset-background", config.ring)
       )}
     >
-      <div className="flex items-start justify-between">
+      <div
+        className={cn(
+          "pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-2xl",
+          config.glow
+        )}
+      />
+      <div className="relative flex items-start justify-between">
         <div>
           <p className="section-label">{label}</p>
           <p className="font-display mt-2 text-3xl font-bold tracking-tight text-navy">
@@ -61,14 +103,6 @@ export function StatCard({
           <Icon className="h-5 w-5" />
         </div>
       </div>
-      <div className="mt-4 h-0.5 w-full overflow-hidden rounded-full bg-background">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${Math.min(value * 10, 100)}%` }}
-          transition={{ delay: index * 0.07 + 0.3, duration: 0.8, ease: "easeOut" }}
-          className={cn("h-full rounded-full opacity-60", config.bar)}
-        />
-      </div>
-    </motion.div>
+    </motion.button>
   );
 }

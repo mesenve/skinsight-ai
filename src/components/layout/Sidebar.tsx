@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/cases/case-001", label: "Cases", icon: Activity },
-  { href: "/about", label: "About", icon: Info },
+  { href: "/cases/case-001", label: "Demo Case", icon: Activity },
 ];
+
+const aboutItem = { href: "/about", label: "About", icon: Info };
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -40,12 +41,11 @@ export function Sidebar() {
       </div>
 
       <nav className="mt-10 flex flex-col gap-1">
-        <p className="mb-2 px-3 section-label text-white/30">Navigation</p>
         {navItems.map((item) => {
           const isActive =
             item.label === "Dashboard"
               ? pathname === "/"
-              : item.label === "Cases"
+              : item.label === "Demo Case"
                 ? pathname.startsWith("/cases")
                 : pathname === "/about";
           const Icon = item.icon;
@@ -77,7 +77,32 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-auto rounded-xl bg-white/5 p-4 backdrop-blur-sm">
+      <div className="mt-auto space-y-3">
+        <Link
+          href={aboutItem.href}
+          onClick={() => setMobileOpen(false)}
+          className={cn(
+            "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+            pathname === "/about"
+              ? "bg-white/10 text-white shadow-sm"
+              : "text-white/50 hover:bg-white/5 hover:text-white/80"
+          )}
+        >
+          <Info
+            className={cn(
+              "h-4 w-4 transition-colors",
+              pathname === "/about"
+                ? "text-cyan-accent"
+                : "text-white/40 group-hover:text-white/60"
+            )}
+          />
+          {aboutItem.label}
+          {pathname === "/about" && (
+            <span className="ml-auto h-1.5 w-1.5 rounded-full bg-cyan-accent" />
+          )}
+        </Link>
+
+        <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-accent animate-pulse-dot" />
           <p className="text-xs font-semibold text-white/70">
@@ -88,6 +113,7 @@ export function Sidebar() {
           AI-assisted review for clinician verification. Not a substitute for
           professional medical judgment.
         </p>
+        </div>
       </div>
     </>
   );

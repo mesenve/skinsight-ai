@@ -10,9 +10,15 @@ import {
 import { filterCases, getDashboardStats } from "@/lib/mock-data";
 import type { QueueFilter } from "@/lib/types";
 import { StatCard } from "./StatCard";
-import { QueueFilters } from "./QueueFilters";
 import { QueueSearch } from "./QueueSearch";
 import { PatientQueueTable } from "./PatientQueueTable";
+
+const filterLabels: Record<QueueFilter, string> = {
+  all: "Incoming Cases",
+  high_risk: "High Risk Cases",
+  follow_up: "Follow-up Cases",
+  doctor_review: "Waiting Review",
+};
 
 export function DashboardContent() {
   const [filter, setFilter] = useState<QueueFilter>("all");
@@ -35,7 +41,7 @@ export function DashboardContent() {
             </h2>
           </div>
           <p className="hidden text-xs text-muted sm:block">
-            Updated just now · Mock clinic data
+            Click a card to filter the queue
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -43,9 +49,11 @@ export function DashboardContent() {
             label="Total Cases"
             value={stats.totalCases}
             icon={Users}
-            accent="navy"
+            accent="green"
             trend="Active in queue"
             index={0}
+            active={filter === "all"}
+            onClick={() => setFilter("all")}
           />
           <StatCard
             label="High Risk"
@@ -54,6 +62,8 @@ export function DashboardContent() {
             accent="red"
             trend="Needs priority review"
             index={1}
+            active={filter === "high_risk"}
+            onClick={() => setFilter("high_risk")}
           />
           <StatCard
             label="Waiting Review"
@@ -62,6 +72,8 @@ export function DashboardContent() {
             accent="blue"
             trend="Clinician verification pending"
             index={2}
+            active={filter === "doctor_review"}
+            onClick={() => setFilter("doctor_review")}
           />
           <StatCard
             label="Follow-up Today"
@@ -70,6 +82,8 @@ export function DashboardContent() {
             accent="cyan"
             trend="Scheduled check-ins"
             index={3}
+            active={filter === "follow_up"}
+            onClick={() => setFilter("follow_up")}
           />
         </div>
       </div>
@@ -79,14 +93,10 @@ export function DashboardContent() {
           <div>
             <p className="section-label">Patient Queue</p>
             <h2 className="font-display mt-1 text-lg font-bold text-navy">
-              Incoming Cases
+              {filterLabels[filter]}
             </h2>
           </div>
           <QueueSearch value={search} onChange={setSearch} />
-        </div>
-
-        <div className="mb-4">
-          <QueueFilters active={filter} onChange={setFilter} />
         </div>
 
         <PatientQueueTable cases={cases} />

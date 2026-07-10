@@ -9,11 +9,12 @@ interface TimelineProps {
   events: ScanEvent[];
   activeId?: string;
   onSelect?: (id: string) => void;
+  className?: string;
 }
 
-export function Timeline({ events, activeId, onSelect }: TimelineProps) {
+export function Timeline({ events, activeId, onSelect, className }: TimelineProps) {
   return (
-    <div className="smooth-card rounded-2xl p-5">
+    <div className={cn("smooth-card rounded-2xl p-5", className)}>
       <p className="section-label">History</p>
       <h3 className="font-display mt-0.5 text-base font-bold text-navy">
         Scan Timeline
