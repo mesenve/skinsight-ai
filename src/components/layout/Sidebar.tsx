@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Activity,
+  CalendarClock,
   Info,
   LayoutDashboard,
   Menu,
@@ -15,15 +16,17 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/cases/case-001", label: "Demo Case", icon: Activity },
+  { href: "/calendar", label: "Calendar", icon: CalendarClock },
+  { href: "/activity", label: "Activity Log", icon: Activity },
 ];
 
+const demoCaseItem = { href: "/cases/case-001", label: "Demo Case", icon: Activity };
 const aboutItem = { href: "/about", label: "About", icon: Info };
 
-function isNavActive(pathname: string, label: string) {
+function isNavActive(pathname: string, href: string, label: string) {
   if (label === "Dashboard") return pathname === "/";
   if (label === "Demo Case") return pathname.startsWith("/cases");
-  return pathname === "/about";
+  return pathname === href || pathname.startsWith(href + "/");
 }
 
 function NavLink({
@@ -92,22 +95,29 @@ export function Sidebar() {
             href={item.href}
             label={item.label}
             icon={item.icon}
-            isActive={isNavActive(pathname, item.label)}
+            isActive={isNavActive(pathname, item.href, item.label)}
             onNavigate={closeMobile}
           />
         ))}
       </nav>
 
-      <div className="mt-auto space-y-3 border-t border-border-subtle/70 pt-4">
+      <div className="mt-auto space-y-1 border-t border-border-subtle/70 pt-4">
+        <NavLink
+          href={demoCaseItem.href}
+          label={demoCaseItem.label}
+          icon={demoCaseItem.icon}
+          isActive={isNavActive(pathname, demoCaseItem.href, demoCaseItem.label)}
+          onNavigate={closeMobile}
+        />
         <NavLink
           href={aboutItem.href}
           label={aboutItem.label}
           icon={aboutItem.icon}
-          isActive={pathname === "/about"}
+          isActive={isNavActive(pathname, aboutItem.href, aboutItem.label)}
           onNavigate={closeMobile}
         />
 
-        <div className="smooth-inset rounded-xl border border-border-subtle/60 p-4">
+        <div className="smooth-inset mt-2 rounded-xl border border-border-subtle/60 p-4">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-medical-blue animate-pulse-dot" />
             <p className="text-xs font-semibold text-navy">

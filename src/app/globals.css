@@ -187,6 +187,55 @@ body {
 .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
 .animate-workflow-pulse { animation: workflow-pulse 2s ease-in-out infinite; }
 
+.skinsight-daypicker {
+  width: 100%;
+}
+
+.skinsight-daypicker .rdp-root {
+  --rdp-accent-color: var(--medical-blue);
+  --rdp-accent-background-color: color-mix(in srgb, var(--medical-blue) 12%, white);
+  --rdp-day-height: 3rem;
+  --rdp-day-width: 100%;
+  --rdp-day_button-height: 3rem;
+  --rdp-day_button-width: 100%;
+  --rdp-nav-height: 2.5rem;
+  width: 100%;
+  margin: 0;
+}
+
+.skinsight-daypicker .rdp-months,
+.skinsight-daypicker .rdp-month,
+.skinsight-daypicker .rdp-month_grid {
+  width: 100%;
+}
+
+.skinsight-daypicker .rdp-weekdays,
+.skinsight-daypicker .rdp-week {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+}
+
+.skinsight-daypicker .rdp-weekday,
+.skinsight-daypicker .rdp-day {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.skinsight-daypicker table.rdp-month_grid {
+  width: 100%;
+  table-layout: fixed;
+  background: white;
+}
+
+.skinsight-daypicker .rdp-weekdays,
+.skinsight-daypicker .rdp-weekday {
+  background: transparent !important;
+}
+
+.skinsight-daypicker .rdp-weekdays {
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
 
 @media print {
   .no-print { display: none !important; }

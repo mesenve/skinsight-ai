@@ -71,3 +71,49 @@ export interface DashboardStats {
   waitingReview: number;
   followUpToday: number;
 }
+
+export type ActivityEventType =
+  | "case_opened"
+  | "ai_scan_run"
+  | "case_approved"
+  | "new_scan_requested"
+  | "doctor_note_added"
+  | "report_generated"
+  | "case_created";
+
+export interface ActivityEvent {
+  id: string;
+  type: ActivityEventType;
+  caseId: string;
+  patientName: string;
+  performedBy: string;
+  timestamp: string;
+  detail?: string;
+}
+
+export type NotificationLevel = "high" | "info" | "reminder";
+
+export interface AppNotification {
+  id: string;
+  level: NotificationLevel;
+  title: string;
+  body: string;
+  caseId?: string;
+  patientName?: string;
+  timestamp: string;
+  read: boolean;
+}
+
+export interface CalendarEvent {
+  id: string;
+  caseId: string;
+  patientName: string;
+  avatarUrl?: string;
+  priority: RiskLevel;
+  date: string;
+  time: string;
+  durationMin: number;
+  type: "follow_up" | "new_scan_requested";
+  lesionLocation: string;
+  mrn: string;
+}
