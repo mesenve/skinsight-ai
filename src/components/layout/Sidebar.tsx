@@ -8,6 +8,7 @@ import {
   Info,
   LayoutDashboard,
   Menu,
+  UserPlus,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -15,17 +16,19 @@ import { LogoMark } from "@/components/shared/LogoMark";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/app", label: "Dashboard", icon: LayoutDashboard },
   { href: "/calendar", label: "Calendar", icon: CalendarClock },
   { href: "/activity", label: "Activity Log", icon: Activity },
+  { href: "/onboarding", label: "Onboarding", icon: UserPlus },
 ];
 
 const demoCaseItem = { href: "/cases/case-001", label: "Demo Case", icon: Activity };
 const aboutItem = { href: "/about", label: "About", icon: Info };
 
 function isNavActive(pathname: string, href: string, label: string) {
-  if (label === "Dashboard") return pathname === "/";
+  if (label === "Dashboard") return pathname === "/app";
   if (label === "Demo Case") return pathname.startsWith("/cases");
+  if (label === "Onboarding") return pathname.startsWith("/onboarding");
   return pathname === href || pathname.startsWith(href + "/");
 }
 
@@ -74,7 +77,7 @@ export function Sidebar() {
   const content = (
     <>
       <div className="border-b border-border-subtle/70 pb-6">
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <LogoMark size={40} className="shadow-medical-blue/15" />
           <div>
             <p className="font-display text-sm font-bold tracking-tight text-navy">
@@ -84,7 +87,7 @@ export function Sidebar() {
               Dermatology Triage
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       <nav className="mt-6 flex flex-col gap-1">

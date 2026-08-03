@@ -57,43 +57,41 @@ export interface CaseStudyColorRole {
 
 export const caseStudyHero = {
   eyebrow: "Product Design Case Study",
-  title: "Designing a safer AI-assisted dermatology review experience",
+  title: "AI-assisted dermatology triage for clinicians",
   description:
-    "SkinSight AI is an independent product concept exploring how artificial intelligence can support dermatology professionals in reviewing, prioritizing and monitoring skin cases—without replacing clinical judgment.",
+    "A portfolio concept showing how AI can help prioritize and review skin cases—without replacing clinical judgment.",
   disclaimer:
-    "Created using fictional patient data and publicly available industry context. SkinSight AI is not affiliated with or intended to replace any existing clinical product.",
+    "Fictional patient data. Not affiliated with any clinical product.",
 };
 
 export const caseStudyMeta: CaseStudyMetaItem[] = [
   { label: "Role", value: "Product Designer" },
-  { label: "Scope", value: "Product Strategy, UX, UI Design, Prototyping" },
-  { label: "Platform", value: "Responsive Web Application" },
-  { label: "Industry", value: "Healthcare & Artificial Intelligence" },
-  { label: "Project Type", value: "Independent Portfolio Concept" },
+  { label: "Platform", value: "Responsive Web App" },
+  { label: "Type", value: "Independent Portfolio Concept" },
 ];
 
 export const projectOverview = {
   challenge: {
     title: "The challenge",
-    body: "Dermatology professionals may need to review a high number of patient images while identifying cases that require faster attention. AI can support this process, but unclear scores, excessive automation and poorly structured interfaces can create new risks instead of reducing them.",
+    body: "Clinicians review many lesion images daily. AI can help triage, but unclear scores and noisy interfaces create new risks.",
     question:
-      "How might we help clinicians identify priority cases faster while keeping medical judgment, transparency and patient safety at the center of the experience?",
+      "How might we speed up priority review while keeping human judgment and transparency central?",
   },
   product: {
     title: "The product",
-    body: "SkinSight AI is a clinician-facing dermatology review platform designed to organize patient cases, surface visual changes, present AI-supported observations and guide clinicians through a structured review and report approval process.",
+    body: "SkinSight AI organizes cases, surfaces AI observations, and guides review through intake → AI review → clinician sign-off.",
     benefits: [
       {
-        title: "Prioritize urgent cases",
-        description: "Surface cases that need faster review based on signals and queue context.",
+        title: "Priority queue",
+        description: "High-risk cases rise to the top with clear status.",
       },
       {
-        title: "Compare scans over time",
-        description: "Make visual evolution visible before clinical conclusions are recorded.",
+        title: "Scan timeline",
+        description: "Compare captures over time before signing off.",
       },
       {
-        title: "Review AI signals with clinical context",
-        description: "Pair model observations with patient history and clinician notes.",
+        title: "Explainable AI",
+        description: "ABCDE signals with short clinician-facing notes.",
       },
     ] satisfies CaseStudyBenefit[],
   },
@@ -129,81 +127,66 @@ export const designPrinciples: CaseStudyPrinciple[] = [
   {
     icon: ShieldCheck,
     title: "Human judgment first",
-    body: "AI findings are presented as decision-support signals, not final diagnoses.",
+    body: "AI output is decision support, not diagnosis.",
   },
   {
     icon: Eye,
     title: "Explain, don’t only score",
-    body: "Every priority level should be supported by visible observations and contextual evidence.",
+    body: "Priority links to visible evidence and notes.",
   },
   {
     icon: ClipboardCheck,
     title: "Safety before speed",
-    body: "Critical actions require completed clinical checks and clear confirmation states.",
+    body: "Critical actions need completed clinical checks.",
   },
   {
     icon: Layers,
     title: "Progressive disclosure",
-    body: "Clinicians see the most important information first while secondary patient details remain accessible when needed.",
+    body: "Essentials first; details on demand.",
   },
 ];
 
 export const clinicalUserFlow: CaseStudyFlowStep[] = [
   {
     step: 1,
-    title: "Patient Intake",
-    description: "A new case enters the queue with scan metadata and patient context.",
+    title: "Intake",
+    description: "Case enters the queue with scan and patient context.",
   },
   {
     step: 2,
-    title: "Image Quality Check",
-    description: "The interface flags retake needs before AI analysis proceeds.",
+    title: "AI Review",
+    description: "GPT-assisted ABCDE signals for clinician review.",
   },
   {
     step: 3,
-    title: "AI-Assisted Review",
-    description: "Pattern signals and evolution changes are surfaced for clinician review.",
+    title: "Assessment",
+    description: "Clinician records findings and overrides if needed.",
   },
   {
     step: 4,
-    title: "Clinician Assessment",
-    description: "The dermatologist records findings and contextual clinical judgment.",
-  },
-  {
-    step: 5,
-    title: "Report Approval",
-    description: "A structured checklist gates final report approval.",
-  },
-  {
-    step: 6,
-    title: "Follow-up Monitoring",
-    description: "Scheduled follow-ups remain visible in the queue and case timeline.",
+    title: "Report",
+    description: "Checklist-gated approval and follow-up scheduling.",
   },
 ];
 
 export const flowNote =
-  "AI review is intentionally positioned before clinician assessment but cannot complete or approve the medical report independently.";
+  "AI review runs before assessment but cannot approve reports on its own.";
 
 export const designDecisions: CaseStudyDecision[] = [
   {
     id: "01",
-    title: "A priority queue instead of a generic patient list",
-    body: "The dashboard prioritizes cases through urgency, waiting time and detected visual changes. This helps clinicians decide where to begin without presenting the AI output as a confirmed diagnosis.",
+    title: "Priority queue over flat lists",
+    body: "Urgency, wait time and status help clinicians start with the right case.",
   },
   {
     id: "02",
-    title: "Separating priority, confidence and evidence",
-    body: "A single AI score can easily be misunderstood as a diagnosis probability. The interface separates review priority, model confidence and the visual signals contributing to the result.",
+    title: "Separate score, confidence and evidence",
+    body: "Risk signal, model output and ABCDE notes stay distinct to avoid misreads.",
   },
   {
     id: "03",
-    title: "Making AI observations explainable",
-    body: "ABCDE observations include short explanations so clinicians can understand why a signal was surfaced instead of only seeing a progress bar or numeric score.",
-  },
-  {
-    id: "04",
-    title: "Keeping clinical approval human-controlled",
-    body: "The report approval action remains unavailable until the required clinical checks are completed. This transforms safety from a disclaimer into a product behavior.",
+    title: "Human-controlled approval",
+    body: "Report sign-off stays disabled until the clinical checklist is complete.",
   },
 ];
 
@@ -288,19 +271,19 @@ export const validationMetrics = [
 
 export const projectOutcome = {
   title: "The outcome",
-  body: "SkinSight AI demonstrates how an AI-powered healthcare interface can balance speed, explainability and clinical responsibility. The final experience focuses on helping professionals review cases more efficiently while keeping critical medical decisions under human control.",
+  body: "A faster review flow with explainable AI signals and approval steps that keep clinicians in control.",
   results: [
     "Clearer case prioritization",
-    "More explainable AI signals",
-    "Safer report approval workflow",
+    "Explainable ABCDE review",
+    "Safer report approval",
   ],
 };
 
 export const caseStudyCta = {
-  title: "Explore the SkinSight AI experience",
-  body: "View the interactive product concept and follow the complete clinical review flow.",
-  primary: { label: "Open Dashboard", href: "/" },
-  secondary: { label: "View Patient Case", href: "/cases/case-001" },
+  title: "Try the prototype",
+  body: "Register as a clinician, then open the triage dashboard.",
+  primary: { label: "Clinician onboarding", href: "/onboarding" },
+  secondary: { label: "Open Dashboard", href: "/app" },
 };
 
 export const designSystemComponents = [

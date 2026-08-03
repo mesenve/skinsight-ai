@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Bell } from "lucide-react";
 import { CLINICIAN_PHOTO } from "@/lib/patient-photos";
 import { notifications } from "@/lib/activity-data";
+import { loadClinicianProfile } from "@/lib/clinician-profile";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -24,6 +26,16 @@ export function Header({ title, subtitle, breadcrumb }: HeaderProps) {
   const unreadCount = notifications.filter((n) => !n.read).length;
   const unreadLabel =
     unreadCount > 9 ? "9+" : unreadCount > 0 ? String(unreadCount) : null;
+
+  const [clinicianName, setClinicianName] = useState("Dr. Maya Laurent");
+  const [clinicianMeta, setClinicianMeta] = useState("Dermatology · On duty");
+
+  useEffect(() => {
+    const profile = loadClinicianProfile();
+    if (!profile) return;
+    setClinicianName(profile.fullName);
+    setClinicianMeta(`${profile.clinicName} · On duty`);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 bg-white/75 shadow-[0_1px_0_rgba(11,18,32,0.04)] backdrop-blur-xl">
@@ -93,7 +105,7 @@ export function Header({ title, subtitle, breadcrumb }: HeaderProps) {
               <div className="relative h-full w-full overflow-hidden rounded-lg bg-[#cfd8e3] ring-1 ring-border-subtle/80">
                 <Image
                   src={CLINICIAN_PHOTO}
-                  alt="Dr. Maya Laurent"
+                  alt={clinicianName}
                   fill
                   className="object-cover object-top"
                   sizes="28px"
@@ -106,10 +118,10 @@ export function Header({ title, subtitle, breadcrumb }: HeaderProps) {
               />
             </div>
             <div className="hidden min-w-0 text-left sm:block">
-              <p className="text-sm font-semibold leading-tight text-navy">
-                Dr. Maya Laurent
+              <p className="truncate text-sm font-semibold leading-tight text-navy">
+                {clinicianName}
               </p>
-              <p className="text-[11px] text-muted">Dermatology</p>
+              <p className="truncate text-[11px] text-muted">{clinicianMeta}</p>
             </div>
           </Link>
         </div>

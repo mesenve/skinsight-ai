@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, AlertTriangle } from "lucide-react";
 import type { PatientCase } from "@/lib/types";
 import { useCases } from "@/context/CasesContext";
-import { analyzeLesion } from "@/lib/analyze-lesion";
+import { analyzeLesion, AnalyzeLesionError, getAnalyzeErrorMessage } from "@/lib/analyze-lesion";
 import { RiskBadge } from "@/components/shared/RiskBadge";
 import { PatientIdPhoto } from "@/components/shared/PatientIdPhoto";
 import { ClinicalWorkflow } from "./ClinicalWorkflow";
@@ -74,7 +74,7 @@ export function CaseDetailContent({
       current.timeline[0]?.imageUrl;
 
     if (!imageUrl) {
-      setScanError("No lesion image available for AI review.");
+      setScanError(getAnalyzeErrorMessage(400, "No lesion image available for AI review."));
       return;
     }
 
@@ -100,7 +100,10 @@ export function CaseDetailContent({
     try {
       const request = analysisRequestRef.current;
       if (!request) {
-        throw new Error("AI review did not start correctly. Try again.");
+        throw new AnalyzeLesionError(
+          getAnalyzeErrorMessage(500, "AI review did not start correctly."),
+          500
+        );
       }
 
       const analysis = await request;
@@ -118,9 +121,9 @@ export function CaseDetailContent({
 
       setAnalysisReady(true);
     } catch (error) {
-      setScanError(
-        error instanceof Error ? error.message : "AI analysis failed. Please try again."
-      );
+      const status = error instanceof AnalyzeLesionError ? error.status : 500;
+      const raw = error instanceof Error ? error.message : undefined;
+      setScanError(getAnalyzeErrorMessage(status, raw));
       if (!current.analysisPending) {
         setAnalysisReady(true);
       }
@@ -150,7 +153,7 @@ export function CaseDetailContent({
   return (
     <div className="space-y-6">
       <Link
-        href="/"
+        href="/app"
         className="inline-flex items-center gap-2 text-sm font-medium text-muted transition-colors hover:text-medical-blue"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -225,8 +228,24 @@ export function CaseDetailContent({
       </motion.div>
 
       {scanError && (
-        <div className="rounded-2xl border border-risk-high/20 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
-          {scanError}
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-2xl border border-risk-high/20 bg-risk-high/5 px-4 py-4 sm:px-5"
+        >
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-risk-high" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-navy">AI review couldn&apos;t be completed</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">{scanError}</p>
+            {!isScanning && (
+              <button
+                type="button"
+                onClick={handleRunScan}
+                className="mt-3 text-sm font-semibold text-medical-blue transition-colors hover:text-medical-blue-light"
+              >
+                Try again
+              </button>
+            )}
+          </div>
         </div>
       )}
 

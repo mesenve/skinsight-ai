@@ -28,7 +28,7 @@ export default async function CasePage({ params, searchParams }: CasePageProps) 
           : "Clinician review workspace"
       }
       breadcrumb={[
-        { label: "Queue", href: "/" },
+        { label: "Queue", href: "/app" },
         { label: staticCase?.patientName ?? "Case" },
       ]}
     >

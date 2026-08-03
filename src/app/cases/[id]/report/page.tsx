@@ -26,7 +26,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
       title="Report Preview"
       subtitle="Clinician-approved assessment — decision support only"
       breadcrumb={[
-        { label: "Queue", href: "/" },
+        { label: "Queue", href: "/app" },
         { label: patientCase.patientName, href: `/cases/${id}` },
         { label: "Report" },
       ]}

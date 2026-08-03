@@ -29,8 +29,23 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## AI Review (Run AI Review)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Copy `env.example` to `.env.local` and add your OpenAI key:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-5.5
+```
+
+Restart the dev server after changing env vars.
+
+## Deploy on Netlify
+
+Production **Run AI Review** requires the same variables in Netlify:
+
+1. Netlify dashboard → **Site settings** → **Environment variables**
+2. Add `OPENAI_API_KEY` and `OPENAI_MODEL=gpt-5.5`
+3. Trigger a new deploy (env changes do not apply to existing deploys)
+
+Without `OPENAI_API_KEY`, the app shows: `OPENAI_API_KEY is not configured on the server.`

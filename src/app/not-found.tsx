@@ -10,7 +10,7 @@ export default function NotFound() {
         The case you are looking for does not exist in the queue.
       </p>
       <Link
-        href="/"
+        href="/app"
         className={buttonStyles({ variant: "primary", size: "md", className: "mt-6" })}
       >
         Return to Dashboard

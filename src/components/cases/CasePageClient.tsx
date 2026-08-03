@@ -31,7 +31,7 @@ export function CasePageClient({ id, autoScan }: CasePageClientProps) {
           This case may have been removed from your local demo storage.
         </p>
         <Link
-          href="/"
+          href="/app"
           className="mt-4 inline-flex text-sm font-semibold text-medical-blue hover:underline"
         >
           Return to queue

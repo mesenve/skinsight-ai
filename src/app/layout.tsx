@@ -12,7 +12,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "SkinSight AI — Dermatology Triage Platform",
   description:
-    "AI-assisted dermatology triage dashboard for clinician decision support. A portfolio concept prototype.",
+    "AI-assisted dermatology triage for clinicians. Prioritize lesion cases, review explainable ABCDE signals, and keep final decisions in human hands.",
 };
 
 export default function RootLayout({

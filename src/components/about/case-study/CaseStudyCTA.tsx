@@ -5,7 +5,7 @@ import { caseStudyCta } from "@/lib/case-study-data";
 
 export function CaseStudyCTA() {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-navy px-6 py-10 sm:px-8 sm:py-12">
+    <section className="relative overflow-hidden rounded-2xl bg-navy px-5 py-8 sm:px-6 sm:py-9">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
@@ -14,7 +14,7 @@ export function CaseStudyCTA() {
         }}
       />
       <div className="relative mx-auto max-w-2xl text-center">
-        <h2 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        <h2 className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
           {caseStudyCta.title}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-white/65 sm:text-base">

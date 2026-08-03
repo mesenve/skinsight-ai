@@ -105,7 +105,7 @@ export function NewPatientForm() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <Link
-        href="/"
+        href="/app"
         className="inline-flex items-center gap-2 text-sm font-medium text-muted transition-colors hover:text-medical-blue"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -268,7 +268,7 @@ export function NewPatientForm() {
               type="button"
               variant="secondary"
               size="md"
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/app")}
             >
               Cancel
             </Button>

@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <AppShell
       title="Case Study"
-      subtitle="Designing safer AI-assisted dermatology review"
+      subtitle="Compact product design case study"
     >
       <AboutContent />
     </AppShell>

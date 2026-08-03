@@ -25,8 +25,8 @@ export function SectionHeader({
       {eyebrow && <p className="section-label">{eyebrow}</p>}
       <h2
         className={cn(
-          "font-display text-2xl font-bold tracking-tight text-navy sm:text-3xl",
-          eyebrow && "mt-2"
+          "font-display text-xl font-bold tracking-tight text-navy sm:text-2xl",
+          eyebrow ? "mt-2" : "mt-0"
         )}
       >
         {title}
