@@ -11,6 +11,8 @@ import {
   Building2,
   CalendarClock,
   Check,
+  Eye,
+  EyeOff,
   ShieldCheck,
   Sparkles,
   UserRound,
@@ -40,6 +42,71 @@ const STEPS = [
 
 const inputClass =
   "smooth-card w-full rounded-xl border border-border-subtle/80 bg-white px-4 py-2.5 text-sm text-navy outline-none transition-all placeholder:text-muted-light focus:border-medical-blue/30 focus:shadow-[var(--shadow-soft)] focus:ring-2 focus:ring-medical-blue/15";
+
+const passwordRules = [
+  {
+    id: "length",
+    label: "At least 8 characters",
+    test: (value: string) => value.length >= 8,
+  },
+  {
+    id: "upper",
+    label: "One uppercase letter",
+    test: (value: string) => /[A-Z]/.test(value),
+  },
+  {
+    id: "lower",
+    label: "One lowercase letter",
+    test: (value: string) => /[a-z]/.test(value),
+  },
+  {
+    id: "number",
+    label: "One number",
+    test: (value: string) => /\d/.test(value),
+  },
+] as const;
+
+function PasswordField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  autoComplete,
+  visible,
+  onToggleVisible,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  autoComplete: string;
+  visible: boolean;
+  onToggleVisible: () => void;
+}) {
+  return (
+    <label className="block space-y-1.5">
+      <span className="text-xs font-semibold text-navy">{label}</span>
+      <div className="relative">
+        <input
+          type={visible ? "text" : "password"}
+          className={cn(inputClass, "pr-11")}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+        />
+        <button
+          type="button"
+          onClick={onToggleVisible}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition-colors hover:text-navy"
+          aria-label={visible ? `Hide ${label}` : `Show ${label}`}
+        >
+          {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+        </button>
+      </div>
+    </label>
+  );
+}
 
 function OptionCard({
   selected,
@@ -137,6 +204,9 @@ export function ClinicianOnboardingWizard() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [clinicName, setClinicName] = useState("");
   const [specialty, setSpecialty] = useState<SpecialtyFocus>("general_derm");
   const [role, setRole] = useState<ClinicianRole>("attending");
@@ -144,6 +214,11 @@ export function ClinicianOnboardingWizard() {
     useState<TriageThreshold>("balanced");
   const [notifyHighRisk, setNotifyHighRisk] = useState(true);
   const [notifyFollowUps, setNotifyFollowUps] = useState(true);
+
+  const passwordsMatch =
+    confirmPassword.length > 0 && password === confirmPassword;
+  const passwordsMismatch =
+    confirmPassword.length > 0 && password !== confirmPassword;
 
   const step = STEPS[stepIndex];
   const progress = ((stepIndex + 1) / STEPS.length) * 100;
@@ -317,17 +392,75 @@ export function ClinicianOnboardingWizard() {
                     autoComplete="email"
                   />
                 </label>
-                <label className="block space-y-1.5">
-                  <span className="text-xs font-semibold text-navy">Password</span>
-                  <input
-                    type="password"
-                    className={inputClass}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="At least 6 characters"
-                    autoComplete="new-password"
-                  />
-                </label>
+
+                <PasswordField
+                  label="Password"
+                  value={password}
+                  onChange={setPassword}
+                  placeholder="Create a password"
+                  autoComplete="new-password"
+                  visible={showPassword}
+                  onToggleVisible={() => setShowPassword((v) => !v)}
+                />
+
+                <div className="rounded-xl border border-border-subtle/70 bg-background/60 px-3.5 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+                    Password rules
+                  </p>
+                  <ul className="mt-2 space-y-1.5">
+                    {passwordRules.map((rule) => {
+                      const passed = rule.test(password);
+                      return (
+                        <li
+                          key={rule.id}
+                          className={cn(
+                            "flex items-center gap-2 text-xs",
+                            passed ? "text-risk-low" : "text-muted"
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              "flex h-4 w-4 items-center justify-center rounded-full border",
+                              passed
+                                ? "border-risk-low/40 bg-risk-low/10"
+                                : "border-border-subtle bg-white"
+                            )}
+                          >
+                            <Check
+                              className={cn(
+                                "h-2.5 w-2.5",
+                                passed ? "opacity-100" : "opacity-30"
+                              )}
+                              strokeWidth={3}
+                            />
+                          </span>
+                          {rule.label}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <PasswordField
+                  label="Confirm password"
+                  value={confirmPassword}
+                  onChange={setConfirmPassword}
+                  placeholder="Repeat password"
+                  autoComplete="new-password"
+                  visible={showConfirmPassword}
+                  onToggleVisible={() => setShowConfirmPassword((v) => !v)}
+                />
+
+                {passwordsMatch && (
+                  <p className="text-xs font-medium text-risk-low">
+                    Passwords match
+                  </p>
+                )}
+                {passwordsMismatch && (
+                  <p className="text-xs font-medium text-risk-high">
+                    Passwords don&apos;t match
+                  </p>
+                )}
               </div>
             )}
 
