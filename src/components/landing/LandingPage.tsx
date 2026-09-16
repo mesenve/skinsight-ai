@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -57,31 +57,6 @@ const faqItems = [
 
 function FaqBlock() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const collapsedHeightRef = useRef<number | null>(null);
-  const [cardHeight, setCardHeight] = useState<number | null>(null);
-
-  useLayoutEffect(() => {
-    const el = listRef.current;
-    if (!el) return;
-
-    const sync = () => {
-      if (openIndex !== null) {
-        if (collapsedHeightRef.current != null) {
-          setCardHeight(collapsedHeightRef.current);
-        }
-        return;
-      }
-      const height = Math.round(el.getBoundingClientRect().height);
-      collapsedHeightRef.current = height;
-      setCardHeight(height);
-    };
-
-    sync();
-    const observer = new ResizeObserver(sync);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [openIndex]);
 
   return (
     <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,18rem)_1fr] lg:items-start lg:gap-8">
@@ -90,8 +65,7 @@ function FaqBlock() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-30px" }}
         transition={{ duration: 0.4 }}
-        style={cardHeight ? { height: cardHeight } : undefined}
-        className="relative min-h-[22rem] w-full max-w-[18rem] overflow-hidden rounded-[1.75rem] border border-white/90 bg-[#eceff3] shadow-[0_18px_50px_rgba(26,75,140,0.14)] lg:sticky lg:top-24"
+        className="relative aspect-[3/4] min-h-[22rem] w-full max-w-[18rem] overflow-hidden rounded-[1.75rem] border border-white/90 bg-[#eceff3] shadow-[0_18px_50px_rgba(26,75,140,0.14)] lg:sticky lg:top-24"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -137,7 +111,7 @@ function FaqBlock() {
         </div>
       </motion.aside>
 
-      <div ref={listRef} className="space-y-2.5">
+      <div className="space-y-2.5">
         {faqItems.map((item, index) => {
           const isOpen = openIndex === index;
 
