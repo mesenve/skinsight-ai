@@ -10,7 +10,7 @@ export interface ClinicianProfile {
   fullName: string;
   email: string;
   clinicName: string;
-  specialty: SpecialtyFocus;
+  specialty: SpecialtyFocus[];
   role: ClinicianRole;
   triageThreshold: TriageThreshold;
   notifyHighRisk: boolean;
@@ -96,7 +96,14 @@ export function loadClinicianProfile(): ClinicianProfile | null {
   try {
     const raw = window.localStorage.getItem(CLINICIAN_PROFILE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as ClinicianProfile;
+    const parsed = JSON.parse(raw) as ClinicianProfile & {
+      specialty?: SpecialtyFocus | SpecialtyFocus[];
+    };
+    // Normalize legacy single specialty values
+    if (parsed.specialty && !Array.isArray(parsed.specialty)) {
+      parsed.specialty = [parsed.specialty];
+    }
+    return parsed as ClinicianProfile;
   } catch {
     return null;
   }
@@ -106,8 +113,15 @@ export function saveClinicianProfile(profile: ClinicianProfile) {
   window.localStorage.setItem(CLINICIAN_PROFILE_KEY, JSON.stringify(profile));
 }
 
-export function specialtyLabel(value: SpecialtyFocus) {
-  return specialtyOptions.find((option) => option.value === value)?.label ?? value;
+export function specialtyLabel(value: SpecialtyFocus | SpecialtyFocus[]) {
+  const values = Array.isArray(value) ? value : [value];
+  if (values.length === 0) return "Not set";
+  return values
+    .map(
+      (item) =>
+        specialtyOptions.find((option) => option.value === item)?.label ?? item
+    )
+    .join(", ");
 }
 
 export function roleLabel(value: ClinicianRole) {

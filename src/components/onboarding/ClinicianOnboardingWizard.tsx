@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,23 +13,20 @@ import {
   Check,
   Eye,
   EyeOff,
-  ShieldCheck,
-  Sparkles,
   UserRound,
 } from "lucide-react";
 import { LogoMark } from "@/components/shared/LogoMark";
 import { Button } from "@/components/ui/Button";
+import { OnboardingVisualPanel } from "@/components/onboarding/OnboardingVisualPanel";
 import {
   roleOptions,
   saveClinicianProfile,
-  specialtyLabel,
   specialtyOptions,
   thresholdOptions,
   type ClinicianProfile,
   type ClinicianRole,
   type SpecialtyFocus,
   type TriageThreshold,
-  roleLabel,
 } from "@/lib/clinician-profile";
 import { cn } from "@/lib/utils";
 
@@ -37,11 +34,10 @@ const STEPS = [
   { id: "account", label: "Account", icon: UserRound },
   { id: "practice", label: "Practice", icon: Building2 },
   { id: "preferences", label: "Preferences", icon: Bell },
-  { id: "ready", label: "Ready", icon: ShieldCheck },
 ] as const;
 
 const inputClass =
-  "smooth-card w-full rounded-xl border border-border-subtle/80 bg-white px-4 py-2.5 text-sm text-navy outline-none transition-all placeholder:text-muted-light focus:border-medical-blue/30 focus:shadow-[var(--shadow-soft)] focus:ring-2 focus:ring-medical-blue/15";
+  "w-full rounded-xl border border-border-subtle/80 bg-white px-3.5 py-2 text-sm text-navy outline-none transition-all placeholder:text-[#a8b3c2] shadow-[0_1px_2px_rgba(11,18,32,0.04)] focus:border-medical-blue/35 focus:shadow-[0_0_0_3px_rgba(26,75,140,0.12)] focus:ring-0";
 
 const passwordRules = [
   {
@@ -86,7 +82,7 @@ function PasswordField({
   return (
     <label className="block space-y-1.5">
       <span className="text-xs font-semibold text-navy">{label}</span>
-      <div className="relative">
+      <div className="relative p-0.5 -m-0.5">
         <input
           type={visible ? "text" : "password"}
           className={cn(inputClass, "pr-11")}
@@ -98,7 +94,7 @@ function PasswordField({
         <button
           type="button"
           onClick={onToggleVisible}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition-colors hover:text-navy"
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition-colors hover:text-navy"
           aria-label={visible ? `Hide ${label}` : `Show ${label}`}
         >
           {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -124,16 +120,16 @@ function OptionCard({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-xl border px-4 py-3 text-left transition-all duration-200",
+        "rounded-xl border px-3 py-2.5 text-left transition-all duration-200",
         selected
-          ? "border-medical-blue/35 bg-medical-blue/[0.06] shadow-[var(--shadow-soft)] ring-1 ring-medical-blue/20"
+          ? "border-medical-blue bg-medical-blue/[0.05]"
           : "border-border-subtle/80 bg-white hover:border-medical-blue/25 hover:bg-medical-blue/[0.03]"
       )}
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-navy">{title}</p>
-          <p className="mt-1 text-xs leading-relaxed text-muted">{description}</p>
+          <p className="text-xs font-semibold text-navy sm:text-sm">{title}</p>
+          <p className="mt-0.5 text-[11px] leading-snug text-muted">{description}</p>
         </div>
         <span
           className={cn(
@@ -146,6 +142,48 @@ function OptionCard({
           <Check className="h-3 w-3" strokeWidth={3} />
         </span>
       </div>
+    </button>
+  );
+}
+
+function PreferenceOption({
+  selected,
+  title,
+  description,
+  onClick,
+}: {
+  selected: boolean;
+  title: string;
+  description: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition-all duration-200",
+        selected
+          ? "border-medical-blue bg-medical-blue/[0.05]"
+          : "border-border-subtle/80 bg-white hover:border-medical-blue/25 hover:bg-medical-blue/[0.03]"
+      )}
+    >
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm font-semibold text-navy">{title}</span>
+        <span className="mt-0.5 block text-[11px] leading-snug text-muted">
+          {description}
+        </span>
+      </span>
+      <span
+        className={cn(
+          "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors",
+          selected
+            ? "border-medical-blue bg-medical-blue text-white"
+            : "border-border-subtle bg-white text-transparent"
+        )}
+      >
+        <Check className="h-3 w-3" strokeWidth={3} />
+      </span>
     </button>
   );
 }
@@ -167,26 +205,26 @@ function ToggleRow({
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center gap-4 rounded-xl border border-border-subtle/80 bg-white px-4 py-3 text-left transition-all hover:border-medical-blue/20"
+      className="flex w-full items-center gap-3 rounded-xl border border-border-subtle/80 bg-white px-3 py-2.5 text-left transition-all hover:border-medical-blue/20"
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-medical-blue/[0.08] text-medical-blue">
-        <Icon className="h-4 w-4" />
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-medical-blue/[0.08] text-medical-blue">
+        <Icon className="h-3.5 w-3.5" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-navy">{title}</span>
-        <span className="mt-0.5 block text-xs text-muted">{description}</span>
+        <span className="block text-xs font-semibold text-navy sm:text-sm">{title}</span>
+        <span className="mt-0.5 block text-[11px] leading-snug text-muted">{description}</span>
       </span>
       <span
         className={cn(
-          "relative h-6 w-11 shrink-0 rounded-full transition-colors",
+          "relative h-5 w-9 shrink-0 rounded-full transition-colors",
           checked ? "bg-medical-blue" : "bg-border"
         )}
         aria-hidden
       >
         <span
           className={cn(
-            "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform",
-            checked ? "translate-x-5" : "translate-x-0.5"
+            "absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform",
+            checked ? "translate-x-4" : "translate-x-0.5"
           )}
         />
       </span>
@@ -208,7 +246,7 @@ export function ClinicianOnboardingWizard() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [clinicName, setClinicName] = useState("");
-  const [specialty, setSpecialty] = useState<SpecialtyFocus>("general_derm");
+  const [specialty, setSpecialty] = useState<SpecialtyFocus[]>(["general_derm"]);
   const [role, setRole] = useState<ClinicianRole>("attending");
   const [triageThreshold, setTriageThreshold] =
     useState<TriageThreshold>("balanced");
@@ -222,16 +260,7 @@ export function ClinicianOnboardingWizard() {
 
   const step = STEPS[stepIndex];
   const progress = ((stepIndex + 1) / STEPS.length) * 100;
-
-  const summary = useMemo(
-    () => ({
-      fullName: fullName.trim() || "Your profile",
-      clinicName: clinicName.trim() || "Your clinic",
-      specialty: specialtyLabel(specialty),
-      role: roleLabel(role),
-    }),
-    [clinicName, fullName, role, specialty]
-  );
+  const isLastStep = stepIndex === STEPS.length - 1;
 
   const goTo = (nextIndex: number) => {
     setDirection(nextIndex > stepIndex ? 1 : -1);
@@ -274,104 +303,61 @@ export function ClinicianOnboardingWizard() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-8 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-3">
-          <LogoMark size={40} />
-          <div>
-            <p className="font-display text-sm font-bold tracking-tight text-navy">
-              SkinSight AI
-            </p>
-            <p className="text-[11px] font-medium text-muted">
-              Clinician onboarding
-            </p>
-          </div>
-        </Link>
-        <Link
-          href="/app"
-          className="text-sm font-medium text-muted transition-colors hover:text-medical-blue"
-        >
-          Skip for now
-        </Link>
-      </div>
-
-      <div className="mb-8">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <p className="section-label">Step {stepIndex + 1} of {STEPS.length}</p>
-            <h1 className="font-display mt-1 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
-              {step.label}
-            </h1>
-          </div>
-          <p className="text-xs font-semibold text-medical-blue">
-            {Math.round(progress)}%
-          </p>
-        </div>
-
-        <div className="h-1.5 overflow-hidden rounded-full bg-white/80 shadow-inner">
-          <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-medical-blue via-medical-blue-light to-cyan-accent"
-            initial={false}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
-        </div>
-
-        <div className="mt-4 grid grid-cols-4 gap-2">
-          {STEPS.map((item, index) => {
-            const Icon = item.icon;
-            const complete = index < stepIndex;
-            const current = index === stepIndex;
-            return (
-              <div
-                key={item.id}
-                className={cn(
-                  "flex items-center gap-2 rounded-xl px-2.5 py-2 text-[11px] font-semibold sm:text-xs",
-                  current && "bg-white text-navy shadow-[var(--shadow-soft)]",
-                  complete && "text-medical-blue",
-                  !current && !complete && "text-muted-light"
-                )}
-              >
-                <span
-                  className={cn(
-                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
-                    current && "bg-medical-blue text-white",
-                    complete && "bg-medical-blue/10 text-medical-blue",
-                    !current && !complete && "bg-white/70 text-muted-light"
-                  )}
-                >
-                  {complete ? (
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                  ) : (
-                    <Icon className="h-3 w-3" />
-                  )}
-                </span>
-                <span className="hidden truncate sm:inline">{item.label}</span>
+    <div className="flex h-dvh items-center justify-center overflow-hidden px-3 py-3 sm:px-5 sm:py-4">
+      <div className="grid h-full w-full max-w-6xl overflow-hidden rounded-[1.5rem] border border-border-subtle/80 bg-white shadow-[var(--shadow-elevated)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        {/* Left — form */}
+        <div className="flex min-h-0 min-w-0 flex-col p-4 sm:p-5 lg:p-6">
+          <div className="mb-3 flex shrink-0 items-center justify-between gap-3">
+            <Link href="/" className="flex items-center gap-2.5">
+              <LogoMark size={32} />
+              <div>
+                <p className="font-display text-sm font-bold tracking-tight text-navy">
+                  SkinSight AI
+                </p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                  Clinician
+                </p>
               </div>
-            );
-          })}
-        </div>
-      </div>
+            </Link>
+          </div>
 
-      <div className="smooth-card flex-1 rounded-2xl p-5 sm:p-8">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={step.id}
-            custom={direction}
-            initial={{ opacity: 0, x: direction * 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -24 }}
-            transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
+          <div className="mb-3 shrink-0">
+            <div className="mb-2">
+              <p className="section-label">
+                Step {stepIndex + 1} of {STEPS.length}
+              </p>
+              <h1 className="font-display mt-0.5 text-xl font-bold tracking-tight text-navy sm:text-2xl">
+                {step.label}
+              </h1>
+            </div>
+
+            <div className="h-1 overflow-hidden rounded-full bg-background shadow-inner">
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-medical-blue via-medical-blue-light to-cyan-accent"
+                initial={false}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+              />
+            </div>
+          </div>
+
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className="min-h-0 flex-1 overflow-y-auto px-1.5 py-1">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={step.id}
+                custom={direction}
+                initial={{ opacity: 0, x: direction * 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -16 }}
+                transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
             {step.id === "account" && (
-              <div className="space-y-5">
-                <div>
-                  <p className="text-sm leading-relaxed text-muted">
-                    Create your clinician account to access the triage workspace.
-                    Demo only — no real authentication.
-                  </p>
-                </div>
-                <label className="block space-y-1.5">
+              <div className="space-y-4">
+                <p className="text-xs leading-relaxed text-muted sm:text-sm">
+                  Create your clinician account.
+                </p>
+                <label className="block space-y-1.5 px-0.5">
                   <span className="text-xs font-semibold text-navy">Full name</span>
                   <input
                     className={inputClass}
@@ -381,7 +367,7 @@ export function ClinicianOnboardingWizard() {
                     autoComplete="name"
                   />
                 </label>
-                <label className="block space-y-1.5">
+                <label className="block space-y-1.5 px-0.5">
                   <span className="text-xs font-semibold text-navy">Work email</span>
                   <input
                     type="email"
@@ -393,52 +379,42 @@ export function ClinicianOnboardingWizard() {
                   />
                 </label>
 
-                <PasswordField
-                  label="Password"
-                  value={password}
-                  onChange={setPassword}
-                  placeholder="Create a password"
-                  autoComplete="new-password"
-                  visible={showPassword}
-                  onToggleVisible={() => setShowPassword((v) => !v)}
-                />
+                <div className="space-y-2">
+                  <PasswordField
+                    label="Password"
+                    value={password}
+                    onChange={setPassword}
+                    placeholder="Create a password"
+                    autoComplete="new-password"
+                    visible={showPassword}
+                    onToggleVisible={() => setShowPassword((v) => !v)}
+                  />
 
-                <div className="rounded-xl border border-border-subtle/70 bg-background/60 px-3.5 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-                    Password rules
-                  </p>
-                  <ul className="mt-2 space-y-1.5">
-                    {passwordRules.map((rule) => {
-                      const passed = rule.test(password);
-                      return (
-                        <li
-                          key={rule.id}
-                          className={cn(
-                            "flex items-center gap-2 text-xs",
-                            passed ? "text-risk-low" : "text-muted"
-                          )}
-                        >
-                          <span
+                  <div className="rounded-xl border border-border-subtle/70 bg-background/60 px-3 py-2">
+                    <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+                      {passwordRules.map((rule) => {
+                        const passed = rule.test(password);
+                        return (
+                          <li
+                            key={rule.id}
                             className={cn(
-                              "flex h-4 w-4 items-center justify-center rounded-full border",
-                              passed
-                                ? "border-risk-low/40 bg-risk-low/10"
-                                : "border-border-subtle bg-white"
+                              "flex items-center gap-1.5 text-[11px]",
+                              passed ? "text-risk-low" : "text-muted"
                             )}
                           >
                             <Check
                               className={cn(
-                                "h-2.5 w-2.5",
+                                "h-3 w-3 shrink-0",
                                 passed ? "opacity-100" : "opacity-30"
                               )}
                               strokeWidth={3}
                             />
-                          </span>
-                          {rule.label}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                            {rule.label}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </div>
 
                 <PasswordField
@@ -465,11 +441,11 @@ export function ClinicianOnboardingWizard() {
             )}
 
             {step.id === "practice" && (
-              <div className="space-y-6">
-                <p className="text-sm leading-relaxed text-muted">
+              <div className="space-y-4">
+                <p className="text-xs leading-relaxed text-muted sm:text-sm">
                   Tell us where you practice so triage defaults fit your clinic.
                 </p>
-                <label className="block space-y-1.5">
+                <label className="block space-y-1.5 px-0.5">
                   <span className="text-xs font-semibold text-navy">
                     Clinic or hospital
                   </span>
@@ -482,22 +458,31 @@ export function ClinicianOnboardingWizard() {
                 </label>
 
                 <div>
-                  <p className="mb-2 text-xs font-semibold text-navy">Specialty focus</p>
+                  <p className="mb-2.5 text-xs font-semibold text-navy">Specialty focus</p>
                   <div className="grid gap-2.5 sm:grid-cols-2">
-                    {specialtyOptions.map((option) => (
-                      <OptionCard
-                        key={option.value}
-                        selected={specialty === option.value}
-                        title={option.label}
-                        description={option.description}
-                        onClick={() => setSpecialty(option.value)}
-                      />
-                    ))}
+                    {specialtyOptions.map((option) => {
+                      const selected = specialty.includes(option.value);
+                      return (
+                        <OptionCard
+                          key={option.value}
+                          selected={selected}
+                          title={option.label}
+                          description={option.description}
+                          onClick={() =>
+                            setSpecialty((prev) =>
+                              prev.includes(option.value)
+                                ? prev.filter((item) => item !== option.value)
+                                : [...prev, option.value]
+                            )
+                          }
+                        />
+                      );
+                    })}
                   </div>
                 </div>
 
                 <div>
-                  <p className="mb-2 text-xs font-semibold text-navy">Role</p>
+                  <p className="mb-2.5 text-xs font-semibold text-navy">Role</p>
                   <div className="grid gap-2.5 sm:grid-cols-3">
                     {roleOptions.map((option) => (
                       <OptionCard
@@ -514,18 +499,18 @@ export function ClinicianOnboardingWizard() {
             )}
 
             {step.id === "preferences" && (
-              <div className="space-y-6">
-                <p className="text-sm leading-relaxed text-muted">
-                  Set how aggressively SkinSight should surface cases in your queue.
+              <div className="space-y-4">
+                <p className="text-xs leading-relaxed text-muted">
+                  Set how aggressively SkinSight surfaces cases in your queue.
                 </p>
 
                 <div>
-                  <p className="mb-2 text-xs font-semibold text-navy">
+                  <p className="mb-2.5 text-xs font-semibold text-navy">
                     Triage sensitivity
                   </p>
                   <div className="grid gap-2.5">
                     {thresholdOptions.map((option) => (
-                      <OptionCard
+                      <PreferenceOption
                         key={option.value}
                         selected={triageThreshold === option.value}
                         title={option.label}
@@ -541,7 +526,7 @@ export function ClinicianOnboardingWizard() {
                   <ToggleRow
                     icon={Bell}
                     title="High-risk case alerts"
-                    description="Notify when a new elevated-risk lesion enters the queue"
+                    description="Notify when elevated-risk lesions enter the queue"
                     checked={notifyHighRisk}
                     onChange={setNotifyHighRisk}
                   />
@@ -555,91 +540,47 @@ export function ClinicianOnboardingWizard() {
                 </div>
               </div>
             )}
+              </motion.div>
+            </AnimatePresence>
+            </div>
 
-            {step.id === "ready" && (
-              <div className="space-y-6">
-                <div className="rounded-2xl bg-gradient-to-br from-medical-blue to-navy px-5 py-6 text-white">
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
-                      <Sparkles className="h-5 w-5 text-cyan-accent" />
-                    </span>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-white/55">
-                        Profile ready
-                      </p>
-                      <h2 className="mt-1 font-display text-xl font-bold">
-                        Welcome, {summary.fullName}
-                      </h2>
-                      <p className="mt-2 text-sm leading-relaxed text-white/70">
-                        Your triage workspace is configured. AI remains decision
-                        support only — final judgment stays with you.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {[
-                    { label: "Clinic", value: summary.clinicName },
-                    { label: "Role", value: summary.role },
-                    { label: "Specialty", value: summary.specialty },
-                    {
-                      label: "Triage mode",
-                      value:
-                        thresholdOptions.find((o) => o.value === triageThreshold)
-                          ?.label ?? triageThreshold,
-                    },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="smooth-inset rounded-xl px-4 py-3"
-                    >
-                      <p className="section-label text-[10px]">{item.label}</p>
-                      <p className="mt-1 text-sm font-semibold text-navy">
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {error && (
+              <p className="mt-2 shrink-0 rounded-xl border border-risk-high/20 bg-risk-high/5 px-3 py-2 text-sm text-risk-high">
+                {error}
+              </p>
             )}
-          </motion.div>
-        </AnimatePresence>
 
-        {error && (
-          <p className="mt-5 rounded-xl border border-risk-high/20 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
-            {error}
-          </p>
-        )}
+            <div className="mt-3 flex shrink-0 items-center justify-between gap-3 border-t border-border-subtle/80 pt-3">
+              <Button
+                variant="ghost"
+                onClick={handleBack}
+                disabled={stepIndex === 0}
+                className={cn(stepIndex === 0 && "invisible")}
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
 
-        <div className="mt-8 flex items-center justify-between gap-3 border-t border-border-subtle/80 pt-5">
-          <Button
-            variant="ghost"
-            onClick={handleBack}
-            disabled={stepIndex === 0}
-            className={cn(stepIndex === 0 && "invisible")}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
+              {isLastStep ? (
+                <Button variant="ai" onClick={handleFinish} disabled={saving}>
+                  {saving ? "Opening…" : "Enter dashboard"}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button variant="primary" onClick={handleNext}>
+                  Continue
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
 
-          {step.id !== "ready" ? (
-            <Button variant="primary" onClick={handleNext}>
-              Continue
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button variant="ai" onClick={handleFinish} disabled={saving}>
-              {saving ? "Opening workspace…" : "Enter triage dashboard"}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          )}
+        {/* Right — visual panel inside container */}
+        <div className="relative hidden min-h-0 h-full overflow-hidden lg:block">
+          <OnboardingVisualPanel stepId={step.id} stepIndex={stepIndex} />
         </div>
       </div>
-
-      <p className="mt-6 text-center text-[11px] leading-relaxed text-muted">
-        Portfolio demo onboarding. No credentials are sent to a server.
-      </p>
     </div>
   );
 }

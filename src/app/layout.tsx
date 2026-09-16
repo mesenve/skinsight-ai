@@ -13,6 +13,19 @@ export const metadata: Metadata = {
   title: "SkinSight AI — Dermatology Triage Platform",
   description:
     "AI-assisted dermatology triage for clinicians. Prioritize lesion cases, review explainable ABCDE signals, and keep final decisions in human hands.",
+  openGraph: {
+    title: "SkinSight AI — Dermatology Triage Platform",
+    description:
+      "AI-assisted dermatology triage for clinicians who need speed without losing judgment.",
+    images: [{ url: "/marketing/og-banner.png", width: 1376, height: 768 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SkinSight AI — Dermatology Triage Platform",
+    description:
+      "AI-assisted dermatology triage for clinicians who need speed without losing judgment.",
+    images: ["/marketing/og-banner.png"],
+  },
 };
 
 export default function RootLayout({

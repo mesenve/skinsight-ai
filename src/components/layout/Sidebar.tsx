@@ -23,7 +23,7 @@ const navItems = [
 ];
 
 const demoCaseItem = { href: "/cases/case-001", label: "Demo Case", icon: Activity };
-const aboutItem = { href: "/about", label: "About", icon: Info };
+const aboutItem = { href: "/about", label: "Case Study", icon: Info };
 
 function isNavActive(pathname: string, href: string, label: string) {
   if (label === "Dashboard") return pathname === "/app";
