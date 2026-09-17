@@ -290,7 +290,7 @@ export function LandingPage() {
       {/* Problem — one job */}
       <section
         id="challenge"
-        className="scroll-mt-28 mesh-bg border-t border-border-subtle/60 px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
+        className="scroll-mt-28 bg-[#edf6fe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
       >
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-label">The challenge</p>
