@@ -290,9 +290,26 @@ export function LandingPage() {
       {/* Problem — one job */}
       <section
         id="challenge"
-        className="scroll-mt-28 bg-[#edf6fe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
+        className="relative scroll-mt-28 overflow-hidden px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
       >
-        <div className="mx-auto max-w-3xl text-center">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse 70% 55% at 12% 8%, rgba(45,108,181,0.1) 0%, transparent 55%), radial-gradient(ellipse 55% 45% at 88% 12%, rgba(6,182,212,0.08) 0%, transparent 50%), linear-gradient(180deg, #f7fbff 0%, #ffffff 48%, #f4f8fc 100%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(26,75,140,0.08) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+            maskImage:
+              "radial-gradient(ellipse 75% 60% at 50% 30%, black 15%, transparent 75%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-3xl text-center">
           <p className="section-label">The challenge</p>
           <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
             Too many lesion images. Too little clarity on what comes first.
