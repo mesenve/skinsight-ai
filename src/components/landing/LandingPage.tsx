@@ -216,8 +216,22 @@ export function LandingPage() {
           <img
             src="/hero/cellular-signal.png"
             alt=""
+            aria-hidden="true"
+            className="absolute -bottom-[6%] -right-[4%] h-[112%] w-[78%] object-contain object-right opacity-40 blur-3xl"
+            decoding="async"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero/cellular-signal.png"
+            alt=""
             className="absolute inset-y-0 right-0 h-full w-[72%] object-contain object-right"
             decoding="async"
+            style={{
+              maskImage:
+                "radial-gradient(ellipse 118% 118% at 100% 0%, black 42%, rgba(0,0,0,0.9) 64%, transparent 100%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 118% 118% at 100% 0%, black 42%, rgba(0,0,0,0.9) 64%, transparent 100%)",
+            }}
           />
         </div>
 
