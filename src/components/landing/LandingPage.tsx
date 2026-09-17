@@ -211,30 +211,14 @@ export function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[#f2f7fc]" />
-          <div className="absolute bottom-0 right-[-3%] top-24 w-[80%] sm:top-28 lg:top-40">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/hero/cellular-signal.png"
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full scale-105 object-contain object-right opacity-35 blur-3xl"
-              decoding="async"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/hero/cellular-signal.png"
-              alt=""
-              className="h-full w-full object-contain object-right mix-blend-multiply"
-              decoding="async"
-              style={{
-                maskImage:
-                  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 16%, black 34%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 16%, black 34%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%)",
-              }}
-            />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero/cellular-signal.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-[70%_50%]"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.99)_0%,rgba(248,252,255,0.97)_25%,rgba(244,250,255,0.78)_42%,rgba(244,250,255,0.28)_59%,rgba(244,250,255,0)_78%)]" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:px-12 lg:pb-20 lg:pt-32">
