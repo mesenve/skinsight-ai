@@ -216,7 +216,7 @@ export function LandingPage() {
           <img
             src="/hero/cellular-signal.png"
             alt=""
-            className="absolute -bottom-[8%] -right-[3%] h-[108%] w-[80%] object-contain object-right mix-blend-multiply"
+            className="absolute bottom-0 right-[-3%] top-24 w-[80%] object-contain object-right mix-blend-multiply sm:top-28 lg:top-32"
             decoding="async"
             style={{
               maskImage:
