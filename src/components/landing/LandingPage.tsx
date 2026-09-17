@@ -9,6 +9,8 @@ import {
   CalendarDays,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Quote,
   Sparkles,
 } from "lucide-react";
@@ -54,6 +56,131 @@ const faqItems = [
       "No. This version is a portfolio concept prototype and has not been validated, certified, or approved for clinical use.",
   },
 ] as const;
+
+const clinicianQuotes = [
+  {
+    quote:
+      "The priority queue makes it clear which cases need attention first, while the ABCDE signals keep the reasoning visible before I make the final call.",
+    role: "Dermatology clinic lead",
+    context: "Representative clinical workflow perspective",
+    initials: "DC",
+  },
+  {
+    quote:
+      "It gives our team a calm, structured starting point for reviewing a busy list of lesion images without losing the clinical context around each case.",
+    role: "Clinical operations manager",
+    context: "Representative clinical workflow perspective",
+    initials: "CO",
+  },
+  {
+    quote:
+      "The value is not a black-box result. It is seeing the signals, reviewing the evidence, and keeping the clinician in control of the decision.",
+    role: "Consultant dermatologist",
+    context: "Representative clinical workflow perspective",
+    initials: "CD",
+  },
+] as const;
+
+function QuoteSlider() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeQuote = clinicianQuotes[activeIndex];
+
+  const showPrevious = () => {
+    setActiveIndex((current) =>
+      current === 0 ? clinicianQuotes.length - 1 : current - 1,
+    );
+  };
+
+  const showNext = () => {
+    setActiveIndex((current) => (current + 1) % clinicianQuotes.length);
+  };
+
+  return (
+    <section className="bg-white px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-7 flex items-end justify-between gap-5 sm:mb-8">
+          <div>
+            <p className="section-label">Clinician perspective</p>
+            <h2 className="font-display mt-2 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
+              Built around clearer decisions.
+            </h2>
+          </div>
+          <p className="hidden text-sm text-muted sm:block">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(clinicianQuotes.length).padStart(2, "0")}
+          </p>
+        </div>
+
+        <div className="relative overflow-hidden rounded-[2rem] border border-medical-blue/10 bg-[linear-gradient(120deg,rgba(239,248,255,0.98)_0%,rgba(255,255,255,0.98)_50%,rgba(232,250,253,0.9)_100%)] p-1 shadow-[0_18px_50px_rgba(26,75,140,0.11)]">
+          <div className="relative overflow-hidden rounded-[1.8rem] px-6 py-8 sm:px-10 sm:py-11 lg:px-14">
+            <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-cyan-accent/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-36 left-1/3 h-64 w-64 rounded-full bg-medical-blue/10 blur-3xl" />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -18 }}
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                className="relative"
+              >
+                <Quote className="h-9 w-9 text-medical-blue/35" aria-hidden="true" />
+                <blockquote className="font-display mt-6 max-w-3xl text-2xl font-semibold leading-[1.35] tracking-tight text-navy sm:text-3xl">
+                  “{activeQuote.quote}”
+                </blockquote>
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-5 border-t border-medical-blue/10 pt-5 sm:mt-10">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-medical-blue to-cyan-accent text-xs font-bold tracking-[0.08em] text-white shadow-[0_6px_16px_rgba(14,131,207,0.24)]">
+                      {activeQuote.initials}
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-navy">{activeQuote.role}</p>
+                      <p className="mt-0.5 text-xs text-muted">{activeQuote.context}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2" aria-label="Quote controls">
+                    <button
+                      type="button"
+                      onClick={showPrevious}
+                      aria-label="Show previous clinician perspective"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-medical-blue/15 bg-white/80 text-medical-blue transition-colors hover:bg-medical-blue hover:text-white"
+                    >
+                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNext}
+                      aria-label="Show next clinician perspective"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-medical-blue/15 bg-white/80 text-medical-blue transition-colors hover:bg-medical-blue hover:text-white"
+                    >
+                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center justify-center gap-2" aria-label="Choose clinician perspective">
+          {clinicianQuotes.map((item, index) => (
+            <button
+              key={item.initials}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              aria-label={`Show perspective ${index + 1}`}
+              aria-current={index === activeIndex ? "true" : undefined}
+              className={cn(
+                "h-2.5 rounded-full transition-all",
+                index === activeIndex ? "w-8 bg-medical-blue" : "w-2.5 bg-medical-blue/20 hover:bg-medical-blue/45",
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function FaqBlock() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -394,31 +521,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Illustrative testimonial */}
-      <section className="bg-white px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12">
-        <motion.figure
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.45 }}
-          className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-border-subtle bg-gradient-to-br from-medical-blue/[0.06] via-white to-cyan-accent/[0.07] px-6 py-8 shadow-[var(--shadow-soft)] sm:px-10 sm:py-10"
-        >
-          <Quote className="h-7 w-7 text-medical-blue/30" aria-hidden="true" />
-          <blockquote className="font-display mt-5 max-w-3xl text-xl font-semibold leading-relaxed tracking-tight text-navy sm:text-2xl">
-            “The priority queue makes it clear which cases need attention first,
-            while the ABCDE signals keep the reasoning visible before I make
-            the final call.”
-          </blockquote>
-          <figcaption className="mt-6">
-            <p className="text-sm font-semibold text-navy">
-              Illustrative clinician perspective
-            </p>
-            <p className="mt-1 text-xs text-muted">
-              Representative scenario for this portfolio concept
-            </p>
-          </figcaption>
-        </motion.figure>
-      </section>
+      <QuoteSlider />
 
       {/* Product promise */}
       <section
