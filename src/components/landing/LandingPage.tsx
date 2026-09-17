@@ -211,8 +211,16 @@ export function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#f1f7fd] via-[#edf6fe] to-[#ddecfb]" />
+          <div className="absolute inset-0 bg-[#f2f7fc]" />
           <div className="absolute bottom-0 right-[-3%] top-24 w-[80%] sm:top-28 lg:top-40">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/cellular-signal.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full scale-105 object-contain object-right opacity-35 blur-3xl"
+              decoding="async"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero/cellular-signal.png"
@@ -221,9 +229,9 @@ export function LandingPage() {
               decoding="async"
               style={{
                 maskImage:
-                  "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
+                  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 16%, black 34%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%)",
                 WebkitMaskImage:
-                  "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
+                  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 16%, black 34%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%)",
               }}
             />
           </div>
