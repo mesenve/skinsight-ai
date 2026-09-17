@@ -211,18 +211,13 @@ export function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#f1f7fd] via-[#f7fbff]/90 to-white/20" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/hero/cellular-signal.png"
             alt=""
-            className="absolute inset-y-0 right-0 h-full w-full object-cover object-[72%_center]"
+            className="absolute inset-y-0 right-0 h-full w-[72%] object-contain object-right"
             decoding="async"
-            style={{
-              maskImage:
-                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 28%, black 56%)",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 28%, black 56%)",
-            }}
           />
         </div>
 
