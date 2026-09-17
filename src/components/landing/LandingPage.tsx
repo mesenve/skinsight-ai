@@ -516,12 +516,12 @@ export function LandingPage() {
       <footer className="relative overflow-hidden bg-[#06152b] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/footer/hex-night.png"
+          src="/footer/hex-night-hq.png"
           alt=""
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom opacity-90"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
           decoding="async"
         />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,40,0.22)_0%,rgba(4,18,40,0.5)_45%,rgba(4,18,40,0.82)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,40,0.16)_0%,rgba(4,18,40,0.32)_45%,rgba(4,18,40,0.58)_100%)]" />
 
         <div className="relative mx-auto max-w-6xl">
           <div className="mx-auto max-w-3xl text-center">
