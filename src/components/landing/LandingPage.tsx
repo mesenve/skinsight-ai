@@ -430,16 +430,18 @@ export function LandingPage() {
               "radial-gradient(ellipse 75% 60% at 50% 30%, black 15%, transparent 75%)",
           }}
         />
-        <div className="relative mx-auto max-w-3xl text-center">
-          <p className="section-label">The challenge</p>
-          <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
-            Too many lesion images. Too little clarity on what comes first.
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
-            Dermatology teams review case after case under time pressure. AI can
-            help — but only if risk signals are explainable and the clinician
-            stays in control.
-          </p>
+        <div className="relative mx-auto max-w-6xl">
+          <div className="max-w-3xl text-left">
+            <p className="section-label">The challenge</p>
+            <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
+              Too many lesion images. Too little clarity on what comes first.
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
+              Dermatology teams review case after case under time pressure. AI can
+              help — but only if risk signals are explainable and the clinician
+              stays in control.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -467,7 +469,7 @@ export function LandingPage() {
         />
 
         <div className="relative mx-auto max-w-6xl">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="max-w-2xl text-left">
             <p className="section-label text-medical-blue">How it works</p>
             <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl lg:text-4xl">
               One clinical workflow.
