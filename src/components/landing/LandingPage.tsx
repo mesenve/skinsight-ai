@@ -535,7 +535,7 @@ export function LandingPage() {
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/onboarding"
-                className="inline-flex h-11 min-w-[11.5rem] items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-navy shadow-[0_10px_28px_rgba(103,189,255,0.24)] transition-transform hover:-translate-y-0.5"
+                className="inline-flex h-11 min-w-[11.5rem] items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-navy shadow-[0_10px_28px_rgba(103,189,255,0.24)]"
               >
                 Start onboarding
                 <ArrowRight className="h-4 w-4" />
