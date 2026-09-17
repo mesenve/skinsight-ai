@@ -203,49 +203,31 @@ const howItWorksSteps = [
   },
 ] as const;
 
-function ProductCanvas() {
-  return (
-    <div className="relative mx-auto w-full max-w-xl overflow-visible lg:max-w-none">
-      <div className="relative aspect-[5/4] w-full overflow-visible sm:aspect-square lg:aspect-[6/5]">
-        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] shadow-[0_28px_80px_rgba(26,75,140,0.14)]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero/cellular-signal.png"
-            alt="Skin layers with a highlighted area"
-            className="h-full w-full object-cover object-center"
-            decoding="async"
-            style={{
-              maskImage:
-                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.8) 28%, black 48%)",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.8) 28%, black 48%)",
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function LandingPage() {
   return (
     <div className="min-h-screen text-foreground">
       <LandingHeader />
 
-      {/* Hero — copy left, visuals right */}
+      {/* Hero */}
       <section className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0">
-          <div
-            className="absolute inset-0"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero/cellular-signal.png"
+            alt=""
+            className="absolute inset-y-0 right-0 h-full w-full object-cover object-[72%_center]"
+            decoding="async"
             style={{
-              backgroundImage:
-                "radial-gradient(ellipse 55% 50% at 85% 45%, rgba(45,108,181,0.08) 0%, transparent 55%), radial-gradient(ellipse 40% 35% at 10% 20%, rgba(6,182,212,0.05) 0%, transparent 50%), linear-gradient(180deg, #ffffff 0%, #f7fafc 60%, #eef2f7 100%)",
+              maskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 28%, black 56%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 28%, black 56%)",
             }}
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-10 px-5 pb-14 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:grid-cols-[1fr_1.05fr] lg:gap-8 lg:px-12 lg:pb-20 lg:pt-32">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:px-12 lg:pb-20 lg:pt-32">
+          <div className="flex max-w-xl flex-col items-center text-center lg:max-w-[48%] lg:items-start lg:text-left">
             <motion.p
               className="font-display text-4xl font-bold tracking-tight text-navy sm:text-5xl lg:text-[3.25rem]"
               {...fadeUp}
@@ -301,19 +283,6 @@ export function LandingPage() {
               </Link>
             </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: 0.75,
-              delay: 0.18,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            className="lg:pl-2"
-          >
-            <ProductCanvas />
-          </motion.div>
         </div>
       </section>
 
