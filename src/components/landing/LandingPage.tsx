@@ -212,19 +212,21 @@ export function LandingPage() {
       <section className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-[#f1f7fd] via-[#edf6fe] to-[#ddecfb]" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero/cellular-signal.png"
-            alt=""
-            className="absolute bottom-0 right-[-3%] top-24 w-[80%] object-contain object-right mix-blend-multiply sm:top-28 lg:top-32"
-            decoding="async"
-            style={{
-              maskImage:
-                "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
-            }}
-          />
+          <div className="absolute bottom-0 right-[-3%] top-24 w-[80%] sm:top-28 lg:top-40">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/cellular-signal.png"
+              alt=""
+              className="h-full w-full object-contain object-right mix-blend-multiply"
+              decoding="async"
+              style={{
+                maskImage:
+                  "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.55) 72%, transparent 100%)",
+              }}
+            />
+          </div>
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:px-12 lg:pb-20 lg:pt-32">
