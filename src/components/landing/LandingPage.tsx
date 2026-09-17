@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  ArrowLeft,
   ArrowRight,
   CalendarDays,
   CheckCircle2,
@@ -62,6 +63,7 @@ const clinicianQuotes = [
     name: "Dr. Emily Carter",
     role: "Dermatologist · London, UK",
     initials: "DC",
+    avatar: "/avatars/id-01.jpg",
   },
   {
     quote:
@@ -69,6 +71,7 @@ const clinicianQuotes = [
     name: "Dr. James Miller",
     role: "Dermatologist · Austin, US",
     initials: "CO",
+    avatar: "/avatars/id-06.jpg",
   },
   {
     quote:
@@ -76,6 +79,7 @@ const clinicianQuotes = [
     name: "Dr. Sophia Lee",
     role: "Dermatologist · Sydney, AU",
     initials: "CD",
+    avatar: "/avatars/id-03.jpg",
   },
 ] as const;
 
@@ -83,10 +87,20 @@ function QuoteSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeQuote = clinicianQuotes[activeIndex];
 
+  const showPrevious = () => {
+    setActiveIndex((current) =>
+      current === 0 ? clinicianQuotes.length - 1 : current - 1,
+    );
+  };
+
+  const showNext = () => {
+    setActiveIndex((current) => (current + 1) % clinicianQuotes.length);
+  };
+
   return (
     <section className="bg-white px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-6 sm:mb-7">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-6 text-center sm:mb-7">
           <div>
             <p className="section-label">Clinician perspective</p>
             <h2 className="font-display mt-2 text-xl font-bold tracking-tight text-navy sm:text-2xl">
@@ -95,53 +109,69 @@ function QuoteSlider() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-[1.5rem] border border-medical-blue/10 bg-[linear-gradient(120deg,rgba(239,248,255,0.92)_0%,rgba(255,255,255,0.98)_52%,rgba(232,250,253,0.8)_100%)] shadow-[0_12px_35px_rgba(26,75,140,0.08)]">
-          <div className="relative overflow-hidden px-6 py-7 sm:px-8 sm:py-8 lg:px-10">
-            <div className="pointer-events-none absolute -right-24 -top-28 h-56 w-56 rounded-full bg-cyan-accent/10 blur-3xl" />
+        <div className="relative overflow-hidden rounded-[1.65rem] bg-[#071a35] shadow-[0_18px_42px_rgba(7,26,53,0.19)]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_12%,rgba(51,190,233,0.3),transparent_34%),radial-gradient(circle_at_92%_88%,rgba(52,123,238,0.28),transparent_34%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-accent/70 to-transparent" />
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, x: 18 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -18 }}
-                transition={{ duration: 0.28, ease: "easeOut" }}
-                className="relative"
-              >
-                <Quote className="h-7 w-7 text-medical-blue/35" aria-hidden="true" />
-                <blockquote className="font-display mt-4 max-w-3xl text-lg font-semibold leading-relaxed tracking-tight text-navy sm:text-xl">
+          <AnimatePresence mode="wait">
+            <motion.article
+              key={activeIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative grid min-h-[19rem] items-center gap-7 px-7 py-8 sm:grid-cols-[1fr_11rem] sm:px-10 sm:py-10"
+            >
+              <div>
+                <Quote className="h-7 w-7 text-cyan-accent/80" aria-hidden="true" />
+                <blockquote className="font-display mt-5 max-w-xl text-lg font-medium leading-relaxed tracking-tight text-white sm:text-xl">
                   “{activeQuote.quote}”
                 </blockquote>
-                <div className="mt-6 flex items-center gap-3 border-t border-medical-blue/10 pt-4">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-medical-blue to-cyan-accent text-[11px] font-bold tracking-[0.08em] text-white shadow-[0_6px_16px_rgba(14,131,207,0.2)]">
-                      {activeQuote.initials}
-                    </span>
-                    <div>
-                      <p className="text-sm font-semibold text-navy">{activeQuote.name}</p>
-                      <p className="mt-0.5 text-xs text-muted">{activeQuote.role}</p>
-                    </div>
+                <div className="mt-7 flex items-center gap-3">
+                  <Image
+                    src={activeQuote.avatar}
+                    alt=""
+                    width={88}
+                    height={88}
+                    className="h-10 w-10 rounded-full border border-white/30 object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-white">{activeQuote.name}</p>
+                    <p className="mt-0.5 text-xs text-blue-100/70">{activeQuote.role}</p>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              </div>
+              <div className="relative mx-auto h-44 w-36 overflow-hidden rounded-2xl border border-white/15 bg-white/5 shadow-[0_14px_30px_rgba(0,0,0,0.2)] sm:mx-0 sm:justify-self-end">
+                <Image
+                  src={activeQuote.avatar}
+                  alt={`${activeQuote.name} portrait`}
+                  fill
+                  sizes="144px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071a35]/70 via-transparent to-transparent" />
+              </div>
+            </motion.article>
+          </AnimatePresence>
         </div>
 
-        <div className="mt-5 flex items-center justify-center gap-2" aria-label="Choose clinician perspective">
-          {clinicianQuotes.map((item, index) => (
-            <button
-              key={item.initials}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              aria-label={`Show perspective ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
-              className={cn(
-                "h-2.5 rounded-full transition-all",
-                index === activeIndex ? "w-8 bg-medical-blue" : "w-2.5 bg-medical-blue/20 hover:bg-medical-blue/45",
-              )}
-            />
-          ))}
+        <div className="mt-5 flex items-center justify-center gap-3" aria-label="Quote controls">
+          <button
+            type="button"
+            onClick={showPrevious}
+            aria-label="Show previous clinician perspective"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-medical-blue/15 bg-[#f1f7fc] text-navy transition-colors hover:bg-medical-blue hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={showNext}
+            aria-label="Show next clinician perspective"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-medical-blue/15 bg-[#f1f7fc] text-navy transition-colors hover:bg-medical-blue hover:text-white"
+          >
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>
