@@ -209,7 +209,7 @@ export function LandingPage() {
       <LandingHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#f7fbff]">
+      <section className="relative min-h-screen overflow-hidden bg-[#f7fbff]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-y-0 right-0 w-[45%]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
