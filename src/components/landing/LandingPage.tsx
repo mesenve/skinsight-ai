@@ -209,16 +209,18 @@ export function LandingPage() {
       <LandingHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
+      <section className="relative overflow-hidden bg-[#f4f9fd]">
         <div className="pointer-events-none absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero/cellular-signal.png"
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover object-[70%_50%]"
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.99)_0%,rgba(248,252,255,0.97)_25%,rgba(244,250,255,0.78)_42%,rgba(244,250,255,0.28)_59%,rgba(244,250,255,0)_78%)]" />
+          <div className="absolute inset-y-0 right-0 w-[56%]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/cellular-signal.png"
+              alt=""
+              className="h-full w-full object-cover object-[67%_50%]"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,#f4f9fd_0%,rgba(244,249,253,0.78)_18%,rgba(244,249,253,0.15)_42%,transparent_62%)]" />
+          </div>
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:px-12 lg:pb-20 lg:pt-32">
