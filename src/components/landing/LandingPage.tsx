@@ -13,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { LandingHeader } from "@/components/landing/LandingHeader";
+import { LogoMark } from "@/components/shared/LogoMark";
 import { buttonStyles } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -512,58 +513,97 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="border-t border-border-subtle bg-background px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
-        <div className="mx-auto max-w-4xl rounded-3xl border border-medical-blue/15 bg-gradient-to-br from-medical-blue/[0.08] via-white to-cyan-accent/[0.07] px-6 py-12 text-center shadow-[var(--shadow-elevated)] sm:px-10">
-          <p className="font-display text-3xl font-bold tracking-tight text-navy sm:text-4xl">
-            SkinSight AI
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
-            Register as a clinician and open the live triage demo in minutes.
-          </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/onboarding"
-              className={buttonStyles({
-                variant: "ai",
-                size: "lg",
-                className: "min-w-[11rem] px-6",
-              })}
-            >
-              Clinician onboarding
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/about"
-              className={buttonStyles({
-                variant: "secondary",
-                size: "lg",
-                className:
-                  "min-w-[11rem] border-border bg-white text-navy shadow-[var(--shadow-soft)] hover:border-medical-blue/25 hover:bg-medical-blue/[0.04] hover:text-medical-blue",
-              })}
-            >
-              Read the case study
-            </Link>
-          </div>
-        </div>
-      </section>
+      <footer className="relative overflow-hidden bg-[#06152b] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/footer/hex-night.png"
+          alt=""
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom opacity-90"
+          decoding="async"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,40,0.22)_0%,rgba(4,18,40,0.5)_45%,rgba(4,18,40,0.82)_100%)]" />
 
-      <footer className="border-t border-border-subtle bg-white px-5 py-6 sm:px-8 lg:px-12">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-          <p className="text-xs text-muted">
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Ready to modernize lesion triage?
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-blue-100/70 sm:text-base">
+              Join clinics and health systems using SkinSight AI to detect sooner,
+              work smarter, and deliver confident care.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/onboarding"
+                className="inline-flex h-11 min-w-[11.5rem] items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-navy shadow-[0_10px_28px_rgba(103,189,255,0.24)] transition-transform hover:-translate-y-0.5"
+              >
+                Start onboarding
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/calendar"
+                className="inline-flex h-11 min-w-[11.5rem] items-center justify-center rounded-full border border-blue-200/60 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                Request a demo
+              </Link>
+            </div>
+          </div>
+
+          <div className="my-12 h-px bg-blue-100/15 sm:my-14" />
+
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_repeat(4,1fr)] lg:gap-8">
+            <div className="max-w-[15rem]">
+              <div className="flex items-center gap-3">
+                <LogoMark size={42} className="rounded-full" />
+                <span className="font-display text-2xl font-semibold tracking-tight text-white">
+                  SkinSight <span className="font-normal text-blue-200/65">AI</span>
+                </span>
+              </div>
+              <p className="mt-5 text-sm leading-relaxed text-blue-100/65">
+                AI-powered skin health insights for earlier action and healthier tomorrows.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-200/65">Product</h3>
+              <div className="mt-4 space-y-3 text-sm text-blue-50/90">
+                <Link href="/#how-it-works" className="block transition-colors hover:text-cyan-accent">How it works</Link>
+                <Link href="/app" className="block transition-colors hover:text-cyan-accent">Live demo</Link>
+                <Link href="/onboarding" className="block transition-colors hover:text-cyan-accent">Onboarding</Link>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-200/65">Company</h3>
+              <div className="mt-4 space-y-3 text-sm text-blue-50/90">
+                <Link href="/about" className="block transition-colors hover:text-cyan-accent">About us</Link>
+                <Link href="/about" className="block transition-colors hover:text-cyan-accent">Case study</Link>
+                <Link href="/calendar" className="block transition-colors hover:text-cyan-accent">Contact</Link>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-200/65">Resources</h3>
+              <div className="mt-4 space-y-3 text-sm text-blue-50/90">
+                <Link href="/#faq" className="block transition-colors hover:text-cyan-accent">Documentation</Link>
+                <Link href="/#faq" className="block transition-colors hover:text-cyan-accent">Support</Link>
+                <Link href="/#faq" className="block transition-colors hover:text-cyan-accent">Trust center</Link>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-200/65">Legal</h3>
+              <div className="mt-4 space-y-3 text-sm text-blue-50/90">
+                <Link href="/about" className="block transition-colors hover:text-cyan-accent">Privacy policy</Link>
+                <Link href="/about" className="block transition-colors hover:text-cyan-accent">Terms of service</Link>
+                <Link href="/about" className="block transition-colors hover:text-cyan-accent">Accessibility</Link>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-12 border-t border-blue-100/10 pt-6 text-xs text-blue-100/45">
             © 2026 SkinSight AI · Portfolio concept prototype
           </p>
-          <div className="flex gap-4 text-xs text-muted">
-            <Link href="/app" className="transition-colors hover:text-medical-blue">
-              App
-            </Link>
-            <Link href="/onboarding" className="transition-colors hover:text-medical-blue">
-              Onboarding
-            </Link>
-            <Link href="/about" className="transition-colors hover:text-medical-blue">
-              About
-            </Link>
-          </div>
         </div>
       </footer>
     </div>
