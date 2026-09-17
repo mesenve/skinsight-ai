@@ -224,8 +224,8 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl items-center px-5 py-24 sm:px-8 sm:py-28 lg:px-12">
-          <div className="flex max-w-xl flex-col items-center text-center lg:max-w-[48%] lg:items-start lg:text-left">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-5 py-24 sm:px-8 sm:py-28 lg:px-12">
+          <div className="flex w-full max-w-xl flex-col items-center text-center lg:max-w-[48%] lg:items-start lg:text-left">
             <motion.p
               className="font-display text-4xl font-bold tracking-tight text-navy sm:text-5xl lg:text-[3.25rem]"
               {...fadeUp}
