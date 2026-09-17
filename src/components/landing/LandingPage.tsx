@@ -209,7 +209,7 @@ export function LandingPage() {
       <LandingHeader />
 
       {/* Hero */}
-      <section className="relative min-h-[calc(100svh+8rem)] overflow-hidden bg-[#f7fbff] lg:min-h-[calc(100svh+12rem)]">
+      <section className="relative min-h-[100svh] overflow-hidden bg-[#f7fbff]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-y-0 right-0 w-[55%]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -224,7 +224,7 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[calc(100svh+8rem)] max-w-6xl items-center px-5 py-24 sm:px-8 sm:py-28 lg:min-h-[calc(100svh+12rem)] lg:px-12">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl items-center px-5 py-24 sm:px-8 sm:py-28 lg:px-12">
           <div className="flex max-w-xl flex-col items-center text-center lg:max-w-[48%] lg:-translate-y-20 lg:items-start lg:text-left">
             <motion.p
               className="font-display text-4xl font-bold tracking-tight text-navy sm:text-5xl lg:text-[3.25rem]"
