@@ -209,7 +209,7 @@ export function LandingPage() {
       <LandingHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#f4f9fd]">
+      <section className="relative overflow-hidden bg-[#f7fbff]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-y-0 right-0 w-[45%]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -219,7 +219,8 @@ export function LandingPage() {
               className="h-full w-full object-cover object-[67%_50%]"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,#f4f9fd_0%,rgba(244,249,253,0.78)_18%,rgba(244,249,253,0.15)_42%,transparent_62%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,#f7fbff_0%,rgba(247,251,255,0.78)_18%,rgba(247,251,255,0.15)_42%,transparent_62%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-b from-transparent via-[#f7fbff]/70 to-[#f7fbff]" />
           </div>
         </div>
 
