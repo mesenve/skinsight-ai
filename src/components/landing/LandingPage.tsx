@@ -211,7 +211,7 @@ export function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#f4f9fd]">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-y-0 right-0 w-[56%]">
+          <div className="absolute inset-y-0 right-0 w-[45%]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero/cellular-signal.png"
