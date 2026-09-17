@@ -9,8 +9,6 @@ import {
   CalendarDays,
   CheckCircle2,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Quote,
   Sparkles,
 } from "lucide-react";
@@ -61,22 +59,22 @@ const clinicianQuotes = [
   {
     quote:
       "The priority queue makes it clear which cases need attention first, while the ABCDE signals keep the reasoning visible before I make the final call.",
-    role: "Dermatology clinic lead",
-    context: "Representative clinical workflow perspective",
+    name: "Dr. Emily Carter",
+    role: "Dermatologist · London, UK",
     initials: "DC",
   },
   {
     quote:
       "It gives our team a calm, structured starting point for reviewing a busy list of lesion images without losing the clinical context around each case.",
-    role: "Clinical operations manager",
-    context: "Representative clinical workflow perspective",
+    name: "Dr. James Miller",
+    role: "Dermatologist · Austin, US",
     initials: "CO",
   },
   {
     quote:
       "The value is not a black-box result. It is seeing the signals, reviewing the evidence, and keeping the clinician in control of the decision.",
-    role: "Consultant dermatologist",
-    context: "Representative clinical workflow perspective",
+    name: "Dr. Sophia Lee",
+    role: "Dermatologist · Sydney, AU",
     initials: "CD",
   },
 ] as const;
@@ -85,35 +83,21 @@ function QuoteSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeQuote = clinicianQuotes[activeIndex];
 
-  const showPrevious = () => {
-    setActiveIndex((current) =>
-      current === 0 ? clinicianQuotes.length - 1 : current - 1,
-    );
-  };
-
-  const showNext = () => {
-    setActiveIndex((current) => (current + 1) % clinicianQuotes.length);
-  };
-
   return (
     <section className="bg-white px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-7 flex items-end justify-between gap-5 sm:mb-8">
+        <div className="mb-6 sm:mb-7">
           <div>
             <p className="section-label">Clinician perspective</p>
-            <h2 className="font-display mt-2 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
+            <h2 className="font-display mt-2 text-xl font-bold tracking-tight text-navy sm:text-2xl">
               Built around clearer decisions.
             </h2>
           </div>
-          <p className="hidden text-sm text-muted sm:block">
-            {String(activeIndex + 1).padStart(2, "0")} / {String(clinicianQuotes.length).padStart(2, "0")}
-          </p>
         </div>
 
-        <div className="relative overflow-hidden rounded-[2rem] border border-medical-blue/10 bg-[linear-gradient(120deg,rgba(239,248,255,0.98)_0%,rgba(255,255,255,0.98)_50%,rgba(232,250,253,0.9)_100%)] p-1 shadow-[0_18px_50px_rgba(26,75,140,0.11)]">
-          <div className="relative overflow-hidden rounded-[1.8rem] px-6 py-8 sm:px-10 sm:py-11 lg:px-14">
-            <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-cyan-accent/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-36 left-1/3 h-64 w-64 rounded-full bg-medical-blue/10 blur-3xl" />
+        <div className="relative overflow-hidden rounded-[1.5rem] border border-medical-blue/10 bg-[linear-gradient(120deg,rgba(239,248,255,0.92)_0%,rgba(255,255,255,0.98)_52%,rgba(232,250,253,0.8)_100%)] shadow-[0_12px_35px_rgba(26,75,140,0.08)]">
+          <div className="relative overflow-hidden px-6 py-7 sm:px-8 sm:py-8 lg:px-10">
+            <div className="pointer-events-none absolute -right-24 -top-28 h-56 w-56 rounded-full bg-cyan-accent/10 blur-3xl" />
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -124,37 +108,19 @@ function QuoteSlider() {
                 transition={{ duration: 0.28, ease: "easeOut" }}
                 className="relative"
               >
-                <Quote className="h-9 w-9 text-medical-blue/35" aria-hidden="true" />
-                <blockquote className="font-display mt-6 max-w-3xl text-2xl font-semibold leading-[1.35] tracking-tight text-navy sm:text-3xl">
+                <Quote className="h-7 w-7 text-medical-blue/35" aria-hidden="true" />
+                <blockquote className="font-display mt-4 max-w-3xl text-lg font-semibold leading-relaxed tracking-tight text-navy sm:text-xl">
                   “{activeQuote.quote}”
                 </blockquote>
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-5 border-t border-medical-blue/10 pt-5 sm:mt-10">
+                <div className="mt-6 flex items-center gap-3 border-t border-medical-blue/10 pt-4">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-medical-blue to-cyan-accent text-xs font-bold tracking-[0.08em] text-white shadow-[0_6px_16px_rgba(14,131,207,0.24)]">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-medical-blue to-cyan-accent text-[11px] font-bold tracking-[0.08em] text-white shadow-[0_6px_16px_rgba(14,131,207,0.2)]">
                       {activeQuote.initials}
                     </span>
                     <div>
-                      <p className="text-sm font-semibold text-navy">{activeQuote.role}</p>
-                      <p className="mt-0.5 text-xs text-muted">{activeQuote.context}</p>
+                      <p className="text-sm font-semibold text-navy">{activeQuote.name}</p>
+                      <p className="mt-0.5 text-xs text-muted">{activeQuote.role}</p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2" aria-label="Quote controls">
-                    <button
-                      type="button"
-                      onClick={showPrevious}
-                      aria-label="Show previous clinician perspective"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-medical-blue/15 bg-white/80 text-medical-blue transition-colors hover:bg-medical-blue hover:text-white"
-                    >
-                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={showNext}
-                      aria-label="Show next clinician perspective"
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-medical-blue/15 bg-white/80 text-medical-blue transition-colors hover:bg-medical-blue hover:text-white"
-                    >
-                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                    </button>
                   </div>
                 </div>
               </motion.div>
