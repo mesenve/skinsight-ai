@@ -13,7 +13,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { LandingHeader } from "@/components/landing/LandingHeader";
-import { RiskBadge } from "@/components/shared/RiskBadge";
 import { buttonStyles } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -205,144 +204,24 @@ const howItWorksSteps = [
 ] as const;
 
 function ProductCanvas() {
-  const queueCard = (
-    <div className="rounded-[1.25rem] border border-white/90 bg-white/92 p-3 shadow-[0_18px_50px_rgba(26,75,140,0.16)] backdrop-blur-xl sm:p-3.5">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-medical-blue">
-            Today&apos;s triage
-          </p>
-          <p className="font-display mt-0.5 text-sm font-bold text-navy sm:text-base">
-            Patient queue
-          </p>
-        </div>
-        <span className="shrink-0 rounded-full bg-risk-high/[0.08] px-2 py-0.5 text-[9px] font-semibold text-risk-high">
-          3 high risk
-        </span>
-      </div>
-
-      <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-        {[
-          { label: "Total", value: "10" },
-          { label: "Waiting", value: "5" },
-          { label: "Follow-up", value: "2" },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-lg border border-border-subtle/80 bg-[#f7fafc] px-2 py-1.5"
-          >
-            <p className="text-[8px] font-semibold uppercase tracking-wide text-muted">
-              {stat.label}
-            </p>
-            <p className="font-display mt-0.5 text-base font-bold text-navy">
-              {stat.value}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-2 space-y-1.5">
-        {[
-          {
-            name: "Elena Vasquez",
-            detail: "Left forearm",
-            level: "high" as const,
-          },
-          {
-            name: "James Okonkwo",
-            detail: "Upper back",
-            level: "high" as const,
-          },
-          {
-            name: "Amara Diallo",
-            detail: "Left thigh",
-            level: "medium" as const,
-          },
-        ].map((row) => (
-          <div
-            key={row.name}
-            className="flex items-center justify-between gap-2 rounded-lg border border-border-subtle/70 bg-white px-2 py-1.5"
-          >
-            <div className="min-w-0">
-              <p className="truncate text-xs font-semibold text-navy">
-                {row.name}
-              </p>
-              <p className="text-[9px] text-muted">{row.detail}</p>
-            </div>
-            <RiskBadge level={row.level} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const riskCard = (
-    <div className="rounded-[1.25rem] border border-white/90 bg-white/92 p-3 shadow-[0_18px_50px_rgba(26,75,140,0.16)] backdrop-blur-xl sm:p-3.5">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-muted">
-        AI risk signal
-      </p>
-      <p className="font-display mt-1.5 text-3xl font-bold tracking-tight text-navy sm:text-4xl">
-        82
-        <span className="text-lg text-muted-light">/100</span>
-      </p>
-      <p className="mt-0.5 text-xs font-medium text-medical-blue">
-        Elevated priority
-      </p>
-      <div className="mt-3 space-y-1.5">
-        {["Asymmetry", "Border", "Color", "Diameter", "Evolution"].map(
-          (item, index) => (
-            <div key={item} className="flex items-center gap-2">
-              <span className="w-16 text-[9px] font-medium text-muted">
-                {item}
-              </span>
-              <div className="h-1 flex-1 overflow-hidden rounded-full bg-border">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-medical-blue-light to-cyan-accent"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${68 + index * 5}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.85, delay: 0.12 * index }}
-                />
-              </div>
-            </div>
-          )
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <div className="relative mx-auto w-full max-w-xl overflow-visible lg:max-w-none">
-      {/* Visual stage — banner hex field + floating product cards */}
       <div className="relative aspect-[5/4] w-full overflow-visible sm:aspect-square lg:aspect-[6/5]">
-        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-[#f7fafc] via-[#eef5fb] to-[#e8f0f8] shadow-[0_28px_80px_rgba(26,75,140,0.14)] ring-1 ring-medical-blue/10">
+        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] shadow-[0_28px_80px_rgba(26,75,140,0.14)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/hero/hex-field.jpg?v=2"
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover object-[center_45%]"
+            src="/hero/cellular-signal.png"
+            alt="Skin layers with a highlighted area"
+            className="h-full w-full object-cover object-center"
             decoding="async"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.8) 28%, black 48%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.8) 28%, black 48%)",
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white/35 via-transparent to-white/20" />
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 18, x: 10 }}
-          animate={{ opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 0.65, delay: 0.32 }}
-          className="absolute -right-1 top-[4%] z-20 w-[min(88%,15.5rem)] sm:-right-3 sm:top-[6%] sm:w-[16.5rem] lg:-right-4 lg:w-[17rem]"
-        >
-          {queueCard}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 22, x: -10 }}
-          animate={{ opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 0.65, delay: 0.45 }}
-          className="absolute -left-1 bottom-[3%] z-20 w-[min(85%,13.5rem)] sm:-left-3 sm:bottom-[5%] sm:w-[14.5rem] lg:-left-4 lg:w-[15rem]"
-        >
-          {riskCard}
-        </motion.div>
       </div>
     </div>
   );
