@@ -340,15 +340,9 @@ export function LandingPage() {
             <img
               src="/hero/cellular-signal.png"
               alt=""
-              className="hero-artwork-image h-full w-full object-cover object-[67%_50%]"
+              className="h-full w-full object-cover object-[67%_50%]"
               decoding="async"
             />
-            <span className="hero-wave hero-wave--one" aria-hidden="true" />
-            <span className="hero-wave hero-wave--two" aria-hidden="true" />
-            <span className="hero-signal-pulse" aria-hidden="true" />
-            <span className="hero-bubble hero-bubble--one" aria-hidden="true" />
-            <span className="hero-bubble hero-bubble--two" aria-hidden="true" />
-            <span className="hero-bubble hero-bubble--three" aria-hidden="true" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#f7fbff_0%,rgba(247,251,255,0.7)_18%,rgba(247,251,255,0.08)_42%,transparent_62%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[18%] bg-gradient-to-b from-transparent via-[#f7fbff]/70 to-[#f7fbff]" />
           </div>
