@@ -238,6 +238,34 @@ body {
   transform-origin: center;
 }
 
+.report-assembly-layer::before,
+.report-assembly-layer::after {
+  position: absolute;
+  content: "";
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 0 4px rgba(112, 192, 246, 0.24);
+}
+
+.report-assembly-layer::before {
+  top: 0.44rem;
+  left: 1.1rem;
+  width: 3.4rem;
+  height: 0.18rem;
+  box-shadow:
+    0 0.42rem 0 rgba(255, 255, 255, 0.6),
+    0.9rem 0.42rem 0 rgba(255, 255, 255, 0.6);
+}
+
+.report-assembly-layer::after {
+  top: 0.35rem;
+  right: 1.05rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(67, 181, 248, 0.48);
+}
+
 .report-assembly-layer--back { top: 3.05rem; }
 .report-assembly-layer--middle { top: 4.55rem; }
 .report-assembly-layer--front { top: 6.05rem; }
