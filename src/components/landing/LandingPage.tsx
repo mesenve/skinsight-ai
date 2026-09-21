@@ -327,59 +327,6 @@ const howItWorksSteps = [
   },
 ] as const;
 
-function ReportAssemblyAnimation() {
-  const layers = [
-    { className: "report-assembly-layer--back", delay: 0.05 },
-    { className: "report-assembly-layer--middle", delay: 0.45 },
-    { className: "report-assembly-layer--front", delay: 0.85 },
-  ];
-
-  return (
-    <div className="report-assembly" aria-label="Report layers assembling inside a secure container">
-      <div className="report-assembly-glow" aria-hidden="true" />
-      <div className="report-assembly-cube" aria-hidden="true" />
-      <div className="report-assembly-floor" aria-hidden="true" />
-
-      {layers.map((layer) => (
-        <motion.div
-          key={layer.className}
-          className={cn("report-assembly-layer", layer.className)}
-          initial={{ opacity: 0, y: -46, scale: 0.9, rotateX: 55, rotateZ: -3 }}
-          animate={{
-            opacity: [0, 1, 1, 0],
-            y: [-46, 0, 0, -46],
-            scale: [0.9, 1, 1, 0.9],
-            rotateX: 55,
-            rotateZ: -3,
-          }}
-          transition={{
-            duration: 4.8,
-            delay: layer.delay,
-            repeat: Infinity,
-            ease: [0.22, 1, 0.36, 1],
-            times: [0, 0.2, 0.76, 1],
-          }}
-        />
-      ))}
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5, y: 8 }}
-        animate={{ opacity: [0, 0, 1, 1, 0], scale: [0.5, 0.5, 1, 1, 0.5], y: [8, 8, 0, 0, 8] }}
-        transition={{
-          duration: 4.8,
-          delay: 1.55,
-          repeat: Infinity,
-          ease: [0.22, 1, 0.36, 1],
-          times: [0, 0.24, 0.36, 0.76, 1],
-        }}
-        className="report-assembly-check"
-      >
-        <CheckCircle2 className="h-8 w-8" strokeWidth={2.5} aria-hidden="true" />
-      </motion.div>
-    </div>
-  );
-}
-
 export function LandingPage() {
   return (
     <div className="min-h-screen text-foreground">
@@ -550,7 +497,17 @@ export function LandingPage() {
               >
                 <div className="mx-auto -my-2 flex h-[10.5rem] w-[13.5rem] items-center justify-center sm:-my-3 sm:h-48 sm:w-60">
                   {item.step === "04" ? (
-                    <ReportAssemblyAnimation />
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster={item.image}
+                      aria-label="Report layers assembling inside a secure container"
+                      className={cn("h-full w-full object-contain", item.scale)}
+                    >
+                      <source src="/how-it-works/step-04-report.mp4" type="video/mp4" />
+                    </video>
                   ) : (
                     <Image
                       src={item.image}
