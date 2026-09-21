@@ -259,15 +259,17 @@ function FaqBlock() {
                 type="button"
                 aria-expanded={isOpen}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="flex w-full items-center gap-2 px-4 py-4 text-left text-sm font-semibold text-navy sm:gap-2 sm:px-5 sm:text-base"
+                className="flex w-full items-center px-4 py-4 text-left text-sm font-semibold text-navy sm:px-5 sm:text-base"
               >
-                <span className="font-display w-5 shrink-0 -translate-y-[1px] text-xs font-semibold tracking-wide text-medical-blue/55">
-                  {String(index + 1).padStart(2, "0")}
+                <span className="flex min-w-0 flex-1 items-baseline gap-2">
+                  <span className="font-display w-5 shrink-0 text-xs font-semibold tracking-wide text-medical-blue/55">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="min-w-0 flex-1 leading-snug">{item.question}</span>
                 </span>
-                <span className="flex-1 leading-snug">{item.question}</span>
                 <ChevronDown
                   className={cn(
-                    "h-5 w-5 shrink-0 text-navy/70 transition-transform duration-300",
+                    "ml-2 h-5 w-5 shrink-0 text-navy/70 transition-transform duration-300",
                     isOpen && "rotate-180 text-medical-blue"
                   )}
                   aria-hidden="true"
