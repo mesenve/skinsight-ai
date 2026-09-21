@@ -336,13 +336,17 @@ export function LandingPage() {
       <section className="relative min-h-[100svh] overflow-hidden bg-[#f7fbff]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-y-0 right-0 w-[55%]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/hero/cellular-signal.png"
-              alt=""
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster="/hero/cellular-signal.png"
+              aria-hidden="true"
               className="h-full w-full object-cover object-[67%_50%]"
-              decoding="async"
-            />
+            >
+              <source src="/hero/cellular-signal-motion.mp4" type="video/mp4" />
+            </video>
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#f7fbff_0%,rgba(247,251,255,0.7)_18%,rgba(247,251,255,0.08)_42%,transparent_62%)]" />
             <div className="absolute inset-x-0 bottom-0 h-[18%] bg-gradient-to-b from-transparent via-[#f7fbff]/70 to-[#f7fbff]" />
           </div>
