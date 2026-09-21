@@ -190,13 +190,18 @@ function FaqBlock() {
         transition={{ duration: 0.4 }}
         className="relative aspect-[3/4] min-h-[22rem] w-full max-w-[18rem] overflow-hidden rounded-[1.75rem] border border-white/90 bg-[#eceff3] shadow-[0_18px_50px_rgba(26,75,140,0.14)] lg:sticky lg:top-24"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/avatars/maya-faq.jpg?v=12"
-          alt="Dr. Maya Laurent"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/faq/clinician-story-poster.jpg"
+          aria-label="Clinician reviewing a dermatology workflow"
           className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
-          decoding="async"
-        />
+        >
+          <source src="/faq/clinician-story-clean.mp4" type="video/mp4" />
+        </video>
 
         <div
           className="absolute bottom-4 left-1/2 w-[calc(100%-2.25rem)] -translate-x-1/2 overflow-hidden rounded-2xl px-3 py-2.5 sm:bottom-5 sm:w-[calc(100%-2.75rem)]"
