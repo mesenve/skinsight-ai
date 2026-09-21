@@ -259,9 +259,9 @@ function FaqBlock() {
                 type="button"
                 aria-expanded={isOpen}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="flex w-full items-center gap-3.5 px-4 py-4 text-left text-sm font-semibold text-navy sm:gap-4 sm:px-5 sm:text-base"
+                className="flex w-full items-center gap-2 px-4 py-4 text-left text-sm font-semibold text-navy sm:gap-2 sm:px-5 sm:text-base"
               >
-                <span className="font-display w-7 shrink-0 text-xs font-semibold tracking-wide text-medical-blue/55">
+                <span className="font-display w-5 shrink-0 text-xs font-semibold tracking-wide text-medical-blue/55">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="flex-1 leading-snug">{item.question}</span>
