@@ -344,18 +344,34 @@ function ReportAssemblyAnimation() {
         <motion.div
           key={layer.className}
           className={cn("report-assembly-layer", layer.className)}
-          initial={{ opacity: 0, y: -46, scale: 0.9 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.56, delay: layer.delay, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: -46, scale: 0.9, rotateX: 55, rotateZ: -3 }}
+          animate={{
+            opacity: [0, 1, 1, 0],
+            y: [-46, 0, 0, -46],
+            scale: [0.9, 1, 1, 0.9],
+            rotateX: 55,
+            rotateZ: -3,
+          }}
+          transition={{
+            duration: 4.8,
+            delay: layer.delay,
+            repeat: Infinity,
+            ease: [0.22, 1, 0.36, 1],
+            times: [0, 0.2, 0.76, 1],
+          }}
         />
       ))}
 
       <motion.div
         initial={{ opacity: 0, scale: 0.5, y: 8 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.42, delay: 1.55, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ opacity: [0, 0, 1, 1, 0], scale: [0.5, 0.5, 1, 1, 0.5], y: [8, 8, 0, 0, 8] }}
+        transition={{
+          duration: 4.8,
+          delay: 1.55,
+          repeat: Infinity,
+          ease: [0.22, 1, 0.36, 1],
+          times: [0, 0.24, 0.36, 0.76, 1],
+        }}
         className="report-assembly-check"
       >
         <CheckCircle2 className="h-8 w-8" strokeWidth={2.5} aria-hidden="true" />
