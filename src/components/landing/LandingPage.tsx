@@ -627,10 +627,6 @@ export function LandingPage() {
             <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
               Common questions about SkinSight
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
-              How the concept supports clinical triage while keeping the
-              clinician in control.
-            </p>
           </div>
 
           <FaqBlock />
