@@ -156,6 +156,115 @@ body {
   color: var(--muted);
 }
 
+/* How it works — report assembly micro-animation. */
+.report-assembly {
+  position: relative;
+  width: 12rem;
+  height: 10.5rem;
+  overflow: visible;
+}
+
+.report-assembly-glow {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.15rem;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(68, 184, 246, 0.32), transparent 70%);
+  filter: blur(8px);
+}
+
+.report-assembly-cube {
+  position: absolute;
+  inset: 1.35rem 1.35rem 0.7rem 1.6rem;
+  border: 1px solid rgba(68, 163, 240, 0.7);
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(177, 222, 255, 0.12)),
+    rgba(214, 239, 255, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 -1.4rem 2rem rgba(67, 168, 240, 0.12),
+    0 0.9rem 1.6rem rgba(41, 125, 201, 0.14);
+  transform: perspective(420px) rotateX(4deg) rotateZ(-3deg);
+}
+
+.report-assembly-cube::before,
+.report-assembly-cube::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.report-assembly-cube::before {
+  inset: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 0.85rem;
+}
+
+.report-assembly-cube::after {
+  right: 0.55rem;
+  bottom: 0.4rem;
+  left: 0.55rem;
+  height: 2.15rem;
+  border-radius: 0.8rem;
+  background: linear-gradient(180deg, rgba(220, 244, 255, 0.08), rgba(73, 169, 239, 0.18));
+}
+
+.report-assembly-floor {
+  position: absolute;
+  right: 2.1rem;
+  bottom: 1.6rem;
+  left: 2.35rem;
+  height: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 0.65rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(140, 205, 255, 0.45));
+  box-shadow: 0 0.55rem 1rem rgba(48, 134, 213, 0.2);
+  transform: perspective(280px) rotateX(55deg) rotateZ(-3deg);
+}
+
+.report-assembly-layer {
+  position: absolute;
+  right: 2.05rem;
+  left: 2.3rem;
+  height: 1.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 0.55rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(147, 211, 255, 0.47) 52%, rgba(120, 148, 246, 0.38));
+  box-shadow: 0 0.35rem 0.7rem rgba(43, 135, 218, 0.18), inset 0 0 0 1px rgba(91, 181, 247, 0.18);
+  transform: perspective(280px) rotateX(55deg) rotateZ(-3deg);
+  transform-origin: center;
+}
+
+.report-assembly-layer--back { top: 3.05rem; }
+.report-assembly-layer--middle { top: 4.55rem; }
+.report-assembly-layer--front { top: 6.05rem; }
+
+.report-assembly-check {
+  position: absolute;
+  right: 0.75rem;
+  top: 4.85rem;
+  display: flex;
+  height: 2.55rem;
+  width: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4dc8ff, #1688e8);
+  color: white;
+  box-shadow: 0 0.6rem 1.15rem rgba(18, 127, 222, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .report-assembly-layer,
+  .report-assembly-check {
+    transform: none;
+  }
+}
+
 @keyframes scan-beam {
   0% { transform: translateY(-120%) scaleY(0.6); opacity: 0; }
   15% { opacity: 1; }

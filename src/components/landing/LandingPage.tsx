@@ -327,6 +327,43 @@ const howItWorksSteps = [
   },
 ] as const;
 
+function ReportAssemblyAnimation() {
+  const layers = [
+    { className: "report-assembly-layer--back", delay: 0.05 },
+    { className: "report-assembly-layer--middle", delay: 0.45 },
+    { className: "report-assembly-layer--front", delay: 0.85 },
+  ];
+
+  return (
+    <div className="report-assembly" aria-label="Report layers assembling inside a secure container">
+      <div className="report-assembly-glow" aria-hidden="true" />
+      <div className="report-assembly-cube" aria-hidden="true" />
+      <div className="report-assembly-floor" aria-hidden="true" />
+
+      {layers.map((layer) => (
+        <motion.div
+          key={layer.className}
+          className={cn("report-assembly-layer", layer.className)}
+          initial={{ opacity: 0, y: -46, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.56, delay: layer.delay, ease: [0.22, 1, 0.36, 1] }}
+        />
+      ))}
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5, y: 8 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.42, delay: 1.55, ease: [0.22, 1, 0.36, 1] }}
+        className="report-assembly-check"
+      >
+        <CheckCircle2 className="h-8 w-8" strokeWidth={2.5} aria-hidden="true" />
+      </motion.div>
+    </div>
+  );
+}
+
 export function LandingPage() {
   return (
     <div className="min-h-screen text-foreground">
@@ -496,16 +533,20 @@ export function LandingPage() {
                 className="relative rounded-[1.35rem] border border-white/80 bg-white/70 px-5 pb-5 pt-2.5 text-center shadow-[0_10px_36px_rgba(26,75,140,0.08)] backdrop-blur-xl sm:px-6 sm:pb-6 sm:pt-3"
               >
                 <div className="mx-auto -my-2 flex h-[10.5rem] w-[13.5rem] items-center justify-center sm:-my-3 sm:h-48 sm:w-60">
-                  <Image
-                    src={item.image}
-                    alt=""
-                    width={1024}
-                    height={1024}
-                    quality={100}
-                    sizes="768px"
-                    priority={index < 2}
-                    className={cn("h-full w-full object-contain", item.scale)}
-                  />
+                  {item.step === "04" ? (
+                    <ReportAssemblyAnimation />
+                  ) : (
+                    <Image
+                      src={item.image}
+                      alt=""
+                      width={1024}
+                      height={1024}
+                      quality={100}
+                      sizes="768px"
+                      priority={index < 2}
+                      className={cn("h-full w-full object-contain", item.scale)}
+                    />
+                  )}
                 </div>
 
                 <p className="mt-2 text-[11px] font-semibold tracking-[0.14em] text-medical-blue">
