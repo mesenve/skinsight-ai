@@ -627,7 +627,7 @@ export function LandingPage() {
           <div className="max-w-2xl">
             <p className="section-label text-medical-blue">FAQ</p>
             <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-navy sm:text-3xl">
-              Common questions about SkinSight
+              Everything you need to know about SkinSight
             </h2>
           </div>
 
