@@ -222,10 +222,7 @@ function FaqBlock() {
           <p className="font-display text-[13px] font-bold tracking-tight text-navy">
             Dr. Maya Laurent
           </p>
-          <p className="mt-0.5 text-[10px] font-medium text-medical-blue/80">
-            Dermatology specialist
-          </p>
-          <p className="mt-1 text-[11px] leading-snug text-navy/70">
+          <p className="mt-1 whitespace-nowrap text-[11px] leading-snug text-navy/70">
             Need help exploring the clinical workflow?
           </p>
           <Link
