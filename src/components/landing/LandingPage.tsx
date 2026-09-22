@@ -286,7 +286,7 @@ function FaqBlock() {
                     }}
                     className="overflow-hidden"
                   >
-                    <p className="max-w-3xl px-4 pb-5 pl-[3.25rem] pr-12 text-sm leading-relaxed text-muted sm:px-5 sm:pl-[3.75rem]">
+                    <p className="max-w-3xl px-4 pb-5 pl-[2.75rem] pr-12 text-sm leading-relaxed text-muted sm:px-5 sm:pl-12">
                       {item.answer}
                     </p>
                   </motion.div>
