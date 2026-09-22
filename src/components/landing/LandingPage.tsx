@@ -259,7 +259,7 @@ function FaqBlock() {
                 className="flex w-full items-center px-4 py-4 text-left text-sm font-semibold text-navy sm:px-5 sm:text-base"
               >
                 <span className="flex min-w-0 flex-1 items-baseline gap-2">
-                  <span className="font-display w-5 shrink-0 text-xs font-semibold tracking-wide text-medical-blue/55">
+                  <span className="font-display w-5 shrink-0 -translate-y-[2px] text-xs font-semibold tracking-wide text-medical-blue/55">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="min-w-0 flex-1 leading-snug">{item.question}</span>
