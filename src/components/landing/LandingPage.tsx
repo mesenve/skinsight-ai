@@ -633,13 +633,18 @@ export function LandingPage() {
       </section>
 
       <footer className="relative overflow-hidden bg-[#06152b] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/footer/hex-night-hq.png"
-          alt=""
+        <video
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
-          decoding="async"
-        />
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/footer/hex-night-hq.png"
+          aria-hidden="true"
+        >
+          <source src="/footer/skinsight-footer.mp4" type="video/mp4" />
+        </video>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,18,40,0.16)_0%,rgba(4,18,40,0.32)_45%,rgba(4,18,40,0.58)_100%)]" />
 
         <div className="relative mx-auto max-w-6xl">
