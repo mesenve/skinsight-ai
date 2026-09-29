@@ -695,8 +695,6 @@ export function LandingPage() {
             </div>
           </div>
 
-          <div className="my-12 h-px bg-blue-100/15 sm:my-14" />
-
           <div className="grid items-start gap-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_repeat(4,1fr)] lg:gap-8">
             <div className="max-w-[15rem]">
               <div className="flex items-center gap-3">
@@ -747,7 +745,7 @@ export function LandingPage() {
             </div>
           </div>
 
-          <p className="mt-12 border-t border-blue-100/10 pt-6 text-xs text-blue-100/45">
+          <p className="mt-12 text-xs text-blue-100/45">
             © 2026 SkinSight AI · Portfolio concept prototype
           </p>
         </div>
