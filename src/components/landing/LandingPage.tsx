@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -332,6 +332,27 @@ const howItWorksSteps = [
 ] as const;
 
 export function LandingPage() {
+  const footerVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = footerVideoRef.current;
+    if (!video) return;
+
+    const applySoftPlayback = () => {
+      video.defaultPlaybackRate = 0.68;
+      video.playbackRate = 0.68;
+    };
+
+    applySoftPlayback();
+    video.addEventListener("loadedmetadata", applySoftPlayback);
+    video.addEventListener("canplay", applySoftPlayback);
+
+    return () => {
+      video.removeEventListener("loadedmetadata", applySoftPlayback);
+      video.removeEventListener("canplay", applySoftPlayback);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen text-foreground">
       <LandingHeader />
@@ -634,6 +655,7 @@ export function LandingPage() {
 
       <footer className="relative overflow-hidden bg-[#06152b] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
         <video
+          ref={footerVideoRef}
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
           autoPlay
           loop
