@@ -339,8 +339,8 @@ export function LandingPage() {
     if (!video) return;
 
     const applySoftPlayback = () => {
-      video.defaultPlaybackRate = 0.45;
-      video.playbackRate = 0.45;
+      video.defaultPlaybackRate = 0.32;
+      video.playbackRate = 0.32;
     };
 
     applySoftPlayback();
