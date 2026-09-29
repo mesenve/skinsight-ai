@@ -697,12 +697,12 @@ export function LandingPage() {
 
           <div className="my-12 h-px bg-blue-100/15 sm:my-14" />
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_repeat(4,1fr)] lg:gap-8">
+          <div className="grid items-start gap-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_repeat(4,1fr)] lg:gap-8">
             <div className="max-w-[15rem]">
               <div className="flex items-center gap-3">
                 <LogoMark size={42} className="rounded-full" />
                 <span className="font-display text-2xl font-semibold tracking-tight text-white">
-                  SkinSight <span className="font-normal text-blue-200/65">AI</span>
+                  SkinSight <span className="font-normal text-white">AI</span>
                 </span>
               </div>
               <p className="mt-5 text-sm leading-relaxed text-blue-100/65">
