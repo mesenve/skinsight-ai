@@ -198,6 +198,8 @@ function ClinicianGlobe() {
 }
 
 function QuoteSlider() {
+  const cardRotations = [-12, 6, 12, -6, 0];
+
   return (
     <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
@@ -231,19 +233,21 @@ function QuoteSlider() {
           {clinicianNetwork.map((doctor, index) => (
             <motion.article
               key={doctor.name}
-              initial={{ opacity: 0, y: 14, x: index % 2 === 0 ? -10 : 10, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 14, x: index % 2 === 0 ? -10 : 10, scale: 0.96, rotate: cardRotations[index] }}
+              whileInView={{ opacity: 1, y: 0, x: 0, scale: 1, rotate: cardRotations[index] }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
                 "absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
                 index === 4
-                  ? "z-30 w-40 p-2 left-1/2 top-[27%] -translate-x-1/2 rotate-[-1deg] sm:w-48 sm:p-2.5"
-                  : "z-10 w-32 p-1.5 sm:w-40 sm:p-2",
-                index === 0 && "left-[3%] top-[27%] rotate-[-10deg] sm:left-[6%] sm:top-[25%]",
-                index === 1 && "right-[3%] top-[27%] rotate-[10deg] sm:right-[6%] sm:top-[25%]",
-                index === 2 && "right-[22%] top-[40%] rotate-[6deg] sm:right-[20%] sm:top-[38%]",
-                index === 3 && "left-[22%] top-[40%] rotate-[-6deg] sm:left-[20%] sm:top-[38%]"
+                  ? "z-30 left-1/2 top-[27%] w-40 -translate-x-1/2 p-2 sm:top-[25%] sm:w-48 sm:p-2.5"
+                  : [0, 2].includes(index)
+                    ? "z-10 w-24 p-1 sm:w-28 sm:p-1.5"
+                    : "z-20 w-32 p-1.5 sm:w-40 sm:p-2",
+                index === 0 && "left-[1%] top-[32%] sm:left-[2%] sm:top-[29%]",
+                index === 3 && "left-[15%] top-[27%] sm:left-[16%] sm:top-[24%]",
+                index === 1 && "right-[15%] top-[27%] sm:right-[16%] sm:top-[24%]",
+                index === 2 && "right-[1%] top-[32%] sm:right-[2%] sm:top-[29%]"
               )}
             >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
