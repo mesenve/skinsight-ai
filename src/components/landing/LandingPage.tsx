@@ -288,7 +288,7 @@ function QuoteSlider() {
                 onAnimationComplete={() => {
                   if (slot === 0 && transitioning) { remainingHold.current = 3150; setTransitioning(false); }
                 }}
-                transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.8 : 0.85, delay: reducedMotion || activeIndex > 0 ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : 0.85, delay: reducedMotion || activeIndex > 0 ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
               >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
