@@ -93,7 +93,7 @@ const clinicianNetwork = [
 ] as const;
 
 const globeRotationDurationSeconds = 35;
-const globeScale = 0.9;
+const globeScale = 0.63;
 
 function RotatingGlobe() {
   const globeRef = useRef<Group>(null);
@@ -120,7 +120,7 @@ function RotatingGlobe() {
   });
 
   return (
-    <group ref={globeRef} position={[0, 0.24, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
+    <group ref={globeRef} position={[0, 0, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
         <MeshTransmissionMaterial
@@ -145,9 +145,9 @@ function RotatingGlobe() {
       <mesh scale={0.994}>
         <sphereGeometry args={[1, 96, 96]} />
         <meshPhysicalMaterial
-          color="#b8ddfa"
+          color="#d9efff"
           transparent
-          opacity={0.16}
+          opacity={0.1}
           roughness={0.38}
           transmission={0.44}
           thickness={0.28}
@@ -163,7 +163,7 @@ function RotatingGlobe() {
           alphaMap={continentsTexture}
           color="#ffffff"
           transparent
-          opacity={0.56}
+          opacity={0.4}
           alphaTest={0.01}
           side={DoubleSide}
           depthWrite={false}
@@ -171,7 +171,7 @@ function RotatingGlobe() {
       </mesh>
       <mesh scale={1.018}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color="#f4fbff" transparent opacity={0.14} side={BackSide} depthWrite={false} />
+        <meshBasicMaterial color="#f4fbff" transparent opacity={0.08} side={BackSide} depthWrite={false} />
       </mesh>
     </group>
   );
