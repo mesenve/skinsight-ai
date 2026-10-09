@@ -98,6 +98,8 @@ const clinicianNetwork = [
 
 
 function QuoteSlider() {
+  const initialRevealDuration = 0.68 / 0.7;
+  const initialRevealStagger = 0.08 / 0.7;
   const sceneRef = useRef<HTMLDivElement>(null);
   const sceneEntered = useInView(sceneRef, { once: true, amount: 0.25 });
   const sceneVisible = useInView(sceneRef, { amount: 0.25 });
@@ -111,9 +113,9 @@ function QuoteSlider() {
   const [resumePending, setResumePending] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [pinnedCard, setPinnedCard] = useState<number | null>(null);
-  // The center portrait is already server-rendered; do not add a full dwell
-  // interval on top of its initial reveal. Later cards keep their 2s dwell.
-  const remainingHold = useRef(1000);
+  // Finish the slower opening before the first slide; do not interrupt it.
+  // Later cards retain the existing 2s dwell and 0.68s slide.
+  const remainingHold = useRef((initialRevealDuration + initialRevealStagger * 3) * 1000);
 
   useEffect(() => {
     if (pinnedCard !== null && Math.abs(pinnedCard - activeIndex) >= 3) setPinnedCard(null);
@@ -292,7 +294,7 @@ function QuoteSlider() {
                 onAnimationComplete={() => {
                   if (slot === 0 && transitioning) { remainingHold.current = 2000; setTransitioning(false); }
                 }}
-                transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : 0.68 / 0.7, delay: reducedMotion || activeIndex > 0 ? 0 : depth * (0.08 / 0.7), ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : initialRevealDuration, delay: reducedMotion || activeIndex > 0 ? 0 : depth * initialRevealStagger, ease: [0.22, 1, 0.36, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
               >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
