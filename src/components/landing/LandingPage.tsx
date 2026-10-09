@@ -229,12 +229,14 @@ function QuoteSlider() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "absolute z-10 w-36 overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-1.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-[10.5rem] sm:p-2",
-                index === 0 && "left-1 top-6 rotate-[-4deg] sm:left-4 sm:top-5",
-                index === 1 && "right-1 top-6 rotate-[4deg] sm:right-4 sm:top-5",
-                index === 2 && "right-4 bottom-4 rotate-[3deg] sm:right-[16%] sm:bottom-3",
-                index === 3 && "left-4 bottom-4 rotate-[-3deg] sm:left-[16%] sm:bottom-3",
-                index === 4 && "left-1/2 top-[38%] -translate-x-1/2 rotate-[-1deg]"
+                "absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
+                index === 4
+                  ? "z-30 w-40 p-2 left-1/2 top-[27%] -translate-x-1/2 rotate-[-1deg] sm:w-48 sm:p-2.5"
+                  : "z-10 w-32 p-1.5 sm:w-40 sm:p-2",
+                index === 0 && "left-[3%] top-[27%] rotate-[-10deg] sm:left-[6%] sm:top-[25%]",
+                index === 1 && "right-[3%] top-[27%] rotate-[10deg] sm:right-[6%] sm:top-[25%]",
+                index === 2 && "right-[22%] top-[40%] rotate-[6deg] sm:right-[20%] sm:top-[38%]",
+                index === 3 && "left-[22%] top-[40%] rotate-[-6deg] sm:left-[20%] sm:top-[38%]"
               )}
             >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
