@@ -212,8 +212,8 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative isolate mt-6 flex min-h-[24rem] items-center justify-center overflow-hidden sm:min-h-[24rem]">
-          <div className="globe-float relative h-[21rem] w-[21rem] sm:h-[25rem] sm:w-[25rem]" aria-hidden="true">
+        <div className="relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-hidden sm:min-h-[30rem]">
+          <div className="globe-float relative h-[25rem] w-[25rem] sm:h-[30rem] sm:w-[30rem]" aria-hidden="true">
             <Image
               src="/earth/trusted-doctors-globe.webp"
               alt=""
@@ -225,6 +225,7 @@ function QuoteSlider() {
             />
             <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
             <span className="globe-light-sweep absolute inset-[5%] z-20 rounded-full" />
+            <span className="globe-edge-glow absolute inset-[7%] z-20 rounded-full" />
             <span className="globe-glint globe-glint-one absolute z-20" />
             <span className="globe-glint globe-glint-two absolute z-20" />
             <span className="globe-glint globe-glint-three absolute z-20" />
