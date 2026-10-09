@@ -156,30 +156,32 @@ function QuoteSlider() {
               viewport={{ once: true, margin: "-70px" }}
               transition={{ duration: 0.65, delay: 0.18 + index * 0.18, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "absolute z-10 w-44 rounded-[1.35rem] border border-white/85 bg-white/55 p-3 shadow-[0_16px_38px_rgba(26,75,140,0.16)] backdrop-blur-xl sm:w-52 sm:p-3.5",
-                index === 0 && "left-3 top-16 sm:left-6 sm:top-14",
-                index === 1 && "right-3 top-16 sm:right-6 sm:top-14",
-                index === 2 && "bottom-16 left-8 sm:bottom-12 sm:left-[12%]",
-                index === 3 && "right-8 bottom-16 sm:right-[12%] sm:bottom-12",
-                index === 4 && "left-1/2 top-[42%] -translate-x-1/2"
+                "absolute z-10 w-44 overflow-hidden rounded-[1.35rem] border border-white/90 bg-white/45 p-2 shadow-[0_18px_45px_rgba(26,75,140,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-52 sm:p-2.5",
+                index === 0 && "left-3 top-16 rotate-[-4deg] sm:left-6 sm:top-14",
+                index === 1 && "right-3 top-16 rotate-[4deg] sm:right-6 sm:top-14",
+                index === 2 && "bottom-16 left-8 rotate-[3deg] sm:bottom-12 sm:left-[12%]",
+                index === 3 && "right-8 bottom-16 rotate-[-3deg] sm:right-[12%] sm:bottom-12",
+                index === 4 && "left-1/2 top-[42%] -translate-x-1/2 rotate-[-1deg]"
               )}
             >
-              <div className="flex items-center gap-3">
+              <div className="relative aspect-[1.12] overflow-hidden rounded-[1.05rem] border border-white/70 bg-white/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                 <Image
                   src={doctor.avatar}
                   alt=""
-                  width={64}
-                  height={64}
-                  className="h-11 w-11 rounded-full border border-white/90 object-cover shadow-[0_6px_14px_rgba(26,75,140,0.12)] sm:h-12 sm:w-12"
+                  fill
+                  sizes="(max-width: 640px) 176px, 208px"
+                  className="object-cover"
                 />
-                <div className="min-w-0">
-                  <p className="truncate text-[13px] font-semibold text-navy">{doctor.name}</p>
-                  <p className="mt-0.5 text-[11px] text-muted">{doctor.role}</p>
-                </div>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-white/10" />
+                <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] ring-1 ring-inset ring-white/55" />
               </div>
-              <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-medical-blue">
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-accent shadow-[0_0_0_3px_rgba(6,182,212,0.12)]" />
-                {doctor.location}
+              <div className="px-1.5 pb-1 pt-2">
+                <div className="flex items-center gap-1.5">
+                  <p className="truncate text-[13px] font-semibold leading-tight text-navy">{doctor.name}</p>
+                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 fill-medical-blue text-white" aria-label="Verified clinician" />
+                </div>
+                <p className="mt-1 text-[10px] font-medium text-muted">{doctor.role}</p>
+                <p className="mt-0.5 text-[10px] text-medical-blue">{doctor.location}</p>
               </div>
             </motion.article>
           ))}
