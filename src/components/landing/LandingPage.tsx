@@ -198,8 +198,6 @@ function ClinicianGlobe() {
 }
 
 function QuoteSlider() {
-  const cardRotations = [-12, 6, 12, -6, 0];
-
   return (
     <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
@@ -212,7 +210,7 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-hidden sm:min-h-[30rem]">
+        <div className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
           <div className="globe-float relative h-[25rem] w-[25rem] sm:h-[30rem] sm:w-[30rem]" aria-hidden="true">
             <span className="globe-halo absolute inset-[7%] z-0 rounded-full" />
             <Image
@@ -237,21 +235,21 @@ function QuoteSlider() {
           {clinicianNetwork.map((doctor, index) => (
             <motion.article
               key={doctor.name}
-              initial={{ opacity: 0, y: 14, x: index % 2 === 0 ? -10 : 10, scale: 0.96, rotate: cardRotations[index] }}
-              whileInView={{ opacity: 1, y: 0, x: 0, scale: 1, rotate: cardRotations[index] }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
+                "doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
                 index === 4
-                  ? "z-30 left-1/2 top-[27%] w-40 -translate-x-1/2 p-2 sm:top-[25%] sm:w-48 sm:p-2.5"
+                  ? "doctor-card-center z-30 w-40 p-2 sm:w-48 sm:p-2.5"
                   : [0, 2].includes(index)
-                    ? "z-10 w-24 p-1 sm:w-28 sm:p-1.5"
-                    : "z-20 w-32 p-1.5 sm:w-40 sm:p-2",
-                index === 0 && "left-[1%] top-[32%] sm:left-[2%] sm:top-[29%]",
-                index === 3 && "left-[15%] top-[27%] sm:left-[16%] sm:top-[24%]",
-                index === 1 && "right-[15%] top-[27%] sm:right-[16%] sm:top-[24%]",
-                index === 2 && "right-[1%] top-[32%] sm:right-[2%] sm:top-[29%]"
+                    ? index === 0
+                      ? "doctor-card-outer-left z-10 w-24 p-1 sm:w-28 sm:p-1.5"
+                      : "doctor-card-outer-right z-10 w-24 p-1 sm:w-28 sm:p-1.5"
+                    : index === 3
+                      ? "doctor-card-inner-left z-20 w-32 p-1.5 sm:w-40 sm:p-2"
+                      : "doctor-card-inner-right z-20 w-32 p-1.5 sm:w-40 sm:p-2"
               )}
             >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
