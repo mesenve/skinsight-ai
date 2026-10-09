@@ -157,7 +157,7 @@ body {
 }
 
 .doctor-carousel {
-  perspective: 1200px;
+  perspective: 1000px;
   transform-style: preserve-3d;
 }
 
@@ -173,62 +173,14 @@ body {
   top: 50%;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  transform-origin: center center;
   transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateX(var(--card-x))
-    translateY(var(--card-y))
-    translateZ(var(--card-z))
-    rotateY(var(--card-rotate-y))
-    rotateZ(var(--card-rotate-z))
+    translate(-50%, -50%)
+    translate3d(var(--card-x), var(--card-y), var(--card-z))
+    rotateY(var(--card-angle))
     scale(var(--card-scale));
   will-change: transform, opacity;
   pointer-events: auto;
-}
-
-.doctor-card-center {
-  --card-x: 0px;
-  --card-y: -12px;
-  --card-z: 150px;
-  --card-rotate-y: 0deg;
-  --card-rotate-z: 0deg;
-  --card-scale: 1.06;
-}
-
-.doctor-card-inner-left {
-  --card-x: -235px;
-  --card-y: 38px;
-  --card-z: 54px;
-  --card-rotate-y: 21deg;
-  --card-rotate-z: -4deg;
-  --card-scale: 0.9;
-}
-
-.doctor-card-inner-right {
-  --card-x: 235px;
-  --card-y: 38px;
-  --card-z: 54px;
-  --card-rotate-y: -21deg;
-  --card-rotate-z: 4deg;
-  --card-scale: 0.9;
-}
-
-.doctor-card-outer-left {
-  --card-x: -425px;
-  --card-y: -42px;
-  --card-z: -16px;
-  --card-rotate-y: 32deg;
-  --card-rotate-z: -8deg;
-  --card-scale: 0.72;
-}
-
-.doctor-card-outer-right {
-  --card-x: 425px;
-  --card-y: -42px;
-  --card-z: -16px;
-  --card-rotate-y: -32deg;
-  --card-rotate-z: 8deg;
-  --card-scale: 0.72;
 }
 
 .flag-glass {
@@ -239,42 +191,11 @@ body {
   -webkit-backdrop-filter: blur(10px) saturate(1.15);
 }
 
-@media (max-width: 1023px) {
-  .doctor-card-inner-left { --card-x: -195px; --card-y: 32px; }
-  .doctor-card-inner-right { --card-x: 195px; --card-y: 32px; }
-  .doctor-card-outer-left { --card-x: -340px; --card-y: -34px; }
-  .doctor-card-outer-right { --card-x: 340px; --card-y: -34px; }
-}
-
 @media (max-width: 639px) {
   .doctor-carousel {
     min-height: 23rem;
   }
 
-  .doctor-card-center {
-    width: 8rem;
-    --card-y: -8px;
-    --card-scale: 1;
-  }
-
-  .doctor-card-inner-left,
-  .doctor-card-inner-right {
-    width: 5.5rem;
-    --card-y: 26px;
-    --card-scale: 0.88;
-  }
-
-  .doctor-card-outer-left,
-  .doctor-card-outer-right {
-    width: 4rem;
-    --card-y: -24px;
-    --card-scale: 0.72;
-  }
-
-  .doctor-card-inner-left { --card-x: -105px; }
-  .doctor-card-inner-right { --card-x: 105px; }
-  .doctor-card-outer-left { --card-x: -155px; }
-  .doctor-card-outer-right { --card-x: 155px; }
 }
 
 @keyframes scan-beam {
