@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import media from "@/lib/landing-media.json";
 
 interface LogoMarkProps {
   size?: number;
@@ -9,12 +10,13 @@ interface LogoMarkProps {
 export function LogoMark({ size = 40, className }: LogoMarkProps) {
   return (
     <Image
-      src="/logo.png"
+      src={media.logo}
+      unoptimized
       alt="SkinSight AI"
       width={size}
       height={size}
       className={cn("rounded-xl shadow-lg shadow-medical-blue/20", className)}
-      priority
+      preload
     />
   );
 }
