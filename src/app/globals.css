@@ -359,10 +359,10 @@ body {
 }
 
 .globe-pole-glow-top {
-  top: 5%;
-  left: 14%;
-  width: 72%;
-  height: 19%;
+  top: 9.75%;
+  left: 32%;
+  width: 36%;
+  height: 9.5%;
   background: radial-gradient(ellipse, #fff 0%, rgba(255,255,255,0.98) 30%, rgba(249,253,255,0.88) 48%, rgba(255,255,255,0.32) 66%, transparent 82%);
   filter: blur(4px);
   animation: globe-top-white-bloom 6s ease-in-out infinite;
