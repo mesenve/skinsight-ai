@@ -154,7 +154,7 @@ function QuoteSlider() {
     return () => observer.disconnect();
   }, []);
 
-  const cardWidth = Math.min(240, Math.max(130, sceneWidth / 4.5));
+  const cardWidth = Math.min(240, Math.max(130, sceneWidth / 4.5)) * 1.15;
   const gap = sceneWidth < 640 ? 16 : 24;
   const perspective = 1000;
   // Project the edges of the rotated rectangles, rather than their untransformed widths.
@@ -307,7 +307,7 @@ function QuoteSlider() {
               </div>
               <div className="px-1 pb-0.5 pt-1.5">
                 <div className="flex items-center gap-1">
-                  <p className="text-[13.2px] font-semibold leading-tight text-navy">{doctor.name}</p>
+                  <p className="text-[15.18px] font-semibold leading-tight text-navy">{doctor.name}</p>
                   <Image
                     src={media.badge}
                     unoptimized
@@ -318,7 +318,7 @@ function QuoteSlider() {
                     className="h-3.5 w-3.5 shrink-0 object-contain"
                   />
                 </div>
-                <p className="mt-0.5 text-[10.8px] font-medium text-muted">{doctor.role}</p>
+                <p className="mt-0.5 text-[12.42px] font-medium text-muted">{doctor.role}</p>
               </div>
               </motion.article>
               );
