@@ -107,15 +107,16 @@ function QuoteSlider() {
   // An unbounded occurrence index keeps clone keys stable across the loop seam.
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [openingComplete, setOpeningComplete] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
   const [pointerInside, setPointerInside] = useState(false);
   const [keyboardInside, setKeyboardInside] = useState(false);
   const [resumePending, setResumePending] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [pinnedCard, setPinnedCard] = useState<number | null>(null);
-  // Finish the slower opening before the first slide; do not interrupt it.
+  // The opening's completion starts the first slide with no additional dwell.
   // Later cards retain the existing 2s dwell and 0.68s slide.
-  const remainingHold = useRef((initialRevealDuration + initialRevealStagger * 3) * 1000);
+  const remainingHold = useRef(0);
 
   useEffect(() => {
     if (pinnedCard !== null && Math.abs(pinnedCard - activeIndex) >= 3) setPinnedCard(null);
@@ -136,7 +137,9 @@ function QuoteSlider() {
 
   useEffect(() => {
     if (!sceneEntered || !sceneVisible || !pageVisible || reducedMotion !== false ||
-        pointerInside || keyboardInside || pinnedCard !== null || resumePending || transitioning) return;
+        (activeIndex === 0 && !openingComplete) ||
+        (pointerInside && (activeIndex > 0 || hoveredCard !== null)) ||
+        keyboardInside || pinnedCard !== null || (resumePending && activeIndex > 0) || transitioning) return;
     const startedAt = performance.now();
     let fired = false;
     const timer = window.setTimeout(() => {
@@ -148,7 +151,7 @@ function QuoteSlider() {
       window.clearTimeout(timer);
       if (!fired) remainingHold.current = Math.max(0, remainingHold.current - (performance.now() - startedAt));
     };
-  }, [sceneEntered, sceneVisible, pageVisible, reducedMotion, pointerInside, keyboardInside, pinnedCard, resumePending, transitioning]);
+  }, [sceneEntered, sceneVisible, pageVisible, reducedMotion, pointerInside, hoveredCard, keyboardInside, pinnedCard, resumePending, transitioning, activeIndex, openingComplete]);
   const [sceneWidth, setSceneWidth] = useState(1152);
   useEffect(() => {
     const scene = sceneRef.current;
@@ -201,6 +204,7 @@ function QuoteSlider() {
           onFocusCapture={(event) => { if (event.target.matches(":focus-visible")) setKeyboardInside(true); }}
           onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setKeyboardInside(false); }}
           data-active-index={activeIndex}
+          data-opening-complete={openingComplete}
           data-transitioning={transitioning}
           aria-label="Doctor showcase"
           className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
@@ -292,6 +296,7 @@ function QuoteSlider() {
                   filter: `blur(${depth >= 3 ? 3 : 0}px)`,
                 }}
                 onAnimationComplete={() => {
+                  if (activeIndex === 0 && sceneEntered && depth === 2) setOpeningComplete(true);
                   if (slot === 0 && transitioning) { remainingHold.current = 2000; setTransitioning(false); }
                 }}
                 transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : initialRevealDuration, delay: reducedMotion || activeIndex > 0 ? 0 : depth * initialRevealStagger, ease: [0.22, 1, 0.36, 1] }}
