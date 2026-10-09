@@ -100,10 +100,6 @@ function QuoteSlider() {
             <br />
             <span className="text-medical-blue">trusted worldwide.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
-            SkinSight is developed with a global network of dermatologists,
-            keeping every recommendation grounded in clinical judgment.
-          </p>
         </div>
 
         <div className="relative mt-12 min-h-[39rem] overflow-hidden sm:min-h-[35rem]">
