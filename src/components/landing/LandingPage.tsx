@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { MeshTransmissionMaterial } from "@react-three/drei";
+import { Environment, MeshTransmissionMaterial } from "@react-three/drei";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -199,6 +199,7 @@ function ClinicianGlobe() {
       <directionalLight position={[4, 5, 4]} intensity={2.1} color="#ffffff" />
       <directionalLight position={[-4, 1, 2]} intensity={0.85} color="#a9e5ff" />
       <pointLight position={[0, 2, 3]} intensity={1.4} distance={6} color="#ffffff" />
+      <Environment preset="studio" environmentIntensity={0.55} />
       <RotatingGlobe />
     </Canvas>
   );
