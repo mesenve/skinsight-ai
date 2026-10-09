@@ -116,7 +116,7 @@ function QuoteSlider() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [pinnedCard, setPinnedCard] = useState<number | null>(null);
   // The opening's completion starts the first slide with no additional dwell.
-  // Later cards retain the existing 2s dwell and 0.68s slide.
+  // Later cards pause briefly for 0.7s between the 0.68s slides.
   const remainingHold = useRef(0);
 
   useEffect(() => {
@@ -301,7 +301,7 @@ function QuoteSlider() {
                     revealedOpeningSides.current.add(slot);
                     if (revealedOpeningSides.current.size === 2) setOpeningComplete(true);
                   }
-                  if (slot === 0 && transitioning) { remainingHold.current = 2000; setTransitioning(false); }
+                  if (slot === 0 && transitioning) { remainingHold.current = 700; setTransitioning(false); }
                 }}
                 transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : initialRevealDuration, delay: reducedMotion || activeIndex > 0 ? 0 : depth * initialRevealStagger, ease: activeIndex > 0 ? [0.22, 1, 0.36, 1] : [0.42, 0, 0.58, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
