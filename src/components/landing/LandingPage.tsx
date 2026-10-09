@@ -78,16 +78,16 @@ const clinicianNetwork = [
     avatar: "/avatars/clinician-aiko.webp",
   },
   {
-    name: "Dr. Daniel Okeke",
-    role: "Dermatologist",
-    flag: "/flags/ng.svg",
-    avatar: "/avatars/clinician-daniel.webp",
-  },
-  {
     name: "Dr. Leila Haddad",
     role: "Dermatologist",
     flag: "/flags/ae.svg",
     avatar: "/avatars/clinician-leila.webp",
+  },
+  {
+    name: "Dr. Daniel Okeke",
+    role: "Dermatologist",
+    flag: "/flags/ng.svg",
+    avatar: "/avatars/clinician-daniel.webp",
   },
 ] as const;
 
