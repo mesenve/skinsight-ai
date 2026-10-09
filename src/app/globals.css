@@ -183,8 +183,8 @@ body {
 }
 
 @keyframes globe-float {
-  0%, 100% { transform: translate3d(0, -6px, 0) scale(1); }
-  50% { transform: translate3d(0, 6px, 0) scale(1.015); }
+  0%, 100% { transform: translate3d(0, -2px, 0) scale(1); }
+  50% { transform: translate3d(0, 2px, 0) scale(1.006); }
 }
 
 @keyframes globe-sheen {
@@ -214,6 +214,19 @@ body {
 @keyframes globe-edge-glow {
   0%, 100% { opacity: 0.18; transform: rotate(-10deg) scale(0.99); }
   50% { opacity: 0.52; transform: rotate(10deg) scale(1.01); }
+}
+
+@keyframes globe-surface-shimmer {
+  0% { transform: translate3d(-130%, 0, 0) rotate(-18deg); opacity: 0; }
+  18% { opacity: 0.2; }
+  42% { opacity: 0.76; }
+  68% { opacity: 0.26; }
+  100% { transform: translate3d(280%, 0, 0) rotate(-18deg); opacity: 0; }
+}
+
+@keyframes globe-specular {
+  0%, 100% { transform: translate3d(-6%, -3%, 0) scale(0.9); opacity: 0.14; }
+  50% { transform: translate3d(7%, 4%, 0) scale(1.08); opacity: 0.58; }
 }
 
 .globe-float {
@@ -252,6 +265,32 @@ body {
   will-change: transform, opacity;
 }
 
+.globe-surface-shimmer {
+  left: -18%;
+  top: -22%;
+  width: 42%;
+  height: 144%;
+  background: linear-gradient(112deg, transparent 0%, rgba(102, 211, 255, 0.06) 30%, rgba(255, 255, 255, 0.94) 48%, rgba(91, 197, 255, 0.48) 56%, transparent 72%);
+  filter: blur(3px);
+  clip-path: circle(48% at 50% 50%);
+  mix-blend-mode: screen;
+  animation: globe-surface-shimmer 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform, opacity;
+}
+
+.globe-specular {
+  left: 9%;
+  top: 7%;
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 28% 22%, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.32) 9%, rgba(255, 255, 255, 0) 34%);
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  animation: globe-specular 6.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 .globe-edge-glow {
   border: 2px solid rgba(159, 226, 255, 0.45);
   box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.58), 0 0 34px rgba(73, 184, 255, 0.3);
@@ -281,6 +320,8 @@ body {
   .globe-halo,
   .globe-light-sweep,
   .globe-bloom,
+  .globe-surface-shimmer,
+  .globe-specular,
   .globe-edge-glow,
   .globe-glint {
     animation: none !important;
