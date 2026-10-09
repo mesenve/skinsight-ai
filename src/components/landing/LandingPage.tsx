@@ -216,6 +216,7 @@ function QuoteSlider() {
               className="globe-image absolute inset-0 z-10 h-full w-full object-contain"
             />
             <span className="globe-brand-veil absolute z-20" />
+            <span className="globe-glass-reflection absolute z-20" />
             <span className="globe-pole-glow globe-pole-glow-top absolute z-20" />
             <span className="globe-pole-glow globe-pole-glow-bottom absolute z-20" />
             <span className="globe-surface-flow absolute z-20" />
