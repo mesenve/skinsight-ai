@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { preload } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
@@ -110,7 +110,6 @@ function QuoteSlider() {
   const [transitioning, setTransitioning] = useState(false);
   const [openingComplete, setOpeningComplete] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
-  const [pointerInside, setPointerInside] = useState(false);
   const [keyboardInside, setKeyboardInside] = useState(false);
   const [resumePending, setResumePending] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -118,10 +117,23 @@ function QuoteSlider() {
   // The opening's completion starts the first slide with no additional dwell.
   // Later cards pause briefly for 0.7s between the 0.68s slides.
   const remainingHold = useRef(0);
+  const advanceAfterHover = useRef(false);
+  const queueResume = useCallback(() => {
+    advanceAfterHover.current = true;
+    remainingHold.current = 0;
+    setResumePending(true);
+  }, []);
 
   useEffect(() => {
     if (pinnedCard !== null && Math.abs(pinnedCard - activeIndex) >= 3) setPinnedCard(null);
   }, [pinnedCard, activeIndex]);
+
+  useEffect(() => {
+    if (hoveredCard !== null && Math.abs(hoveredCard - activeIndex) >= 3) {
+      setHoveredCard(null);
+      queueResume();
+    }
+  }, [hoveredCard, activeIndex, queueResume]);
 
   useEffect(() => {
     const update = () => setPageVisible(document.visibilityState === "visible");
@@ -131,20 +143,20 @@ function QuoteSlider() {
   }, []);
 
   useEffect(() => {
-    if (!resumePending || pointerInside || !sceneVisible || !pageVisible) return;
+    if (!resumePending || hoveredCard !== null || keyboardInside || pinnedCard !== null || !sceneVisible || !pageVisible) return;
     const timer = window.setTimeout(() => setResumePending(false), 1000);
     return () => window.clearTimeout(timer);
-  }, [resumePending, pointerInside, sceneVisible, pageVisible]);
+  }, [resumePending, hoveredCard, keyboardInside, pinnedCard, sceneVisible, pageVisible]);
 
   useEffect(() => {
     if (!sceneEntered || !sceneVisible || !pageVisible || reducedMotion !== false ||
         (activeIndex === 0 && !openingComplete) ||
-        (pointerInside && (activeIndex > 0 || hoveredCard !== null)) ||
-        keyboardInside || pinnedCard !== null || (resumePending && activeIndex > 0) || transitioning) return;
+        hoveredCard !== null || keyboardInside || pinnedCard !== null || resumePending || transitioning) return;
     const startedAt = performance.now();
     let fired = false;
     const timer = window.setTimeout(() => {
       fired = true;
+      advanceAfterHover.current = false;
       setTransitioning(true);
       setActiveIndex((index) => index + 1);
     }, remainingHold.current);
@@ -152,7 +164,7 @@ function QuoteSlider() {
       window.clearTimeout(timer);
       if (!fired) remainingHold.current = Math.max(0, remainingHold.current - (performance.now() - startedAt));
     };
-  }, [sceneEntered, sceneVisible, pageVisible, reducedMotion, pointerInside, hoveredCard, keyboardInside, pinnedCard, resumePending, transitioning, activeIndex, openingComplete]);
+  }, [sceneEntered, sceneVisible, pageVisible, reducedMotion, hoveredCard, keyboardInside, pinnedCard, resumePending, transitioning, activeIndex, openingComplete]);
   const [sceneWidth, setSceneWidth] = useState(1152);
   useEffect(() => {
     const scene = sceneRef.current;
@@ -200,10 +212,13 @@ function QuoteSlider() {
         </div>
 
         <div ref={sceneRef}
-          onPointerEnter={(event) => { if (event.pointerType === "mouse") { setPointerInside(true); setResumePending(false); } }}
-          onPointerLeave={(event) => { if (event.pointerType === "mouse") { setPointerInside(false); setHoveredCard(null); setResumePending(true); } }}
+          onPointerLeave={(event) => { if (event.pointerType === "mouse" && hoveredCard !== null) { setHoveredCard(null); queueResume(); } }}
           onFocusCapture={(event) => { if (event.target.matches(":focus-visible")) setKeyboardInside(true); }}
-          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setKeyboardInside(false); }}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setKeyboardInside(false); setPinnedCard(null); setHoveredCard(null); queueResume();
+            }
+          }}
           data-active-index={activeIndex}
           data-opening-complete={openingComplete}
           data-transitioning={transitioning}
@@ -277,8 +292,13 @@ function QuoteSlider() {
                 tabIndex={depth < 3 ? 0 : -1}
                 aria-label={depth < 3 ? `${doctor.name}: show demo testimonial` : undefined}
                 aria-expanded={depth < 3 ? testimonialOpen : undefined}
-                onPointerEnter={(event) => { if (event.pointerType === "mouse") setHoveredCard(occurrence); }}
-                onPointerLeave={() => setHoveredCard(null)}
+                onPointerEnter={(event) => { if (event.pointerType === "mouse" && depth < 3) {
+                  setKeyboardInside(false); setPinnedCard(null); setHoveredCard(occurrence); setResumePending(false);
+                } }}
+                onPointerLeave={(event) => { if (event.pointerType === "mouse" && depth < 3) {
+                  setHoveredCard((current) => current === occurrence ? null : current); queueResume();
+                } }}
+                onPointerDown={() => setKeyboardInside(false)}
                 onPointerUp={(event) => { if (event.pointerType === "touch") { setHoveredCard(null); setPinnedCard((current) => current === occurrence ? null : occurrence); } }}
                 onClick={(event) => { if (event.detail === 0) setPinnedCard((current) => current === occurrence ? null : occurrence); }}
                 onKeyDown={(event) => {
@@ -286,7 +306,10 @@ function QuoteSlider() {
                   if (event.key === "Escape") { setPinnedCard(null); setHoveredCard(null); }
                 }}
                 onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) setHoveredCard(occurrence); }}
-                onBlur={() => { setHoveredCard(null); setPinnedCard(null); }}
+                onBlur={() => {
+                  setHoveredCard((current) => current === occurrence ? null : current);
+                  setPinnedCard((current) => current === occurrence ? null : current);
+                }}
                 data-arc-index={slot}
                 data-occurrence={occurrence}
                 style={style}
@@ -301,7 +324,10 @@ function QuoteSlider() {
                     revealedOpeningSides.current.add(slot);
                     if (revealedOpeningSides.current.size === 2) setOpeningComplete(true);
                   }
-                  if (slot === 0 && transitioning) { remainingHold.current = 700; setTransitioning(false); }
+                  if (slot === 0 && transitioning) {
+                    remainingHold.current = advanceAfterHover.current ? 0 : 700;
+                    setTransitioning(false);
+                  }
                 }}
                 transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : initialRevealDuration, delay: reducedMotion || activeIndex > 0 ? 0 : depth * initialRevealStagger, ease: activeIndex > 0 ? [0.22, 1, 0.36, 1] : [0.42, 0, 0.58, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
