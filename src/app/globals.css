@@ -191,6 +191,13 @@ body {
   outline-offset: 3px;
 }
 
+.doctor-card[data-arc-index="-1"],
+.doctor-card[data-arc-index="1"],
+.doctor-card[data-arc-index="-2"],
+.doctor-card[data-arc-index="2"] {
+  box-shadow: 0 9px 22px rgba(26,75,140,0.14), 0 2px 7px rgba(11,18,32,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
 .clinical-glass {
   overflow: hidden;
   border-radius: 1rem;
