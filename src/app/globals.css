@@ -261,8 +261,8 @@ body {
 }
 
 @keyframes globe-holo-orb {
-  0%, 100% { transform: translate3d(-2%, -1%, 0) scale(0.96); opacity: 0.11; }
-  50% { transform: translate3d(3%, 3%, 0) scale(1.05); opacity: 0.34; }
+  0%, 100% { transform: translate3d(-2%, -1%, 0) scale(0.96); opacity: 0.143; }
+  50% { transform: translate3d(3%, 3%, 0) scale(1.05); opacity: 0.442; }
 }
 
 @keyframes holo-particle {
@@ -349,7 +349,7 @@ body {
   background:
     radial-gradient(circle, transparent 51%, rgba(114, 220, 255, 0.42) 59%, rgba(171, 133, 255, 0.28) 67%, transparent 77%),
     conic-gradient(from 120deg, rgba(77, 210, 255, 0.2), rgba(173, 116, 255, 0.24), rgba(255, 255, 255, 0.44), rgba(146, 225, 255, 0.24), rgba(77, 210, 255, 0.2));
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
   will-change: transform, opacity;
 }
 
@@ -357,7 +357,7 @@ body {
   /* 124% original diameter × 0.7 = 86.8%. */
   inset: 6.6%;
   filter: blur(12.6px);
-  opacity: 0.205;
+  opacity: 0.2665;
   animation: globe-holo-aura-outer 18s linear infinite;
 }
 
@@ -365,7 +365,7 @@ body {
   /* 108% original diameter × 0.7 = 75.6%. */
   inset: 12.2%;
   filter: blur(5.6px);
-  opacity: 0.275;
+  opacity: 0.3575;
   animation: globe-holo-aura-inner 24s linear infinite;
 }
 
