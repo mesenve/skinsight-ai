@@ -111,7 +111,7 @@ function QuoteSlider() {
   const [resumePending, setResumePending] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [pinnedCard, setPinnedCard] = useState<number | null>(null);
-  const remainingHold = useRef(3150);
+  const remainingHold = useRef(2000);
 
   useEffect(() => {
     if (pinnedCard !== null && Math.abs(pinnedCard - activeIndex) >= 3) setPinnedCard(null);
@@ -257,6 +257,9 @@ function QuoteSlider() {
               const testimonialOpen = depth < 3 && (hoveredCard === occurrence || pinnedCard === occurrence);
               const maskAlphas = slot <= -3 ? [0, 0, 1 / 3, 1, 1, 1] : slot >= 3 ? [1, 1, 1, 1 / 3, 0, 0] : [1, 1, 1, 1, 1, 1];
               const mask = `linear-gradient(to right, ${maskAlphas.map((alpha, index) => `rgba(0,0,0,${alpha}) ${[0, 10, 30, 70, 90, 100][index]}%`).join(", ")})`;
+              // A gradient-to-none mask tween can leave a fully transparent mask
+              // on recycled cards. Only the invisible/ghost edge slots need a mask.
+              style.maskImage = depth >= 3 ? mask : "none";
               return (
               <motion.article
                 key={occurrence}
@@ -283,10 +286,9 @@ function QuoteSlider() {
                   opacity: depth === 0 || sceneEntered || reducedMotion ? pose.opacity : 0,
                   transform: cardTransform(!sceneEntered && !reducedMotion),
                   filter: `blur(${depth >= 3 ? 3 : 0}px)`,
-                  maskImage: depth >= 3 ? mask : "none",
                 }}
                 onAnimationComplete={() => {
-                  if (slot === 0 && transitioning) { remainingHold.current = 3150; setTransitioning(false); }
+                  if (slot === 0 && transitioning) { remainingHold.current = 2000; setTransitioning(false); }
                 }}
                 transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 0.68 : 0.85, delay: reducedMotion || activeIndex > 0 ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
