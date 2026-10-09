@@ -300,8 +300,7 @@ body {
 }
 
 .globe-float {
-  animation: globe-float 8s ease-in-out infinite;
-  will-change: transform;
+  isolation: isolate;
 }
 
 @keyframes globe-surface-drift {
@@ -318,13 +317,15 @@ body {
   pointer-events: none;
   inset: 10%;
   border-radius: 50%;
-  background-image: url('/earth/trusted-doctors-globe.webp');
+  background-image:
+    radial-gradient(ellipse at 18% 40%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 242, 255, 0.22) 22%, transparent 46%),
+    radial-gradient(ellipse at 76% 64%, rgba(161, 222, 255, 0.36) 0%, transparent 40%);
   background-size: 480px 100%;
   background-repeat: repeat-x;
   mask-image: radial-gradient(ellipse, #000 24%, rgba(0, 0, 0, 0.6) 48%, transparent 71%);
-  opacity: 0.24;
+  opacity: 0.36;
   mix-blend-mode: screen;
-  animation: globe-surface-drift 35s linear infinite;
+  animation: globe-surface-drift 28s linear infinite;
   will-change: background-position;
 }
 
@@ -332,14 +333,53 @@ body {
   pointer-events: none;
   inset: 10%;
   border-radius: 50%;
-  background: conic-gradient(from 20deg, transparent 0deg, rgba(197, 237, 255, 0.08) 65deg, rgba(255, 255, 255, 0.55) 110deg, rgba(191, 224, 255, 0.18) 160deg, transparent 220deg, transparent 360deg);
+  background:
+    radial-gradient(ellipse at 22% 48%, rgba(89, 165, 223, 0.18), transparent 45%),
+    conic-gradient(from 20deg, transparent 0deg, rgba(197, 237, 255, 0.16) 65deg, rgba(255, 255, 255, 0.75) 110deg, rgba(191, 224, 255, 0.28) 160deg, transparent 220deg, transparent 360deg);
   mask-image: radial-gradient(circle, transparent 36%, #000 57%, transparent 72%);
   filter: blur(8px);
   opacity: 0.7;
-  mix-blend-mode: screen;
-  animation: globe-rotation-light 18s linear infinite;
+  mix-blend-mode: normal;
+  animation: globe-rotation-light 14s linear infinite;
   will-change: transform;
 }
+
+.globe-aurora {
+  pointer-events: none;
+  inset: 6%;
+  border-radius: 50%;
+  background: conic-gradient(from 25deg, rgba(83, 213, 255, 0.38), rgba(177, 154, 255, 0.25), rgba(255, 255, 255, 0.5), rgba(123, 220, 255, 0.12), rgba(83, 213, 255, 0.38));
+  mask-image: radial-gradient(closest-side, transparent 73%, #000 88%, transparent 100%);
+  filter: blur(7px);
+  opacity: 0.65;
+  animation: globe-rotation-light 12s linear infinite;
+  will-change: transform;
+}
+
+.globe-orbit {
+  pointer-events: none;
+  inset: 6%;
+  border-radius: 50%;
+  animation: globe-rotation-light 16s linear infinite;
+  will-change: transform;
+}
+
+.globe-orbit-spark {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #fff 10%, rgba(164, 232, 255, 0.95) 40%, rgba(117, 204, 255, 0.18) 70%, transparent 100%);
+  box-shadow: 0 0 10px rgba(120, 217, 255, 0.7), 0 0 23px rgba(129, 210, 255, 0.4);
+}
+
+.globe-orbit-two { inset: 10%; animation-duration: 22s; animation-delay: -7s; animation-direction: reverse; }
+.globe-orbit-two .globe-orbit-spark { width: 0.45rem; height: 0.45rem; opacity: 0.7; }
+.globe-orbit-three { inset: 14%; animation-duration: 19s; animation-delay: -11s; }
+.globe-orbit-three .globe-orbit-spark { width: 0.35rem; height: 0.35rem; opacity: 0.6; }
 
 .globe-halo {
   background: radial-gradient(circle, rgba(103, 202, 255, 0.38) 0%, rgba(79, 157, 238, 0.2) 42%, transparent 73%);
@@ -451,6 +491,8 @@ body {
   .globe-float,
   .globe-surface-flow,
   .globe-rotation-light,
+  .globe-aurora,
+  .globe-orbit,
   .globe-halo,
   .globe-bloom,
   .globe-specular,
