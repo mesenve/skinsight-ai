@@ -63,36 +63,31 @@ const clinicianNetwork = [
   {
     name: "Dr. James Miller",
     role: "Dermatologist",
-    city: "New York",
-    flag: "🇺🇸",
+    flag: "/flags/us.svg",
     avatar: "/avatars/clinician-james.webp",
   },
   {
     name: "Dr. Sophie Laurent",
     role: "Dermatologist",
-    city: "Paris",
-    flag: "🇫🇷",
+    flag: "/flags/fr.svg",
     avatar: "/avatars/clinician-sophie.webp",
   },
   {
     name: "Dr. Aiko Tanaka",
     role: "Dermatologist",
-    city: "Tokyo",
-    flag: "🇯🇵",
+    flag: "/flags/jp.svg",
     avatar: "/avatars/clinician-aiko.webp",
   },
   {
     name: "Dr. Daniel Okeke",
     role: "Dermatologist",
-    city: "Lagos",
-    flag: "🇳🇬",
+    flag: "/flags/ng.svg",
     avatar: "/avatars/clinician-daniel.webp",
   },
   {
     name: "Dr. Leila Haddad",
     role: "Dermatologist",
-    city: "Dubai",
-    flag: "🇦🇪",
+    flag: "/flags/ae.svg",
     avatar: "/avatars/clinician-leila.webp",
   },
 ] as const;
@@ -297,6 +292,9 @@ function QuoteSlider() {
                   sizes="(max-width: 640px) 176px, 208px"
                   className="object-cover"
                 />
+                <span className="absolute left-3 top-3 z-10 flex h-7 w-9 items-center justify-center rounded-full border border-white/80 bg-white/90 p-1 shadow-[0_5px_14px_rgba(26,75,140,0.18)] backdrop-blur-sm">
+                  <Image src={doctor.flag} alt="Country flag" width={24} height={16} className="h-4 w-6 rounded-[2px] object-cover" />
+                </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-white/10" />
                 <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] ring-1 ring-inset ring-white/55" />
               </div>
@@ -312,12 +310,6 @@ function QuoteSlider() {
                   />
                 </div>
                 <p className="mt-1 text-[10px] font-medium text-muted">{doctor.role}</p>
-                <div className="mt-1.5 flex items-center gap-1.5 text-medical-blue">
-                  <span className="text-[13px] leading-none" role="img" aria-label="Country flag">
-                    {doctor.flag}
-                  </span>
-                  <span className="text-[10px] leading-none">{doctor.city}</span>
-                </div>
               </div>
             </motion.article>
           ))}
