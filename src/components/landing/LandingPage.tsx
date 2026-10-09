@@ -302,7 +302,6 @@ function QuoteSlider() {
                 </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/15 via-transparent to-white/10" />
                 <div className="doctor-testimonial" data-open={testimonialOpen} aria-hidden={!testimonialOpen}>
-                  <span className="doctor-testimonial-label" aria-label="Demo placeholder text">DEMO</span>
                   <p>{doctor.testimonial}</p>
                 </div>
               </div>
