@@ -210,58 +210,16 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative isolate mt-6 min-h-[24rem] overflow-hidden sm:min-h-[24rem]">
-          <div className="pointer-events-none absolute inset-x-0 bottom-[-1%] z-0 h-[82%] sm:bottom-[-2%] sm:h-[84%]">
-            <ClinicianGlobe />
-          </div>
-
-          {clinicianNetwork.map((doctor, index) => (
-            <motion.article
-              key={doctor.name}
-              initial={{ opacity: 0, y: 20, x: index % 2 === 0 ? -16 : 16, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-70px" }}
-              transition={{ duration: 0.65, delay: 0.18 + index * 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className={cn(
-                "absolute z-20 w-44 overflow-hidden rounded-[1.35rem] border border-white/90 bg-white/78 p-2 shadow-[0_18px_45px_rgba(26,75,140,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-52 sm:p-2.5",
-                index === 0 && "left-3 top-16 rotate-[-4deg] sm:left-6 sm:top-14",
-                index === 1 && "right-3 top-16 rotate-[4deg] sm:right-6 sm:top-14",
-                index === 2 && "right-8 bottom-16 rotate-[3deg] sm:right-[12%] sm:bottom-12",
-                index === 3 && "left-8 bottom-16 rotate-[-3deg] sm:left-[12%] sm:bottom-12",
-                index === 4 && "left-1/2 top-[30%] -translate-x-1/2 rotate-[-1deg]"
-              )}
-            >
-              <div className="relative aspect-[1.12] overflow-hidden rounded-[1.05rem] border border-white/70 bg-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                <Image
-                  src={doctor.avatar}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 176px, 208px"
-                  className="object-cover"
-                />
-                <span className="absolute left-3 top-3 z-10 overflow-hidden rounded-md border border-white/75 bg-transparent p-0.5 shadow-[0_5px_14px_rgba(26,75,140,0.14)]">
-                  <Image src={doctor.flag} alt="Country flag" width={24} height={16} className="block h-4 w-6 rounded-[3px] object-cover" />
-                </span>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-white/10" />
-                <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] ring-1 ring-inset ring-white/55" />
-              </div>
-              <div className="px-1.5 pb-1 pt-2">
-                <div className="flex items-center gap-1.5">
-                  <p className="truncate text-[13px] font-semibold leading-tight text-navy">{doctor.name}</p>
-                  <Image
-                    src="/icons/official-badge.png"
-                    alt="Official clinician"
-                    width={20}
-                    height={20}
-                    className="h-4 w-4 shrink-0 object-contain"
-                  />
-                </div>
-                <p className="mt-1 text-[10px] font-medium text-muted">{doctor.role}</p>
-              </div>
-            </motion.article>
-          ))}
-
-          <div className="pointer-events-none absolute left-1/2 top-[43%] z-[2] h-3 w-3 -translate-x-1/2 rounded-full bg-white shadow-[0_0_0_5px_rgba(97,199,255,0.2),0_0_28px_rgba(97,199,255,0.9)]" />
+        <div className="relative isolate mt-6 flex min-h-[24rem] items-center justify-center overflow-hidden sm:min-h-[24rem]">
+          <Image
+            src="/earth/trusted-doctors-globe.webp"
+            alt=""
+            width={1024}
+            height={1024}
+            priority
+            sizes="(max-width: 640px) 78vw, 30rem"
+            className="h-[21rem] w-[21rem] object-contain sm:h-[25rem] sm:w-[25rem]"
+          />
         </div>
       </div>
     </section>
