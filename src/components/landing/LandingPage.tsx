@@ -63,31 +63,36 @@ const clinicianNetwork = [
   {
     name: "Dr. James Miller",
     role: "Dermatologist",
-    location: "New York · USA",
+    city: "New York",
+    flag: "🇺🇸",
     avatar: "/avatars/clinician-james.webp",
   },
   {
     name: "Dr. Sophie Laurent",
     role: "Dermatologist",
-    location: "Paris · France",
+    city: "Paris",
+    flag: "🇫🇷",
     avatar: "/avatars/clinician-sophie.webp",
   },
   {
     name: "Dr. Aiko Tanaka",
     role: "Dermatologist",
-    location: "Tokyo · Japan",
+    city: "Tokyo",
+    flag: "🇯🇵",
     avatar: "/avatars/clinician-aiko.webp",
   },
   {
     name: "Dr. Daniel Okeke",
     role: "Dermatologist",
-    location: "Lagos · Nigeria",
+    city: "Lagos",
+    flag: "🇳🇬",
     avatar: "/avatars/clinician-daniel.webp",
   },
   {
     name: "Dr. Leila Haddad",
     role: "Dermatologist",
-    location: "Dubai · UAE",
+    city: "Dubai",
+    flag: "🇦🇪",
     avatar: "/avatars/clinician-leila.webp",
   },
 ] as const;
@@ -307,7 +312,12 @@ function QuoteSlider() {
                   />
                 </div>
                 <p className="mt-1 text-[10px] font-medium text-muted">{doctor.role}</p>
-                <p className="mt-0.5 text-[10px] text-medical-blue">{doctor.location}</p>
+                <div className="mt-1.5 flex items-center gap-1.5 text-medical-blue">
+                  <span className="text-[13px] leading-none" role="img" aria-label="Country flag">
+                    {doctor.flag}
+                  </span>
+                  <span className="text-[10px] leading-none">{doctor.city}</span>
+                </div>
               </div>
             </motion.article>
           ))}
