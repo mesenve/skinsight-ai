@@ -226,6 +226,8 @@ function QuoteSlider() {
             />
             <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
             <span className="globe-light-sweep absolute inset-[4%] z-20 rounded-full" />
+            <span className="globe-surface-shimmer absolute z-20" />
+            <span className="globe-specular absolute z-20" />
             <span className="globe-edge-glow absolute inset-[7%] z-20 rounded-full" />
             <span className="globe-glint globe-glint-one absolute z-20" />
             <span className="globe-glint globe-glint-two absolute z-20" />
