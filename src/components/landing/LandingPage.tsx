@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Line } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,7 +12,7 @@ import {
   ChevronDown,
   Sparkles,
 } from "lucide-react";
-import type { Group } from "three";
+import { BackSide, SRGBColorSpace, TextureLoader, type Group } from "three";
 import { LandingHeader } from "@/components/landing/LandingHeader";
 import { LogoMark } from "@/components/shared/LogoMark";
 import { buttonStyles } from "@/components/ui/Button";
@@ -92,113 +91,68 @@ const clinicianNetwork = [
   },
 ] as const;
 
-type GlobePoint = [number, number, number];
-
-const globeNodes = [
-  { lat: 40, lon: -74 },
-  { lat: 48, lon: 2 },
-  { lat: 35, lon: 139 },
-  { lat: 25, lon: 55 },
-  { lat: 6, lon: 3 },
-  { lat: -23, lon: -46 },
-  { lat: -33, lon: 151 },
-] as const;
-
-const globeConnections = [
-  [0, 1],
-  [0, 5],
-  [1, 2],
-  [1, 3],
-  [1, 4],
-  [2, 3],
-  [2, 6],
-  [3, 6],
-  [4, 5],
-] as const;
-
-function globePoint(lat: number, lon: number, radius = 1.06): GlobePoint {
-  const latitude = (lat * Math.PI) / 180;
-  const longitude = (lon * Math.PI) / 180;
-  return [
-    radius * Math.cos(latitude) * Math.sin(longitude),
-    radius * Math.sin(latitude),
-    radius * Math.cos(latitude) * Math.cos(longitude),
-  ];
-}
-
-function globeArc(start: GlobePoint, end: GlobePoint): GlobePoint[] {
-  return Array.from({ length: 22 }, (_, index) => {
-    const t = index / 21;
-    const x = start[0] * (1 - t) + end[0] * t;
-    const y = start[1] * (1 - t) + end[1] * t;
-    const z = start[2] * (1 - t) + end[2] * t;
-    const lift = 1 + Math.sin(Math.PI * t) * 0.18;
-    const length = Math.sqrt(x * x + y * y + z * z) || 1;
-    return [(x / length) * 1.07 * lift, (y / length) * 1.07 * lift, (z / length) * 1.07 * lift];
-  });
-}
+const globeRotationDurationSeconds = 35;
+const globeScale = 1.04;
 
 function RotatingGlobe() {
   const globeRef = useRef<Group>(null);
-  const nodes = useMemo(() => globeNodes.map(({ lat, lon }) => globePoint(lat, lon)), []);
-  const arcs = useMemo(
-    () => globeConnections.map(([start, end]) => globeArc(nodes[start], nodes[end])),
-    [nodes]
-  );
-  const latitudeLines = useMemo(
-    () =>
-      [-55, -28, 0, 28, 55].map((latitude) =>
-        Array.from({ length: 49 }, (_, index) => globePoint(latitude, index * 7.5, 1.065))
-      ),
-    []
-  );
-  const longitudeLines = useMemo(
-    () =>
-      Array.from({ length: 9 }, (_, index) =>
-        Array.from({ length: 49 }, (_, pointIndex) => globePoint(-78 + pointIndex * 3.25, index * 20, 1.065))
-      ),
-    []
-  );
+  const continentsTexture = useLoader(TextureLoader, "/earth/continents.svg");
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    continentsTexture.colorSpace = SRGBColorSpace;
+    continentsTexture.needsUpdate = true;
+  }, [continentsTexture]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setReducedMotion(mediaQuery.matches);
+    updateMotionPreference();
+    mediaQuery.addEventListener("change", updateMotionPreference);
+    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
+  }, []);
 
   useFrame((_, delta) => {
-    if (globeRef.current) globeRef.current.rotation.y += delta * 0.18;
+    if (!reducedMotion && globeRef.current) {
+      globeRef.current.rotation.y += (Math.PI * 2 * delta) / globeRotationDurationSeconds;
+    }
   });
 
   return (
-    <group ref={globeRef} position={[0, -0.08, 0]} rotation={[0.08, -0.35, 0]}>
+    <group ref={globeRef} position={[0, -0.08, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
       <mesh>
-        <sphereGeometry args={[1.03, 64, 64]} />
-        <meshStandardMaterial color="#9ed8ff" transparent opacity={0.23} roughness={0.25} metalness={0.08} />
+        <sphereGeometry args={[1, 96, 96]} />
+        <meshPhysicalMaterial
+          color="#a7d4ff"
+          transparent
+          opacity={0.76}
+          roughness={0.38}
+          metalness={0}
+          transmission={0.22}
+          thickness={0.32}
+          clearcoat={0.45}
+          clearcoatRoughness={0.28}
+        />
       </mesh>
-      <mesh scale={1.025}>
-        <sphereGeometry args={[1.03, 32, 32]} />
-        <meshBasicMaterial color="#83cbff" wireframe transparent opacity={0.22} />
+      <mesh scale={1.008}>
+        <sphereGeometry args={[1, 96, 96]} />
+        <meshPhysicalMaterial
+          map={continentsTexture}
+          color="#f5fbff"
+          transparent
+          opacity={0.8}
+          roughness={0.62}
+          metalness={0}
+          transmission={0.12}
+          thickness={0.12}
+          clearcoat={0.24}
+          clearcoatRoughness={0.36}
+          depthWrite={false}
+        />
       </mesh>
-
-      {latitudeLines.map((points, index) => (
-        <Line key={`latitude-${index}`} points={points} color="#d7f3ff" transparent opacity={0.36} lineWidth={0.7} />
-      ))}
-      {longitudeLines.map((points, index) => (
-        <Line key={`longitude-${index}`} points={points} color="#d7f3ff" transparent opacity={0.28} lineWidth={0.7} />
-      ))}
-      {arcs.map((points, index) => (
-        <Line key={`arc-${index}`} points={points} color="#ffffff" transparent opacity={0.82} lineWidth={1.15} />
-      ))}
-      {nodes.map((position, index) => (
-        <group key={`node-${index}`} position={position}>
-          <mesh>
-            <sphereGeometry args={[0.045, 18, 18]} />
-            <meshBasicMaterial color="#ffffff" toneMapped={false} />
-          </mesh>
-          <mesh scale={1.8}>
-            <sphereGeometry args={[0.045, 18, 18]} />
-            <meshBasicMaterial color="#8ce5ff" transparent opacity={0.28} toneMapped={false} />
-          </mesh>
-        </group>
-      ))}
-      <mesh position={[0, 0, 1.02]}>
-        <sphereGeometry args={[0.08, 24, 24]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.72} toneMapped={false} />
+      <mesh scale={1.018}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <meshBasicMaterial color="#eef8ff" transparent opacity={0.18} side={BackSide} depthWrite={false} />
       </mesh>
     </group>
   );
