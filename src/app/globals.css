@@ -302,6 +302,41 @@ body {
   isolation: isolate;
 }
 
+.globe-image {
+  filter: blur(0.7px) contrast(0.94) saturate(0.93);
+}
+
+.globe-brand-veil {
+  pointer-events: none;
+  inset: 10%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--medical-blue) 0%, var(--medical-blue-light) 48%, #c7eafa 100%);
+  opacity: 0.15;
+  backdrop-filter: blur(1.2px);
+  -webkit-backdrop-filter: blur(1.2px);
+  mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
+}
+
+@keyframes globe-pole-bloom {
+  0%, 100% { transform: scale(0.84, 0.88); opacity: 0.38; }
+  50% { transform: scale(1.18, 1.22); opacity: 0.78; }
+}
+
+.globe-pole-glow {
+  pointer-events: none;
+  left: 22%;
+  width: 56%;
+  height: 15%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.94) 0%, rgba(183,231,255,0.65) 27%, rgba(45,108,181,0.16) 49%, transparent 74%);
+  filter: blur(8px);
+  animation: globe-pole-bloom 6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.globe-pole-glow-top { top: 4%; }
+.globe-pole-glow-bottom { bottom: 4%; }
+
 @keyframes globe-surface-drift {
   from { background-position: 0 50%; }
   to { background-position: -960px 50%; }
@@ -488,6 +523,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .globe-float,
+  .globe-pole-glow,
   .globe-surface-flow,
   .globe-rotation-light,
   .globe-aurora,
