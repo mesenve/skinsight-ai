@@ -120,7 +120,7 @@ function RotatingGlobe() {
   });
 
   return (
-    <group ref={globeRef} position={[0, 0, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
+    <group ref={globeRef} position={[0, 0.1, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
         <MeshTransmissionMaterial
@@ -147,7 +147,7 @@ function RotatingGlobe() {
         <meshPhysicalMaterial
           color="#d9efff"
           transparent
-          opacity={0.1}
+          opacity={0.15}
           roughness={0.38}
           transmission={0.44}
           thickness={0.28}
@@ -163,7 +163,7 @@ function RotatingGlobe() {
           alphaMap={continentsTexture}
           color="#ffffff"
           transparent
-          opacity={0.4}
+          opacity={0.48}
           alphaTest={0.01}
           side={DoubleSide}
           depthWrite={false}
@@ -171,7 +171,7 @@ function RotatingGlobe() {
       </mesh>
       <mesh scale={1.018}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color="#f4fbff" transparent opacity={0.08} side={BackSide} depthWrite={false} />
+        <meshBasicMaterial color="#f4fbff" transparent opacity={0.1} side={BackSide} depthWrite={false} />
       </mesh>
     </group>
   );
