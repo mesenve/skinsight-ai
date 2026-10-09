@@ -182,6 +182,80 @@ body {
   50% { opacity: 0.55; }
 }
 
+@keyframes globe-float {
+  0%, 100% { transform: translate3d(0, -2px, 0) scale(1); }
+  50% { transform: translate3d(0, 2px, 0) scale(1.008); }
+}
+
+@keyframes globe-sheen {
+  0% { transform: translate3d(-120%, 0, 0) rotate(14deg); opacity: 0; }
+  14% { opacity: 0.18; }
+  48% { opacity: 0.46; }
+  78% { opacity: 0.12; }
+  100% { transform: translate3d(235%, 0, 0) rotate(14deg); opacity: 0; }
+}
+
+@keyframes globe-bloom {
+  0%, 100% { opacity: 0.22; transform: scale(0.98); }
+  50% { opacity: 0.42; transform: scale(1.035); }
+}
+
+@keyframes globe-glint {
+  0%, 100% { opacity: 0.18; transform: scale(0.82); }
+  45% { opacity: 0.72; transform: scale(1); }
+  70% { opacity: 0.28; transform: scale(0.9); }
+}
+
+.globe-float {
+  animation: globe-float 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.globe-light-sweep {
+  width: 34%;
+  left: 33%;
+  right: auto;
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0) 26%, rgba(255, 255, 255, 0.72) 48%, rgba(186, 232, 255, 0.22) 58%, transparent 78%);
+  filter: blur(9px);
+  mix-blend-mode: screen;
+  clip-path: circle(48% at 50% 50%);
+  animation: globe-sheen 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform, opacity;
+}
+
+.globe-bloom {
+  background: radial-gradient(circle at 48% 46%, rgba(255, 255, 255, 0.52) 0%, rgba(186, 231, 255, 0.24) 34%, transparent 72%);
+  filter: blur(11px);
+  mix-blend-mode: screen;
+  clip-path: circle(48% at 50% 50%);
+  animation: globe-bloom 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.globe-glint {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.96) 0%, rgba(169, 229, 255, 0.54) 34%, rgba(93, 179, 239, 0) 78%);
+  filter: blur(0.6px);
+  mix-blend-mode: screen;
+  animation: globe-glint 5.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.globe-glint-one { left: 29%; top: 31%; animation-delay: -1.7s; }
+.globe-glint-two { left: 67%; top: 51%; width: 0.55rem; height: 0.55rem; animation-delay: -3.5s; }
+.globe-glint-three { left: 48%; top: 73%; width: 0.45rem; height: 0.45rem; animation-delay: -4.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-float,
+  .globe-light-sweep,
+  .globe-bloom,
+  .globe-glint {
+    animation: none !important;
+  }
+}
+
 .animate-scan-beam { animation: scan-beam 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 .animate-scan-ring { animation: scan-ring 2s ease-out infinite; }
 .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
