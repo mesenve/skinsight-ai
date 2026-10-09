@@ -292,8 +292,8 @@ function QuoteSlider() {
                   sizes="(max-width: 640px) 176px, 208px"
                   className="object-cover"
                 />
-                <span className="absolute left-3 top-3 z-10 flex h-7 w-9 items-center justify-center rounded-full border border-white/80 bg-white/90 p-1 shadow-[0_5px_14px_rgba(26,75,140,0.18)] backdrop-blur-sm">
-                  <Image src={doctor.flag} alt="Country flag" width={24} height={16} className="h-4 w-6 rounded-[2px] object-cover" />
+                <span className="absolute left-3 top-3 z-10 overflow-hidden rounded-md border border-white/75 bg-transparent p-0.5 shadow-[0_5px_14px_rgba(26,75,140,0.14)]">
+                  <Image src={doctor.flag} alt="Country flag" width={24} height={16} className="block h-4 w-6 rounded-[3px] object-cover" />
                 </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-white/10" />
                 <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] ring-1 ring-inset ring-white/55" />
