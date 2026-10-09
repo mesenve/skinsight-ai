@@ -131,14 +131,14 @@ function RotatingGlobe() {
           ior={1.32}
           chromaticAberration={0.018}
           anisotropy={0.08}
-          distortion={0.035}
-          distortionScale={0.12}
-          temporalDistortion={0.03}
+          distortion={0.02}
+          distortionScale={0.08}
+          temporalDistortion={0}
           clearcoat={0.58}
           clearcoatRoughness={0.22}
           attenuationColor="#f2faff"
           attenuationDistance={2.2}
-          samples={4}
+          samples={8}
           resolution={512}
         />
       </mesh>
@@ -199,7 +199,7 @@ function ClinicianGlobe() {
       <directionalLight position={[4, 5, 4]} intensity={2.1} color="#ffffff" />
       <directionalLight position={[-4, 1, 2]} intensity={0.85} color="#a9e5ff" />
       <pointLight position={[0, 2, 3]} intensity={1.4} distance={6} color="#ffffff" />
-      <Environment preset="studio" environmentIntensity={0.24} />
+      <Environment preset="warehouse" environmentIntensity={0.2} />
       <RotatingGlobe />
     </Canvas>
   );
