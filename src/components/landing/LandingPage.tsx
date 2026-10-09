@@ -64,14 +64,14 @@ const clinicianNetwork = [
     role: "Clinical Dermatologist",
     testimonial: "I review the patient's history first.",
     flag: "/flags/us.svg",
-    avatar: media.james,
+    avatar: media.sophie,
   },
   {
     name: "Dr. Sophie Laurent",
     role: "Consultant Dermatologist",
     testimonial: "I check the reasoning before deciding.",
     flag: "/flags/fr.svg",
-    avatar: media.sophie,
+    avatar: media.james,
   },
   {
     name: "Dr. Aiko Tanaka",
