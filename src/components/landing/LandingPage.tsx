@@ -281,7 +281,7 @@ function QuoteSlider() {
               const direction = slot < 0 ? -1 : 1;
               const depth = Math.abs(slot);
               const cardTransform = (entering: boolean) =>
-                `translate(-50%, -50%) translate3d(${pose.x * direction}px, ${pose.y + (entering ? 26 : 0)}px, ${pose.z}px) rotateY(${pose.angle * direction + (entering ? -direction * 22 : 0)}deg) rotateX(${entering ? 38 : 0}deg) scale(${pose.scale * (entering ? 0.94 : 1)})`;
+                `translate(-50%, -50%) translate3d(${pose.x * direction}px, ${pose.y}px, ${pose.z}px) rotateY(${pose.angle * direction + (entering && depth > 0 ? -direction * 22 : 0)}deg) scale(${pose.scale})`;
               const style = {
                 width: cardWidth,
                 zIndex: pose.layer,
