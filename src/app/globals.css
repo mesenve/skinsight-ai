@@ -223,6 +223,14 @@ body {
   --card-scale: 0.76;
 }
 
+.flag-glass {
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(232, 246, 255, 0.42));
+  box-shadow: 0 5px 14px rgba(26, 75, 140, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+}
+
 @media (max-width: 1023px) {
   .doctor-card-inner-left { --card-x: -185px; }
   .doctor-card-inner-right { --card-x: 185px; }
