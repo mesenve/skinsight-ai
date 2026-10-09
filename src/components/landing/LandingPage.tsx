@@ -93,7 +93,7 @@ const clinicianNetwork = [
 ] as const;
 
 const globeRotationDurationSeconds = 35;
-const globeScale = 1.04;
+const globeScale = 0.9;
 
 function RotatingGlobe() {
   const globeRef = useRef<Group>(null);
@@ -120,7 +120,7 @@ function RotatingGlobe() {
   });
 
   return (
-    <group ref={globeRef} position={[0, -0.02, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
+    <group ref={globeRef} position={[0, 0.02, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
         <MeshTransmissionMaterial
