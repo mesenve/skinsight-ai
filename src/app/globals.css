@@ -520,15 +520,16 @@ body {
 }
 
 .globe-holo-aura-outer {
-  inset: -2%;
-  filter: blur(12px);
+  /* Halve the spread beyond the globe's 80% visible diameter. */
+  inset: 4%;
+  filter: blur(6px);
   opacity: 0.72;
   animation: globe-holo-aura-outer 10s linear infinite;
 }
 
 .globe-holo-aura-inner {
-  inset: 3%;
-  filter: blur(8px);
+  inset: 6.5%;
+  filter: blur(4px);
   opacity: 0.55;
   animation: globe-holo-aura-inner 16s linear infinite;
 }
