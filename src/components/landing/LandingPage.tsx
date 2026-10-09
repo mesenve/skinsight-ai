@@ -190,34 +190,6 @@ function QuoteSlider() {
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white via-white/30 to-transparent" />
           </div>
 
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 1000 560"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[72%] w-full opacity-70 sm:h-[80%]"
-          >
-            {[
-              "M 220 135 C 300 150 335 215 430 270",
-              "M 790 135 C 715 145 685 210 600 262",
-              "M 295 415 C 355 390 405 340 470 300",
-              "M 710 415 C 650 395 605 345 540 304",
-              "M 500 82 C 500 155 500 202 500 255",
-            ].map((path, index) => (
-              <motion.path
-                key={path}
-                d={path}
-                fill="none"
-                stroke="rgba(92,202,255,0.9)"
-                strokeWidth="2"
-                strokeDasharray="5 7"
-                initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.9, delay: 0.3 + index * 0.16, ease: "easeOut" }}
-              />
-            ))}
-          </svg>
-
           {clinicianNetwork.map((doctor, index) => (
             <motion.article
               key={doctor.name}
