@@ -63,30 +63,35 @@ const clinicianNetwork = [
   {
     name: "Dr. James Miller",
     role: "Clinical Dermatologist",
+    testimonial: "Consider context before prioritizing care.",
     flag: "/flags/us.svg",
     avatar: "/avatars/clinician-james.webp",
   },
   {
     name: "Dr. Sophie Laurent",
     role: "Consultant Dermatologist",
+    testimonial: "Keep clinical judgment central.",
     flag: "/flags/fr.svg",
     avatar: "/avatars/clinician-sophie.webp",
   },
   {
     name: "Dr. Aiko Tanaka",
     role: "Skin Health Specialist",
+    testimonial: "Consider image quality and context.",
     flag: "/flags/jp.svg",
     avatar: "/avatars/clinician-aiko.webp",
   },
   {
     name: "Dr. Leila Haddad",
     role: "Aesthetic Dermatologist",
+    testimonial: "See the patient beyond the image.",
     flag: "/flags/ae.svg",
     avatar: "/avatars/clinician-leila.webp",
   },
   {
     name: "Dr. Levent Atahanlı",
     role: "Dermatology Advisor",
+    testimonial: "Let evidence guide the next step.",
     flag: "/flags/tr.svg",
     avatar: "/avatars/clinician-levent.webp",
   },
@@ -199,8 +204,52 @@ function ClinicianGlobe() {
 
 function QuoteSlider() {
   const sceneRef = useRef<HTMLDivElement>(null);
-  const sceneVisible = useInView(sceneRef, { once: true, amount: 0.35 });
+  const sceneEntered = useInView(sceneRef, { once: true, amount: 0.35 });
+  const sceneVisible = useInView(sceneRef, { amount: 0.25 });
   const reducedMotion = useReducedMotion();
+  // An unbounded occurrence index keeps clone keys stable across the loop seam.
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [transitioning, setTransitioning] = useState(false);
+  const [pageVisible, setPageVisible] = useState(false);
+  const [pointerInside, setPointerInside] = useState(false);
+  const [keyboardInside, setKeyboardInside] = useState(false);
+  const [resumePending, setResumePending] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [pinnedCard, setPinnedCard] = useState<number | null>(null);
+  const remainingHold = useRef(4500);
+
+  useEffect(() => {
+    if (pinnedCard !== null && Math.abs(pinnedCard - activeIndex) >= 3) setPinnedCard(null);
+  }, [pinnedCard, activeIndex]);
+
+  useEffect(() => {
+    const update = () => setPageVisible(document.visibilityState === "visible");
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  useEffect(() => {
+    if (!resumePending || pointerInside || !sceneVisible || !pageVisible) return;
+    const timer = window.setTimeout(() => setResumePending(false), 1000);
+    return () => window.clearTimeout(timer);
+  }, [resumePending, pointerInside, sceneVisible, pageVisible]);
+
+  useEffect(() => {
+    if (!sceneEntered || !sceneVisible || !pageVisible || reducedMotion !== false ||
+        pointerInside || keyboardInside || pinnedCard !== null || resumePending || transitioning) return;
+    const startedAt = performance.now();
+    let fired = false;
+    const timer = window.setTimeout(() => {
+      fired = true;
+      setTransitioning(true);
+      setActiveIndex((index) => index + 1);
+    }, remainingHold.current);
+    return () => {
+      window.clearTimeout(timer);
+      if (!fired) remainingHold.current = Math.max(0, remainingHold.current - (performance.now() - startedAt));
+    };
+  }, [sceneEntered, sceneVisible, pageVisible, reducedMotion, pointerInside, keyboardInside, pinnedCard, resumePending, transitioning]);
   const [sceneWidth, setSceneWidth] = useState(1152);
   useEffect(() => {
     const scene = sceneRef.current;
@@ -216,24 +265,25 @@ function QuoteSlider() {
   // Project the edges of the rotated rectangles, rather than their untransformed widths.
   const poses = [{ x: 0, y: 0, z: 0, scale: 0.85, angle: 0, opacity: 1, layer: 10 }];
   let rightEdge = cardWidth * poses[0].scale / 2;
-  for (let depth = 1; depth <= 3; depth++) {
-    const scale = depth === 1 ? 0.83 : depth === 2 ? 0.72 : 0.62;
+  for (let depth = 1; depth <= 4; depth++) {
+    const scale = depth === 1 ? 0.83 : depth === 2 ? 0.72 : depth === 3 ? 0.62 : 0.55;
     // Off-axis perspective reduces the apparent yaw; compensate so neighbours
     // remain visibly turned toward the center from the viewer's position.
-    const angle = depth === 1 ? -40 : depth === 2 ? -58 : -68;
-    const z = depth === 1 ? -55 : depth === 2 ? -110 : -180;
+    const angle = depth === 1 ? -40 : depth === 2 ? -58 : depth === 3 ? -68 : -75;
+    const z = depth === 1 ? -55 : depth === 2 ? -110 : depth === 3 ? -180 : -260;
     const radians = angle * Math.PI / 180;
     const half = cardWidth * scale / 2;
     const x = (rightEdge + gap) * (perspective - z - half * Math.sin(radians)) / perspective + half * Math.cos(radians);
     rightEdge = (x + half * Math.cos(radians)) * perspective / (perspective - z + half * Math.sin(radians));
-    poses.push({ x, y: depth === 1 ? 8 : depth === 2 ? 12 : 16, z, scale, angle, opacity: depth === 3 ? 0.22 : 1, layer: depth === 1 ? 8 : depth === 2 ? 5 : 2 });
+    poses.push({ x, y: depth === 1 ? 8 : depth === 2 ? 12 : 16, z, scale, angle, opacity: depth === 4 ? 0 : depth === 3 ? 0.22 : 1, layer: depth === 1 ? 8 : depth === 2 ? 5 : 2 });
   }
-  const slots = [-2, 1, 2, -1, 0];
-  const cards = [
-    ...clinicianNetwork.map((doctor, index) => ({ doctor, slot: slots[index] })),
-    { doctor: clinicianNetwork[2], slot: -3 },
-    { doctor: clinicianNetwork[0], slot: 3 },
-  ];
+  const doctorOrder = [4, 1, 2, 0, 3];
+  const cards = Array.from({ length: 9 }, (_, index) => {
+    const slot = index - 4;
+    const occurrence = activeIndex + slot;
+    const doctorIndex = ((occurrence % doctorOrder.length) + doctorOrder.length) % doctorOrder.length;
+    return { doctor: clinicianNetwork[doctorOrder[doctorIndex]], slot, occurrence };
+  });
   return (
     <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
@@ -246,7 +296,15 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div ref={sceneRef} className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
+        <div ref={sceneRef}
+          onPointerEnter={(event) => { if (event.pointerType === "mouse") { setPointerInside(true); setResumePending(false); } }}
+          onPointerLeave={(event) => { if (event.pointerType === "mouse") { setPointerInside(false); setHoveredCard(null); setResumePending(true); } }}
+          onFocusCapture={(event) => { if (event.target.matches(":focus-visible")) setKeyboardInside(true); }}
+          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setKeyboardInside(false); }}
+          data-active-index={activeIndex}
+          data-transitioning={transitioning}
+          aria-label="Doctor showcase"
+          className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
           <div className="globe-float relative h-[25rem] w-[25rem] sm:h-[30rem] sm:w-[30rem]" aria-hidden="true">
             <span className="globe-halo absolute inset-[7%] z-0 rounded-full" />
             <span className="globe-holo-aura globe-holo-aura-outer absolute z-0" />
@@ -276,7 +334,7 @@ function QuoteSlider() {
           </div>
 
           <div className="doctor-cards-layer absolute inset-0">
-            {cards.map(({ doctor, slot }) => {
+            {cards.map(({ doctor, slot, occurrence }) => {
               const pose = poses[Math.abs(slot)];
               const direction = slot < 0 ? -1 : 1;
               const depth = Math.abs(slot);
@@ -290,23 +348,43 @@ function QuoteSlider() {
                 "--card-z": `${pose.z}px`,
                 "--card-angle": `${pose.angle * direction}deg`,
                 "--card-scale": pose.scale,
-                filter: Math.abs(slot) === 3 ? "blur(3px)" : undefined,
-                maskImage: Math.abs(slot) === 3
-                  ? `linear-gradient(to ${slot < 0 ? "left" : "right"}, #000 30%, transparent 90%)`
-                  : undefined,
+                pointerEvents: depth >= 3 ? "none" : "auto",
               } as CSSProperties;
+              const testimonialOpen = depth < 3 && (hoveredCard === occurrence || pinnedCard === occurrence);
+              const maskAlphas = slot <= -3 ? [0, 0, 1 / 3, 1, 1, 1] : slot >= 3 ? [1, 1, 1, 1 / 3, 0, 0] : [1, 1, 1, 1, 1, 1];
+              const mask = `linear-gradient(to right, ${maskAlphas.map((alpha, index) => `rgba(0,0,0,${alpha}) ${[0, 10, 30, 70, 90, 100][index]}%`).join(", ")})`;
               return (
               <motion.article
-                key={`${doctor.name}-${slot}`}
-                aria-hidden={Math.abs(slot) === 3 ? true : undefined}
-                data-arc-index={slot}
-                style={style}
-                initial={reducedMotion ? false : { opacity: 0, transform: cardTransform(true) }}
-                animate={{
-                  opacity: sceneVisible || reducedMotion ? pose.opacity : 0,
-                  transform: cardTransform(!sceneVisible && !reducedMotion),
+                key={occurrence}
+                aria-hidden={depth >= 3 ? true : undefined}
+                role={depth < 3 ? "button" : undefined}
+                tabIndex={depth < 3 ? 0 : -1}
+                aria-label={depth < 3 ? `${doctor.name}: show demo testimonial` : undefined}
+                aria-expanded={depth < 3 ? testimonialOpen : undefined}
+                onPointerEnter={(event) => { if (event.pointerType === "mouse") setHoveredCard(occurrence); }}
+                onPointerLeave={() => setHoveredCard(null)}
+                onPointerUp={(event) => { if (event.pointerType === "touch") { setHoveredCard(null); setPinnedCard((current) => current === occurrence ? null : occurrence); } }}
+                onClick={(event) => { if (event.detail === 0) setPinnedCard((current) => current === occurrence ? null : occurrence); }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setPinnedCard((current) => current === occurrence ? null : occurrence); }
+                  if (event.key === "Escape") { setPinnedCard(null); setHoveredCard(null); }
                 }}
-                transition={{ duration: reducedMotion ? 0 : 0.85, delay: reducedMotion ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
+                onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) setHoveredCard(occurrence); }}
+                onBlur={() => { setHoveredCard(null); setPinnedCard(null); }}
+                data-arc-index={slot}
+                data-occurrence={occurrence}
+                style={style}
+                initial={reducedMotion || activeIndex > 0 ? false : { opacity: 0, transform: cardTransform(true) }}
+                animate={{
+                  opacity: sceneEntered || reducedMotion ? pose.opacity : 0,
+                  transform: cardTransform(!sceneEntered && !reducedMotion),
+                  filter: `blur(${depth >= 3 ? 3 : 0}px)`,
+                  maskImage: mask,
+                }}
+                onAnimationComplete={() => {
+                  if (slot === 0 && transitioning) { remainingHold.current = 4500; setTransitioning(false); }
+                }}
+                transition={{ duration: reducedMotion ? 0 : activeIndex > 0 ? 1 : 0.85, delay: reducedMotion || activeIndex > 0 ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
               >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
@@ -321,6 +399,10 @@ function QuoteSlider() {
                   <Image src={doctor.flag} alt="Country flag" width={22} height={15} className="block h-3.5 w-5 rounded-[3px] object-cover" />
                 </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/15 via-transparent to-white/10" />
+                <div className="doctor-testimonial" data-open={testimonialOpen} aria-hidden={!testimonialOpen}>
+                  <span className="doctor-testimonial-label" aria-label="Demo placeholder text">DEMO</span>
+                  <p>{doctor.testimonial}</p>
+                </div>
               </div>
               <div className="px-1 pb-0.5 pt-1.5">
                 <div className="flex items-center gap-1">
