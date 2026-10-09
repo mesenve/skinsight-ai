@@ -8,7 +8,6 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
-  BadgeCheck,
   CalendarDays,
   CheckCircle2,
   ChevronDown,
@@ -299,10 +298,12 @@ function QuoteSlider() {
               <div className="px-1.5 pb-1 pt-2">
                 <div className="flex items-center gap-1.5">
                   <p className="truncate text-[13px] font-semibold leading-tight text-navy">{doctor.name}</p>
-                  <BadgeCheck
-                    className="h-4 w-4 shrink-0 fill-[#4f7ff3] text-white"
-                    strokeWidth={2.2}
-                    aria-label="Official clinician"
+                  <Image
+                    src="/icons/official-badge.png"
+                    alt="Official clinician"
+                    width={20}
+                    height={20}
+                    className="h-4 w-4 shrink-0 object-contain"
                   />
                 </div>
                 <p className="mt-1 text-[10px] font-medium text-muted">{doctor.role}</p>
