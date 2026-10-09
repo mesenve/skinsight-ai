@@ -183,16 +183,16 @@ body {
 }
 
 @keyframes globe-float {
-  0%, 100% { transform: translate3d(0, -2px, 0) scale(1); }
-  50% { transform: translate3d(0, 2px, 0) scale(1.008); }
+  0%, 100% { transform: translate3d(0, -6px, 0) scale(1); }
+  50% { transform: translate3d(0, 6px, 0) scale(1.015); }
 }
 
 @keyframes globe-sheen {
-  0% { transform: translate3d(-120%, 0, 0) rotate(14deg); opacity: 0; }
+  0% { background-position: -170% 50%; opacity: 0; }
   14% { opacity: 0.18; }
-  48% { opacity: 0.46; }
-  78% { opacity: 0.12; }
-  100% { transform: translate3d(235%, 0, 0) rotate(14deg); opacity: 0; }
+  48% { background-position: 0% 50%; opacity: 0.72; }
+  78% { background-position: 170% 50%; opacity: 0.2; }
+  100% { background-position: 240% 50%; opacity: 0; }
 }
 
 @keyframes globe-bloom {
@@ -206,6 +206,11 @@ body {
   70% { opacity: 0.28; transform: scale(0.9); }
 }
 
+@keyframes globe-halo {
+  0%, 100% { opacity: 0.24; transform: scale(0.94); }
+  50% { opacity: 0.7; transform: scale(1.06); }
+}
+
 @keyframes globe-edge-glow {
   0%, 100% { opacity: 0.18; transform: rotate(-10deg) scale(0.99); }
   50% { opacity: 0.52; transform: rotate(10deg) scale(1.01); }
@@ -216,16 +221,26 @@ body {
   will-change: transform;
 }
 
+.globe-halo {
+  background: radial-gradient(circle, rgba(103, 202, 255, 0.38) 0%, rgba(79, 157, 238, 0.2) 42%, transparent 73%);
+  filter: blur(18px);
+  mix-blend-mode: multiply;
+  animation: globe-halo 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 .globe-light-sweep {
-  width: 34%;
-  left: 33%;
+  width: auto;
+  left: auto;
   right: auto;
-  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0) 26%, rgba(255, 255, 255, 0.72) 48%, rgba(186, 232, 255, 0.22) 58%, transparent 78%);
-  filter: blur(9px);
+  background: linear-gradient(105deg, transparent 0%, rgba(65, 180, 255, 0) 32%, rgba(255, 255, 255, 0.88) 47%, rgba(82, 202, 255, 0.62) 55%, transparent 69%);
+  background-size: 250% 100%;
+  background-position: -170% 50%;
+  filter: blur(6px);
   mix-blend-mode: screen;
   clip-path: circle(48% at 50% 50%);
-  animation: globe-sheen 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-  will-change: transform, opacity;
+  animation: globe-sheen 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: background-position, opacity;
 }
 
 .globe-bloom {
@@ -238,8 +253,8 @@ body {
 }
 
 .globe-edge-glow {
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.42), 0 0 26px rgba(140, 209, 255, 0.2);
+  border: 2px solid rgba(159, 226, 255, 0.45);
+  box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.58), 0 0 34px rgba(73, 184, 255, 0.3);
   clip-path: circle(48% at 50% 50%);
   mix-blend-mode: screen;
   animation: globe-edge-glow 6.5s ease-in-out infinite;
@@ -263,6 +278,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .globe-float,
+  .globe-halo,
   .globe-light-sweep,
   .globe-bloom,
   .globe-edge-glow,
