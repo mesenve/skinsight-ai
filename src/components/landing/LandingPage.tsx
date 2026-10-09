@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Environment, MeshTransmissionMaterial } from "@react-three/drei";
 import Image from "next/image";
@@ -198,6 +198,35 @@ function ClinicianGlobe() {
 }
 
 function QuoteSlider() {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const [sceneWidth, setSceneWidth] = useState(1152);
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const observer = new ResizeObserver(([entry]) => setSceneWidth(entry.contentRect.width));
+    observer.observe(scene);
+    return () => observer.disconnect();
+  }, []);
+
+  const cardWidth = Math.min(240, Math.max(130, sceneWidth / 4.5));
+  const gap = sceneWidth < 640 ? 16 : 24;
+  const perspective = 1000;
+  // Project the edges of the rotated rectangles, rather than their untransformed widths.
+  const poses = [{ x: 0, y: 0, z: 0, scale: 1, angle: 0, opacity: 1, layer: 10 }];
+  let rightEdge = cardWidth / 2;
+  for (let depth = 1; depth <= 2; depth++) {
+    const scale = depth === 1 ? 0.83 : 0.72;
+    // Off-axis perspective reduces the apparent yaw; compensate so neighbours
+    // remain visibly turned toward the center from the viewer's position.
+    const angle = depth === 1 ? -40 : -58;
+    const z = depth === 1 ? -55 : -110;
+    const radians = angle * Math.PI / 180;
+    const half = cardWidth * scale / 2;
+    const x = (rightEdge + gap) * (perspective - z - half * Math.sin(radians)) / perspective + half * Math.cos(radians);
+    rightEdge = (x + half * Math.cos(radians)) * perspective / (perspective - z + half * Math.sin(radians));
+    poses.push({ x, y: depth === 1 ? 8 : 12, z, scale, angle, opacity: depth === 1 ? 1 : 0.48, layer: depth === 1 ? 8 : 5 });
+  }
+  const slots = [-2, 1, 2, -1, 0];
   return (
     <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
@@ -210,7 +239,7 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
+        <div ref={sceneRef} className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
           <div className="globe-float relative h-[25rem] w-[25rem] sm:h-[30rem] sm:w-[30rem]" aria-hidden="true">
             <span className="globe-halo absolute inset-[7%] z-0 rounded-full" />
             <span className="globe-holo-aura globe-holo-aura-outer absolute z-0" />
@@ -238,25 +267,29 @@ function QuoteSlider() {
           </div>
 
           <div className="doctor-cards-layer absolute inset-0">
-            {clinicianNetwork.map((doctor, index) => (
+            {clinicianNetwork.map((doctor, index) => {
+              const slot = slots[index];
+              const pose = poses[Math.abs(slot)];
+              const direction = slot < 0 ? -1 : 1;
+              const style = {
+                width: cardWidth,
+                zIndex: pose.layer,
+                "--card-x": `${pose.x * direction}px`,
+                "--card-y": `${pose.y}px`,
+                "--card-z": `${pose.z}px`,
+                "--card-angle": `${pose.angle * direction}deg`,
+                "--card-scale": pose.scale,
+              } as CSSProperties;
+              return (
               <motion.article
                 key={doctor.name}
+                data-arc-index={slot}
+                style={style}
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                whileInView={{ opacity: pose.opacity }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={cn(
-                  "doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
-                  index === 4
-                    ? "doctor-card-center z-30 w-40 p-2 sm:w-48 sm:p-2.5"
-                    : [0, 2].includes(index)
-                      ? index === 0
-                        ? "doctor-card-outer-left z-10 w-24 p-1 sm:w-28 sm:p-1.5"
-                        : "doctor-card-outer-right z-10 w-24 p-1 sm:w-28 sm:p-1.5"
-                      : index === 3
-                        ? "doctor-card-inner-left z-20 w-32 p-1.5 sm:w-40 sm:p-2"
-                        : "doctor-card-inner-right z-20 w-32 p-1.5 sm:w-40 sm:p-2"
-                )}
+                className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
               >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                 <Image
@@ -285,7 +318,8 @@ function QuoteSlider() {
                 <p className="mt-0.5 text-[9px] font-medium text-muted">{doctor.role}</p>
               </div>
               </motion.article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
