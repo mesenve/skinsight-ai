@@ -174,11 +174,6 @@ body {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   transform-origin: center center;
-  transform:
-    translate(-50%, -50%)
-    translate3d(var(--card-x), var(--card-y), var(--card-z))
-    rotateY(var(--card-angle))
-    scale(var(--card-scale));
   will-change: transform, opacity;
   pointer-events: auto;
 }
@@ -278,6 +273,43 @@ body {
 
 .globe-float {
   animation: globe-float 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes globe-surface-drift {
+  from { background-position: 0 50%; }
+  to { background-position: -960px 50%; }
+}
+
+@keyframes globe-rotation-light {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.globe-surface-flow {
+  pointer-events: none;
+  inset: 10%;
+  border-radius: 50%;
+  background-image: url('/earth/trusted-doctors-globe.webp');
+  background-size: 480px 100%;
+  background-repeat: repeat-x;
+  mask-image: radial-gradient(ellipse, #000 24%, rgba(0, 0, 0, 0.6) 48%, transparent 71%);
+  opacity: 0.24;
+  mix-blend-mode: screen;
+  animation: globe-surface-drift 35s linear infinite;
+  will-change: background-position;
+}
+
+.globe-rotation-light {
+  pointer-events: none;
+  inset: 10%;
+  border-radius: 50%;
+  background: conic-gradient(from 20deg, transparent 0deg, rgba(197, 237, 255, 0.08) 65deg, rgba(255, 255, 255, 0.55) 110deg, rgba(191, 224, 255, 0.18) 160deg, transparent 220deg, transparent 360deg);
+  mask-image: radial-gradient(circle, transparent 36%, #000 57%, transparent 72%);
+  filter: blur(8px);
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  animation: globe-rotation-light 18s linear infinite;
   will-change: transform;
 }
 
@@ -389,6 +421,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .globe-float,
+  .globe-surface-flow,
+  .globe-rotation-light,
   .globe-halo,
   .globe-bloom,
   .globe-specular,
