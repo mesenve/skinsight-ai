@@ -211,15 +211,22 @@ function QuoteSlider() {
         </div>
 
         <div className="relative isolate mt-6 flex min-h-[24rem] items-center justify-center overflow-hidden sm:min-h-[24rem]">
-          <Image
-            src="/earth/trusted-doctors-globe.webp"
-            alt=""
-            width={1024}
-            height={1024}
-            priority
-            sizes="(max-width: 640px) 78vw, 30rem"
-            className="h-[21rem] w-[21rem] object-contain sm:h-[25rem] sm:w-[25rem]"
-          />
+          <div className="globe-float relative h-[21rem] w-[21rem] sm:h-[25rem] sm:w-[25rem]" aria-hidden="true">
+            <Image
+              src="/earth/trusted-doctors-globe.webp"
+              alt=""
+              width={1024}
+              height={1024}
+              priority
+              sizes="(max-width: 640px) 78vw, 30rem"
+              className="absolute inset-0 z-10 h-full w-full object-contain"
+            />
+            <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
+            <span className="globe-light-sweep absolute inset-[5%] z-20 rounded-full" />
+            <span className="globe-glint globe-glint-one absolute z-20" />
+            <span className="globe-glint globe-glint-two absolute z-20" />
+            <span className="globe-glint globe-glint-three absolute z-20" />
+          </div>
 
           {clinicianNetwork.map((doctor, index) => (
             <motion.article
