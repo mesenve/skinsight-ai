@@ -199,9 +199,9 @@ function ClinicianGlobe() {
 
 function QuoteSlider() {
   return (
-    <section className="relative overflow-hidden bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
+    <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-2xl pt-10 text-center sm:pt-12">
           <p className="section-label text-medical-blue">Clinician perspective</p>
           <h2 className="font-display mt-3 text-3xl font-bold tracking-tight text-navy sm:text-4xl">
             Built with doctors,
@@ -210,7 +210,7 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative isolate mt-12 min-h-[42rem] overflow-hidden sm:min-h-[40rem]">
+        <div className="relative isolate mt-6 min-h-[30rem] overflow-hidden sm:min-h-[31rem]">
           <div className="pointer-events-none absolute inset-x-0 bottom-[-1%] z-0 h-[82%] sm:bottom-[-2%] sm:h-[84%]">
             <ClinicianGlobe />
           </div>
