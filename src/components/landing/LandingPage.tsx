@@ -283,7 +283,7 @@ function QuoteSlider() {
                   opacity: depth === 0 || sceneEntered || reducedMotion ? pose.opacity : 0,
                   transform: cardTransform(!sceneEntered && !reducedMotion),
                   filter: `blur(${depth >= 3 ? 3 : 0}px)`,
-                  maskImage: mask,
+                  maskImage: depth >= 3 ? mask : "none",
                 }}
                 onAnimationComplete={() => {
                   if (slot === 0 && transitioning) { remainingHold.current = 3150; setTransitioning(false); }
