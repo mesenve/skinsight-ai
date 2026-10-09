@@ -304,7 +304,7 @@ function QuoteSlider() {
                   <Image src={doctor.flag} alt="Country flag" width={22} height={15} loading="eager" className="block h-3.5 w-5 rounded-[3px] object-cover" />
                 </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/15 via-transparent to-white/10" />
-                <div className="doctor-testimonial" data-open={testimonialOpen} aria-hidden={!testimonialOpen}>
+                <div className="clinical-glass doctor-testimonial" data-open={testimonialOpen} aria-hidden={!testimonialOpen}>
                   <p>{doctor.testimonial}</p>
                 </div>
               </div>
@@ -353,21 +353,8 @@ function FaqBlock() {
         />
 
         <div
-          className="absolute bottom-4 left-1/2 w-[calc(100%-2.25rem)] -translate-x-1/2 overflow-hidden rounded-2xl px-3 py-2.5 sm:bottom-5 sm:w-[calc(100%-2.75rem)]"
-          style={{
-            background:
-              "linear-gradient(165deg, rgba(255,255,255,0.84) 0%, rgba(255,255,255,0.6) 100%)",
-            backdropFilter: "blur(24px) saturate(180%)",
-            WebkitBackdropFilter: "blur(24px) saturate(180%)",
-            border: "1px solid rgba(255,255,255,0.9)",
-            boxShadow:
-              "0 8px 28px rgba(26,75,140,0.12), inset 0 1px 0 rgba(255,255,255,0.95)",
-          }}
+          className="clinical-glass absolute bottom-4 left-1/2 w-[calc(100%-2.25rem)] -translate-x-1/2 px-3 py-2.5 sm:bottom-5 sm:w-[calc(100%-2.75rem)]"
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-90"
-          />
           <p className="font-display text-[13px] font-bold tracking-tight text-navy">
             Dr. Maya Laurent
           </p>
