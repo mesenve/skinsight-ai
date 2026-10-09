@@ -210,7 +210,7 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative isolate mt-6 min-h-[27rem] overflow-hidden sm:min-h-[28rem]">
+        <div className="relative isolate mt-6 min-h-[24rem] overflow-hidden sm:min-h-[24rem]">
           <div className="pointer-events-none absolute inset-x-0 bottom-[-1%] z-0 h-[82%] sm:bottom-[-2%] sm:h-[84%]">
             <ClinicianGlobe />
           </div>
