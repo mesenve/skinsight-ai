@@ -260,7 +260,7 @@ function QuoteSlider() {
                   sizes="(max-width: 640px) 144px, 168px"
                   className="object-cover"
                 />
-                <span className="absolute left-2 top-2 z-10 overflow-hidden rounded-md border border-white/75 bg-transparent p-0.5 shadow-[0_4px_10px_rgba(26,75,140,0.14)]">
+                <span className="flag-glass absolute left-2 top-2 z-10 overflow-hidden rounded-md p-1">
                   <Image src={doctor.flag} alt="Country flag" width={22} height={15} className="block h-3.5 w-5 rounded-[3px] object-cover" />
                 </span>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/15 via-transparent to-white/10" />
