@@ -341,6 +341,27 @@ body {
   50% { transform: translate3d(7%, 4%, 0) scale(1.08); opacity: 0.58; }
 }
 
+@keyframes holo-ring-horizontal {
+  0%, 100% { transform: perspective(900px) rotateX(67deg) rotateZ(-18deg) scale(0.96); opacity: 0.2; }
+  50% { transform: perspective(900px) rotateX(67deg) rotateZ(162deg) scale(1.04); opacity: 0.72; }
+}
+
+@keyframes holo-ring-vertical {
+  0%, 100% { transform: perspective(900px) rotateY(64deg) rotateZ(-12deg) scale(0.98); opacity: 0.16; }
+  50% { transform: perspective(900px) rotateY(64deg) rotateZ(168deg) scale(1.03); opacity: 0.58; }
+}
+
+@keyframes holo-sweep {
+  0%, 100% { transform: rotate(-18deg) translateX(-12%); opacity: 0.08; }
+  50% { transform: rotate(-18deg) translateX(12%); opacity: 0.38; }
+}
+
+@keyframes holo-particle {
+  0%, 100% { transform: translate3d(0, 5px, 0) scale(0.72); opacity: 0.18; }
+  45% { transform: translate3d(0, -10px, 0) scale(1.12); opacity: 0.95; }
+  70% { opacity: 0.38; }
+}
+
 .globe-float {
   animation: globe-float 8s ease-in-out infinite;
   will-change: transform;
@@ -403,6 +424,59 @@ body {
   will-change: transform, opacity;
 }
 
+.globe-holo-ring {
+  pointer-events: none;
+  border: 1px solid rgba(111, 210, 255, 0.7);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(111, 210, 255, 0.42), inset 0 0 10px rgba(255, 255, 255, 0.28);
+  transform-style: preserve-3d;
+  mix-blend-mode: screen;
+}
+
+.globe-holo-ring-horizontal {
+  left: -7%;
+  top: 31%;
+  width: 114%;
+  height: 39%;
+  animation: holo-ring-horizontal 9s linear infinite;
+}
+
+.globe-holo-ring-vertical {
+  left: 17%;
+  top: -4%;
+  width: 66%;
+  height: 108%;
+  border-color: rgba(171, 237, 255, 0.48);
+  animation: holo-ring-vertical 12s linear infinite reverse;
+}
+
+.globe-holo-sweep {
+  left: 3%;
+  top: 17%;
+  width: 94%;
+  height: 66%;
+  border-radius: 50%;
+  background: linear-gradient(100deg, transparent 22%, rgba(104, 221, 255, 0.34) 47%, rgba(255, 255, 255, 0.58) 51%, transparent 74%);
+  filter: blur(8px);
+  clip-path: ellipse(48% 47% at 50% 50%);
+  mix-blend-mode: screen;
+  animation: holo-sweep 5.8s ease-in-out infinite;
+}
+
+.globe-holo-particle {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(90, 215, 255, 0.8) 32%, transparent 75%);
+  box-shadow: 0 0 12px rgba(93, 209, 255, 0.85);
+  animation: holo-particle 4.6s ease-in-out infinite;
+}
+
+.globe-holo-particle-one { left: 9%; top: 39%; animation-delay: -0.9s; }
+.globe-holo-particle-two { left: 84%; top: 30%; width: 0.32rem; height: 0.32rem; animation-delay: -2.2s; }
+.globe-holo-particle-three { left: 76%; top: 77%; width: 0.5rem; height: 0.5rem; animation-delay: -3.4s; }
+.globe-holo-particle-four { left: 19%; top: 72%; width: 0.3rem; height: 0.3rem; animation-delay: -1.7s; }
+
 .globe-edge-glow {
   border: 2px solid rgba(159, 226, 255, 0.45);
   box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.58), 0 0 34px rgba(73, 184, 255, 0.3);
@@ -434,6 +508,9 @@ body {
   .globe-bloom,
   .globe-surface-shimmer,
   .globe-specular,
+  .globe-holo-ring,
+  .globe-holo-sweep,
+  .globe-holo-particle,
   .globe-edge-glow,
   .globe-glint {
     animation: none !important;
