@@ -137,6 +137,7 @@ function RotatingGlobe() {
       <mesh scale={1.008}>
         <sphereGeometry args={[1, 96, 96]} />
         <meshBasicMaterial
+          map={continentsTexture}
           alphaMap={continentsTexture}
           color="#f5fbff"
           transparent
