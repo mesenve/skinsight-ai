@@ -91,8 +91,7 @@ const clinicianNetwork = [
 
 function QuoteSlider() {
   return (
-    <section className="relative overflow-hidden bg-[#f4f9ff] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_8%_18%,rgba(122,190,255,0.24),transparent_58%),radial-gradient(ellipse_55%_50%_at_92%_20%,rgba(76,214,238,0.16),transparent_58%),linear-gradient(180deg,#f6fbff_0%,#ffffff_62%,#f1f8ff_100%)]" />
+    <section className="relative overflow-hidden bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
       <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="section-label text-medical-blue">Clinician perspective</p>
@@ -107,7 +106,7 @@ function QuoteSlider() {
           </p>
         </div>
 
-        <div className="relative mt-12 min-h-[39rem] overflow-hidden rounded-[2rem] border border-white/80 bg-white/35 shadow-[0_24px_70px_rgba(26,75,140,0.1)] backdrop-blur-sm sm:min-h-[35rem]">
+        <div className="relative mt-12 min-h-[39rem] overflow-hidden sm:min-h-[35rem]">
           <div className="pointer-events-none absolute inset-x-0 bottom-[-4%] h-[70%] sm:bottom-[-9%] sm:h-[78%]">
             <Image
               src={clinicianNetworkWorldImage}
@@ -117,7 +116,7 @@ function QuoteSlider() {
               className="object-contain object-bottom opacity-95"
               priority
             />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#f4f9ff] via-[#f4f9ff]/30 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white via-white/30 to-transparent" />
           </div>
 
           <svg
