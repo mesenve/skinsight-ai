@@ -321,6 +321,10 @@ function QuoteSlider() {
             />
             <span className="globe-surface-flow absolute z-20" />
             <span className="globe-rotation-light absolute z-20" />
+            <span className="globe-aurora absolute z-20" />
+            <span className="globe-orbit globe-orbit-one absolute z-20"><span className="globe-orbit-spark" /></span>
+            <span className="globe-orbit globe-orbit-two absolute z-20"><span className="globe-orbit-spark" /></span>
+            <span className="globe-orbit globe-orbit-three absolute z-20"><span className="globe-orbit-spark" /></span>
             <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
             <span className="globe-specular absolute z-20" />
             <span className="globe-edge-glow absolute inset-[7%] z-20 rounded-full" />
