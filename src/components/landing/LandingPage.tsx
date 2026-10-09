@@ -187,7 +187,7 @@ function QuoteSlider() {
     return { doctor: clinicianNetwork[doctorOrder[doctorIndex]], slot, occurrence };
   });
   return (
-    <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+    <section className="relative overflow-hidden bg-white px-5 pb-8 pt-16 sm:px-8 sm:pb-10 sm:pt-20 lg:px-12 lg:pb-12">
       <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl pt-10 text-center sm:pt-12">
           <p className="section-label text-medical-blue">Clinician perspective</p>
@@ -488,6 +488,8 @@ export function LandingPage() {
     <div className="min-h-screen text-foreground">
       <LandingHeader />
 
+      <QuoteSlider />
+
       {/* Hero */}
       <section className="relative min-h-[100svh] overflow-hidden bg-[#f7fbff]">
         <div className="pointer-events-none absolute inset-0">
@@ -683,8 +685,6 @@ export function LandingPage() {
           </div>
         </div>
       </section>
-
-      <QuoteSlider />
 
       {/* Product promise */}
       <section
