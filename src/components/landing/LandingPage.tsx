@@ -124,9 +124,9 @@ function RotatingGlobe() {
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
         <MeshTransmissionMaterial
-          color="#b9dcf7"
-          transmission={0.92}
-          roughness={0.24}
+          color="#d2ecff"
+          transmission={0.96}
+          roughness={0.3}
           thickness={0.58}
           ior={1.32}
           chromaticAberration={0.018}
@@ -134,9 +134,9 @@ function RotatingGlobe() {
           distortion={0.035}
           distortionScale={0.12}
           temporalDistortion={0.03}
-          clearcoat={0.68}
-          clearcoatRoughness={0.18}
-          attenuationColor="#e7f5ff"
+          clearcoat={0.58}
+          clearcoatRoughness={0.22}
+          attenuationColor="#f2faff"
           attenuationDistance={2.2}
           samples={4}
           resolution={512}
@@ -145,10 +145,10 @@ function RotatingGlobe() {
       <mesh scale={0.994}>
         <sphereGeometry args={[1, 96, 96]} />
         <meshPhysicalMaterial
-          color="#8fc7f0"
+          color="#b8ddfa"
           transparent
-          opacity={0.22}
-          roughness={0.32}
+          opacity={0.16}
+          roughness={0.38}
           transmission={0.44}
           thickness={0.28}
           clearcoat={0.38}
@@ -161,18 +161,18 @@ function RotatingGlobe() {
         <meshPhysicalMaterial
           map={continentsTexture}
           alphaMap={continentsTexture}
-          color="#f5fbff"
+          color="#ffffff"
           transparent
-          opacity={0.66}
+          opacity={0.58}
           alphaTest={0.01}
-          roughness={0.28}
+          roughness={0.42}
           metalness={0}
           transmission={0.28}
           thickness={0.12}
           clearcoat={0.42}
           clearcoatRoughness={0.22}
-          emissive="#d9efff"
-          emissiveIntensity={0.12}
+          emissive="#eaf7ff"
+          emissiveIntensity={0.28}
           side={DoubleSide}
           depthWrite={false}
         />
@@ -199,7 +199,7 @@ function ClinicianGlobe() {
       <directionalLight position={[4, 5, 4]} intensity={2.1} color="#ffffff" />
       <directionalLight position={[-4, 1, 2]} intensity={0.85} color="#a9e5ff" />
       <pointLight position={[0, 2, 3]} intensity={1.4} distance={6} color="#ffffff" />
-      <Environment preset="studio" environmentIntensity={0.55} />
+      <Environment preset="studio" environmentIntensity={0.24} />
       <RotatingGlobe />
     </Canvas>
   );
