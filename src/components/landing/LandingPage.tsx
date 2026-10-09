@@ -228,7 +228,7 @@ function QuoteSlider() {
                 index === 1 && "right-3 top-16 rotate-[4deg] sm:right-6 sm:top-14",
                 index === 2 && "right-8 bottom-16 rotate-[3deg] sm:right-[12%] sm:bottom-12",
                 index === 3 && "left-8 bottom-16 rotate-[-3deg] sm:left-[12%] sm:bottom-12",
-                index === 4 && "left-1/2 top-[42%] -translate-x-1/2 rotate-[-1deg]"
+                index === 4 && "left-1/2 top-[30%] -translate-x-1/2 rotate-[-1deg]"
               )}
             >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[1.05rem] border border-white/70 bg-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
