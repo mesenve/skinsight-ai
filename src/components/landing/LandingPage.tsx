@@ -239,26 +239,27 @@ function QuoteSlider() {
             <span className="globe-holo-particle globe-holo-particle-four absolute z-30" />
           </div>
 
-          {clinicianNetwork.map((doctor, index) => (
-            <motion.article
-              key={doctor.name}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className={cn(
-                "doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
-                index === 4
-                  ? "doctor-card-center z-30 w-40 p-2 sm:w-48 sm:p-2.5"
-                  : [0, 2].includes(index)
-                    ? index === 0
-                      ? "doctor-card-outer-left z-10 w-24 p-1 sm:w-28 sm:p-1.5"
-                      : "doctor-card-outer-right z-10 w-24 p-1 sm:w-28 sm:p-1.5"
-                    : index === 3
-                      ? "doctor-card-inner-left z-20 w-32 p-1.5 sm:w-40 sm:p-2"
-                      : "doctor-card-inner-right z-20 w-32 p-1.5 sm:w-40 sm:p-2"
-              )}
-            >
+          <div className="doctor-cards-layer absolute inset-0">
+            {clinicianNetwork.map((doctor, index) => (
+              <motion.article
+                key={doctor.name}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className={cn(
+                  "doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl",
+                  index === 4
+                    ? "doctor-card-center z-30 w-40 p-2 sm:w-48 sm:p-2.5"
+                    : [0, 2].includes(index)
+                      ? index === 0
+                        ? "doctor-card-outer-left z-10 w-24 p-1 sm:w-28 sm:p-1.5"
+                        : "doctor-card-outer-right z-10 w-24 p-1 sm:w-28 sm:p-1.5"
+                      : index === 3
+                        ? "doctor-card-inner-left z-20 w-32 p-1.5 sm:w-40 sm:p-2"
+                        : "doctor-card-inner-right z-20 w-32 p-1.5 sm:w-40 sm:p-2"
+                )}
+              >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                 <Image
                   src={doctor.avatar}
@@ -285,8 +286,9 @@ function QuoteSlider() {
                 </div>
                 <p className="mt-0.5 text-[9px] font-medium text-muted">{doctor.role}</p>
               </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
