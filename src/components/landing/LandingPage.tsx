@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { MeshTransmissionMaterial } from "@react-three/drei";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,7 +13,7 @@ import {
   ChevronDown,
   Sparkles,
 } from "lucide-react";
-import { BackSide, SRGBColorSpace, TextureLoader, type Group } from "three";
+import { BackSide, DoubleSide, SRGBColorSpace, TextureLoader, type Group } from "three";
 import { LandingHeader } from "@/components/landing/LandingHeader";
 import { LogoMark } from "@/components/shared/LogoMark";
 import { buttonStyles } from "@/components/ui/Button";
@@ -119,36 +120,66 @@ function RotatingGlobe() {
   });
 
   return (
-    <group ref={globeRef} position={[0, -0.08, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
+    <group ref={globeRef} position={[0, -0.02, 0]} rotation={[0.08, -0.35, 0]} scale={globeScale}>
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
+        <MeshTransmissionMaterial
+          color="#b9dcf7"
+          transmission={0.92}
+          roughness={0.24}
+          thickness={0.58}
+          ior={1.32}
+          chromaticAberration={0.018}
+          anisotropy={0.08}
+          distortion={0.035}
+          distortionScale={0.12}
+          temporalDistortion={0.03}
+          clearcoat={0.68}
+          clearcoatRoughness={0.18}
+          attenuationColor="#e7f5ff"
+          attenuationDistance={2.2}
+          samples={4}
+          resolution={512}
+        />
+      </mesh>
+      <mesh scale={0.994}>
+        <sphereGeometry args={[1, 96, 96]} />
         <meshPhysicalMaterial
-          color="#a7d4ff"
+          color="#8fc7f0"
           transparent
-          opacity={0.76}
-          roughness={0.38}
-          metalness={0}
-          transmission={0.22}
-          thickness={0.32}
-          clearcoat={0.45}
-          clearcoatRoughness={0.28}
+          opacity={0.22}
+          roughness={0.32}
+          transmission={0.44}
+          thickness={0.28}
+          clearcoat={0.38}
+          clearcoatRoughness={0.24}
+          depthWrite={false}
         />
       </mesh>
       <mesh scale={1.008}>
         <sphereGeometry args={[1, 96, 96]} />
-        <meshBasicMaterial
+        <meshPhysicalMaterial
           map={continentsTexture}
           alphaMap={continentsTexture}
           color="#f5fbff"
           transparent
-          opacity={0.86}
-          alphaTest={0.02}
+          opacity={0.66}
+          alphaTest={0.01}
+          roughness={0.28}
+          metalness={0}
+          transmission={0.28}
+          thickness={0.12}
+          clearcoat={0.42}
+          clearcoatRoughness={0.22}
+          emissive="#d9efff"
+          emissiveIntensity={0.12}
+          side={DoubleSide}
           depthWrite={false}
         />
       </mesh>
       <mesh scale={1.018}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color="#eef8ff" transparent opacity={0.18} side={BackSide} depthWrite={false} />
+        <meshBasicMaterial color="#f4fbff" transparent opacity={0.14} side={BackSide} depthWrite={false} />
       </mesh>
     </group>
   );
@@ -163,9 +194,11 @@ function ClinicianGlobe() {
       gl={{ alpha: true, antialias: true, powerPreference: "default" }}
       onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
     >
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[3, 4, 5]} intensity={1.5} color="#e9f8ff" />
-      <pointLight position={[-2, 1, 3]} intensity={1.3} color="#7cdcff" />
+      <ambientLight intensity={0.8} color="#e8f6ff" />
+      <hemisphereLight args={["#f8fcff", "#8cb6d8", 1.2]} />
+      <directionalLight position={[4, 5, 4]} intensity={2.1} color="#ffffff" />
+      <directionalLight position={[-4, 1, 2]} intensity={0.85} color="#a9e5ff" />
+      <pointLight position={[0, 2, 3]} intensity={1.4} distance={6} color="#ffffff" />
       <RotatingGlobe />
     </Canvas>
   );
@@ -184,10 +217,10 @@ function QuoteSlider() {
           </h2>
         </div>
 
-        <div className="relative mt-12 min-h-[39rem] overflow-hidden sm:min-h-[35rem]">
-          <div className="pointer-events-none absolute inset-x-0 bottom-[-4%] h-[70%] sm:bottom-[-9%] sm:h-[78%]">
+        <div className="relative mt-12 min-h-[42rem] overflow-hidden sm:min-h-[40rem]">
+          <div className="pointer-events-none absolute inset-x-0 bottom-[-1%] h-[82%] sm:bottom-[-2%] sm:h-[84%]">
             <ClinicianGlobe />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white via-white/30 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-1/5 bg-gradient-to-t from-white/80 via-white/15 to-transparent" />
           </div>
 
           {clinicianNetwork.map((doctor, index) => (
