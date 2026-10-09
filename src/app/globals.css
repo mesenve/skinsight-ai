@@ -256,18 +256,18 @@ body {
 }
 
 @keyframes globe-holo-aura-outer {
-  0%, 100% { transform: scale(0.94) rotate(0deg); opacity: 0.2; }
-  50% { transform: scale(1.06) rotate(180deg); opacity: 0.62; }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes globe-holo-aura-inner {
-  0%, 100% { transform: scale(0.97) rotate(0deg); opacity: 0.34; }
-  50% { transform: scale(1.035) rotate(-180deg); opacity: 0.76; }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
 @keyframes globe-holo-orb {
-  0%, 100% { transform: translate3d(-2%, -1%, 0) scale(0.96); opacity: 0.22; }
-  50% { transform: translate3d(3%, 3%, 0) scale(1.05); opacity: 0.68; }
+  0%, 100% { transform: translate3d(-2%, -1%, 0) scale(0.96); opacity: 0.11; }
+  50% { transform: translate3d(3%, 3%, 0) scale(1.05); opacity: 0.34; }
 }
 
 @keyframes holo-particle {
@@ -316,33 +316,35 @@ body {
   border-radius: 50%;
   background:
     radial-gradient(circle, transparent 51%, rgba(114, 220, 255, 0.42) 59%, rgba(171, 133, 255, 0.28) 67%, transparent 77%),
-    conic-gradient(from 120deg, rgba(77, 210, 255, 0), rgba(173, 116, 255, 0.24), rgba(255, 255, 255, 0.44), rgba(77, 210, 255, 0));
+    conic-gradient(from 120deg, rgba(77, 210, 255, 0.2), rgba(173, 116, 255, 0.24), rgba(255, 255, 255, 0.44), rgba(146, 225, 255, 0.24), rgba(77, 210, 255, 0.2));
   mix-blend-mode: screen;
   will-change: transform, opacity;
 }
 
 .globe-holo-aura-outer {
-  inset: -12%;
-  filter: blur(18px);
-  opacity: 0.28;
-  animation: globe-holo-aura-outer 11s ease-in-out infinite;
+  /* 124% original diameter × 0.7 = 86.8%. */
+  inset: 6.6%;
+  filter: blur(12.6px);
+  opacity: 0.205;
+  animation: globe-holo-aura-outer 18s linear infinite;
 }
 
 .globe-holo-aura-inner {
-  inset: -4%;
-  filter: blur(8px);
-  opacity: 0.42;
-  animation: globe-holo-aura-inner 7s ease-in-out infinite reverse;
+  /* 108% original diameter × 0.7 = 75.6%. */
+  inset: 12.2%;
+  filter: blur(5.6px);
+  opacity: 0.275;
+  animation: globe-holo-aura-inner 24s linear infinite;
 }
 
 .globe-holo-orb {
-  left: -2%;
-  top: -4%;
-  width: 104%;
-  height: 104%;
+  left: 13.6%;
+  top: 13.6%;
+  width: 72.8%;
+  height: 72.8%;
   border-radius: 50%;
   background: radial-gradient(ellipse at 26% 18%, rgba(255, 255, 255, 0.52) 0%, rgba(122, 222, 255, 0.18) 21%, transparent 48%);
-  filter: blur(13px);
+  filter: blur(9.1px);
   mix-blend-mode: screen;
   animation: globe-holo-orb 8s ease-in-out infinite;
 }
