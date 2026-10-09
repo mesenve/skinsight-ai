@@ -212,21 +212,26 @@ function QuoteSlider() {
   const gap = sceneWidth < 640 ? 16 : 24;
   const perspective = 1000;
   // Project the edges of the rotated rectangles, rather than their untransformed widths.
-  const poses = [{ x: 0, y: 0, z: 0, scale: 1, angle: 0, opacity: 1, layer: 10 }];
-  let rightEdge = cardWidth / 2;
-  for (let depth = 1; depth <= 2; depth++) {
-    const scale = depth === 1 ? 0.83 : 0.72;
+  const poses = [{ x: 0, y: 0, z: 0, scale: 0.85, angle: 0, opacity: 1, layer: 10 }];
+  let rightEdge = cardWidth * poses[0].scale / 2;
+  for (let depth = 1; depth <= 3; depth++) {
+    const scale = depth === 1 ? 0.83 : depth === 2 ? 0.72 : 0.62;
     // Off-axis perspective reduces the apparent yaw; compensate so neighbours
     // remain visibly turned toward the center from the viewer's position.
-    const angle = depth === 1 ? -40 : -58;
-    const z = depth === 1 ? -55 : -110;
+    const angle = depth === 1 ? -40 : depth === 2 ? -58 : -68;
+    const z = depth === 1 ? -55 : depth === 2 ? -110 : -180;
     const radians = angle * Math.PI / 180;
     const half = cardWidth * scale / 2;
     const x = (rightEdge + gap) * (perspective - z - half * Math.sin(radians)) / perspective + half * Math.cos(radians);
     rightEdge = (x + half * Math.cos(radians)) * perspective / (perspective - z + half * Math.sin(radians));
-    poses.push({ x, y: depth === 1 ? 8 : 12, z, scale, angle, opacity: depth === 1 ? 1 : 0.48, layer: depth === 1 ? 8 : 5 });
+    poses.push({ x, y: depth === 1 ? 8 : depth === 2 ? 12 : 16, z, scale, angle, opacity: depth === 3 ? 0.22 : 1, layer: depth === 1 ? 8 : depth === 2 ? 5 : 2 });
   }
   const slots = [-2, 1, 2, -1, 0];
+  const cards = [
+    ...clinicianNetwork.map((doctor, index) => ({ doctor, slot: slots[index] })),
+    { doctor: clinicianNetwork[2], slot: -3 },
+    { doctor: clinicianNetwork[0], slot: 3 },
+  ];
   return (
     <section className="relative overflow-hidden bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
       <div className="relative mx-auto max-w-6xl">
@@ -267,8 +272,7 @@ function QuoteSlider() {
           </div>
 
           <div className="doctor-cards-layer absolute inset-0">
-            {clinicianNetwork.map((doctor, index) => {
-              const slot = slots[index];
+            {cards.map(({ doctor, slot }, index) => {
               const pose = poses[Math.abs(slot)];
               const direction = slot < 0 ? -1 : 1;
               const style = {
@@ -279,10 +283,15 @@ function QuoteSlider() {
                 "--card-z": `${pose.z}px`,
                 "--card-angle": `${pose.angle * direction}deg`,
                 "--card-scale": pose.scale,
+                filter: Math.abs(slot) === 3 ? "blur(3px)" : undefined,
+                maskImage: Math.abs(slot) === 3
+                  ? `linear-gradient(to ${slot < 0 ? "left" : "right"}, #000 30%, transparent 90%)`
+                  : undefined,
               } as CSSProperties;
               return (
               <motion.article
-                key={doctor.name}
+                key={`${doctor.name}-${slot}`}
+                aria-hidden={Math.abs(slot) === 3 ? true : undefined}
                 data-arc-index={slot}
                 style={style}
                 initial={{ opacity: 0 }}
