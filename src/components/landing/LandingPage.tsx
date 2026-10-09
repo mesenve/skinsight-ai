@@ -213,8 +213,11 @@ function QuoteSlider() {
               unoptimized
               loading="eager"
               sizes="(max-width: 640px) 78vw, 30rem"
-              className="absolute inset-0 z-10 h-full w-full object-contain"
+              className="globe-image absolute inset-0 z-10 h-full w-full object-contain"
             />
+            <span className="globe-brand-veil absolute z-20" />
+            <span className="globe-pole-glow globe-pole-glow-top absolute z-20" />
+            <span className="globe-pole-glow globe-pole-glow-bottom absolute z-20" />
             <span className="globe-surface-flow absolute z-20" />
             <span className="globe-rotation-light absolute z-20" />
             <span className="globe-aurora absolute z-20" />
