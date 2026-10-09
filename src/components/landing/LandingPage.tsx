@@ -213,9 +213,9 @@ function QuoteSlider() {
         <div className="doctor-carousel relative isolate mt-6 flex min-h-[28rem] items-center justify-center overflow-visible sm:min-h-[30rem]">
           <div className="globe-float relative h-[25rem] w-[25rem] sm:h-[30rem] sm:w-[30rem]" aria-hidden="true">
             <span className="globe-halo absolute inset-[7%] z-0 rounded-full" />
-            <span className="globe-holo-ring globe-holo-ring-horizontal absolute z-0" />
-            <span className="globe-holo-ring globe-holo-ring-vertical absolute z-0" />
-            <span className="globe-holo-sweep absolute z-0" />
+            <span className="globe-holo-aura globe-holo-aura-outer absolute z-0" />
+            <span className="globe-holo-aura globe-holo-aura-inner absolute z-0" />
+            <span className="globe-holo-orb absolute z-0" />
             <Image
               src="/earth/trusted-doctors-globe.webp"
               alt=""
@@ -226,8 +226,6 @@ function QuoteSlider() {
               className="absolute inset-0 z-10 h-full w-full object-contain"
             />
             <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
-            <span className="globe-light-sweep absolute inset-[4%] z-20 rounded-full" />
-            <span className="globe-surface-shimmer absolute z-20" />
             <span className="globe-specular absolute z-20" />
             <span className="globe-edge-glow absolute inset-[7%] z-20 rounded-full" />
             <span className="globe-glint globe-glint-one absolute z-20" />
