@@ -221,7 +221,6 @@ function QuoteSlider() {
         <div className="relative mt-12 min-h-[42rem] overflow-hidden sm:min-h-[40rem]">
           <div className="pointer-events-none absolute inset-x-0 bottom-[-1%] h-[82%] sm:bottom-[-2%] sm:h-[84%]">
             <ClinicianGlobe />
-            <div className="absolute inset-x-0 bottom-0 h-1/5 bg-gradient-to-t from-white/80 via-white/15 to-transparent" />
           </div>
 
           {clinicianNetwork.map((doctor, index) => (
