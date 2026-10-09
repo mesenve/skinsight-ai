@@ -96,7 +96,7 @@ const globeScale = 1.04;
 
 function RotatingGlobe() {
   const globeRef = useRef<Group>(null);
-  const continentsTexture = useLoader(TextureLoader, "/earth/continents.svg");
+  const continentsTexture = useLoader(TextureLoader, "/earth/continents.png");
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
