@@ -61,31 +61,31 @@ const clinicianNetwork = [
     name: "Dr. James Miller",
     role: "Dermatologist",
     location: "New York · USA",
-    avatar: "/avatars/id-01.jpg",
+    avatar: "/avatars/clinician-james.webp",
   },
   {
     name: "Dr. Sophie Laurent",
     role: "Dermatologist",
     location: "Paris · France",
-    avatar: "/avatars/id-06.jpg",
+    avatar: "/avatars/clinician-sophie.webp",
   },
   {
     name: "Dr. Aiko Tanaka",
     role: "Dermatologist",
     location: "Tokyo · Japan",
-    avatar: "/avatars/id-03.jpg",
+    avatar: "/avatars/clinician-aiko.webp",
   },
   {
     name: "Dr. Daniel Okeke",
     role: "Dermatologist",
     location: "Lagos · Nigeria",
-    avatar: "/avatars/id-04.jpg",
+    avatar: "/avatars/clinician-daniel.webp",
   },
   {
     name: "Dr. Leila Haddad",
     role: "Dermatologist",
     location: "Dubai · UAE",
-    avatar: "/avatars/id-05.jpg",
+    avatar: "/avatars/clinician-leila.webp",
   },
 ] as const;
 
