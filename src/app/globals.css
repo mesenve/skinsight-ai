@@ -505,27 +505,32 @@ body {
 .globe-holo-aura {
   pointer-events: none;
   border-radius: 50%;
-  background:
-    radial-gradient(circle, transparent 51%, rgba(114, 220, 255, 0.42) 59%, rgba(171, 133, 255, 0.28) 67%, transparent 77%),
-    conic-gradient(from 120deg, rgba(77, 210, 255, 0.2), rgba(173, 116, 255, 0.24), rgba(255, 255, 255, 0.44), rgba(146, 225, 255, 0.24), rgba(77, 210, 255, 0.2));
+  background: conic-gradient(from 0deg,
+    rgba(45,108,181,0) 0deg,
+    rgba(78,158,226,0.48) 55deg,
+    rgba(134,215,246,0.54) 105deg,
+    rgba(255,255,255,0.08) 155deg,
+    rgba(172,163,233,0.42) 215deg,
+    rgba(102,176,227,0.34) 265deg,
+    rgba(45,108,181,0) 320deg,
+    rgba(45,108,181,0) 360deg);
+  mask-image: radial-gradient(closest-side, transparent 64%, #000 78%, #000 88%, transparent 100%);
   mix-blend-mode: normal;
   will-change: transform, opacity;
 }
 
 .globe-holo-aura-outer {
-  /* 124% original diameter × 0.7 = 86.8%. */
-  inset: 6.6%;
-  filter: blur(12.6px);
-  opacity: 0.2665;
-  animation: globe-holo-aura-outer 18s linear infinite;
+  inset: -2%;
+  filter: blur(12px);
+  opacity: 0.72;
+  animation: globe-holo-aura-outer 10s linear infinite;
 }
 
 .globe-holo-aura-inner {
-  /* 108% original diameter × 0.7 = 75.6%. */
-  inset: 12.2%;
-  filter: blur(5.6px);
-  opacity: 0.3575;
-  animation: globe-holo-aura-inner 24s linear infinite;
+  inset: 3%;
+  filter: blur(8px);
+  opacity: 0.55;
+  animation: globe-holo-aura-inner 16s linear infinite;
 }
 
 .globe-holo-orb {
