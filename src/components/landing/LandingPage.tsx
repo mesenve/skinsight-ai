@@ -5,7 +5,7 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Environment, MeshTransmissionMaterial } from "@react-three/drei";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   CalendarDays,
@@ -62,31 +62,31 @@ const clinicianNetworkWorldImage = "data:image/webp;base64,UklGRkwHAgBXRUJQVlA4W
 const clinicianNetwork = [
   {
     name: "Dr. James Miller",
-    role: "Dermatologist",
+    role: "Clinical Dermatologist",
     flag: "/flags/us.svg",
     avatar: "/avatars/clinician-james.webp",
   },
   {
     name: "Dr. Sophie Laurent",
-    role: "Dermatologist",
+    role: "Consultant Dermatologist",
     flag: "/flags/fr.svg",
     avatar: "/avatars/clinician-sophie.webp",
   },
   {
     name: "Dr. Aiko Tanaka",
-    role: "Dermatologist",
+    role: "Skin Health Specialist",
     flag: "/flags/jp.svg",
     avatar: "/avatars/clinician-aiko.webp",
   },
   {
     name: "Dr. Leila Haddad",
-    role: "Dermatologist",
+    role: "Aesthetic Dermatologist",
     flag: "/flags/ae.svg",
     avatar: "/avatars/clinician-leila.webp",
   },
   {
     name: "Dr. Levent Atahanlı",
-    role: "Dermatologist",
+    role: "Dermatology Advisor",
     flag: "/flags/tr.svg",
     avatar: "/avatars/clinician-levent.webp",
   },
@@ -199,6 +199,8 @@ function ClinicianGlobe() {
 
 function QuoteSlider() {
   const sceneRef = useRef<HTMLDivElement>(null);
+  const sceneVisible = useInView(sceneRef, { once: true, amount: 0.35 });
+  const reducedMotion = useReducedMotion();
   const [sceneWidth, setSceneWidth] = useState(1152);
   useEffect(() => {
     const scene = sceneRef.current;
@@ -259,6 +261,8 @@ function QuoteSlider() {
               sizes="(max-width: 640px) 78vw, 30rem"
               className="absolute inset-0 z-10 h-full w-full object-contain"
             />
+            <span className="globe-surface-flow absolute z-20" />
+            <span className="globe-rotation-light absolute z-20" />
             <span className="globe-bloom absolute inset-[12%] z-20 rounded-full" />
             <span className="globe-specular absolute z-20" />
             <span className="globe-edge-glow absolute inset-[7%] z-20 rounded-full" />
@@ -272,9 +276,12 @@ function QuoteSlider() {
           </div>
 
           <div className="doctor-cards-layer absolute inset-0">
-            {cards.map(({ doctor, slot }, index) => {
+            {cards.map(({ doctor, slot }) => {
               const pose = poses[Math.abs(slot)];
               const direction = slot < 0 ? -1 : 1;
+              const depth = Math.abs(slot);
+              const cardTransform = (entering: boolean) =>
+                `translate(-50%, -50%) translate3d(${pose.x * direction}px, ${pose.y + (entering ? 26 : 0)}px, ${pose.z}px) rotateY(${pose.angle * direction + (entering ? -direction * 22 : 0)}deg) rotateX(${entering ? 38 : 0}deg) scale(${pose.scale * (entering ? 0.94 : 1)})`;
               const style = {
                 width: cardWidth,
                 zIndex: pose.layer,
@@ -294,10 +301,12 @@ function QuoteSlider() {
                 aria-hidden={Math.abs(slot) === 3 ? true : undefined}
                 data-arc-index={slot}
                 style={style}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: pose.opacity }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.55, delay: 0.12 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                initial={reducedMotion ? false : { opacity: 0, transform: cardTransform(true) }}
+                animate={{
+                  opacity: sceneVisible || reducedMotion ? pose.opacity : 0,
+                  transform: cardTransform(!sceneVisible && !reducedMotion),
+                }}
+                transition={{ duration: reducedMotion ? 0 : 0.85, delay: reducedMotion ? 0 : depth * 0.38, ease: [0.22, 1, 0.36, 1] }}
                 className="doctor-card absolute overflow-hidden rounded-[1.1rem] border border-white/90 bg-white/80 p-2 sm:p-2.5 shadow-[0_14px_34px_rgba(26,75,140,0.17),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl"
               >
               <div className="relative aspect-[1.12] overflow-hidden rounded-[0.9rem] border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
