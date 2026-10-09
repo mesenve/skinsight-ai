@@ -108,14 +108,21 @@ function QuoteSlider() {
 
         <div className="relative mt-12 min-h-[39rem] overflow-hidden sm:min-h-[35rem]">
           <div className="pointer-events-none absolute inset-x-0 bottom-[-4%] h-[70%] sm:bottom-[-9%] sm:h-[78%]">
-            <Image
-              src={clinicianNetworkWorldImage}
-              alt=""
-              fill
-              sizes="(max-width: 640px) 120vw, 1100px"
-              className="object-contain object-bottom opacity-95"
-              priority
-            />
+            <motion.div
+              className="absolute inset-0"
+              animate={{ rotateY: [0, 180, 360], scaleX: [1, 0.84, 1] }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear", times: [0, 0.5, 1] }}
+              style={{ transformPerspective: 1200, transformStyle: "preserve-3d", transformOrigin: "center center" }}
+            >
+              <Image
+                src={clinicianNetworkWorldImage}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 120vw, 1100px"
+                className="object-contain object-bottom opacity-95"
+                priority
+              />
+            </motion.div>
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white via-white/30 to-transparent" />
           </div>
 
