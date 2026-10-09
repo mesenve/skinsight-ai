@@ -206,6 +206,11 @@ body {
   70% { opacity: 0.28; transform: scale(0.9); }
 }
 
+@keyframes globe-edge-glow {
+  0%, 100% { opacity: 0.18; transform: rotate(-10deg) scale(0.99); }
+  50% { opacity: 0.52; transform: rotate(10deg) scale(1.01); }
+}
+
 .globe-float {
   animation: globe-float 8s ease-in-out infinite;
   will-change: transform;
@@ -219,7 +224,7 @@ body {
   filter: blur(9px);
   mix-blend-mode: screen;
   clip-path: circle(48% at 50% 50%);
-  animation: globe-sheen 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: globe-sheen 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
   will-change: transform, opacity;
 }
 
@@ -228,7 +233,16 @@ body {
   filter: blur(11px);
   mix-blend-mode: screen;
   clip-path: circle(48% at 50% 50%);
-  animation: globe-bloom 7s ease-in-out infinite;
+  animation: globe-bloom 6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.globe-edge-glow {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.42), 0 0 26px rgba(140, 209, 255, 0.2);
+  clip-path: circle(48% at 50% 50%);
+  mix-blend-mode: screen;
+  animation: globe-edge-glow 6.5s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
@@ -251,6 +265,7 @@ body {
   .globe-float,
   .globe-light-sweep,
   .globe-bloom,
+  .globe-edge-glow,
   .globe-glint {
     animation: none !important;
   }
