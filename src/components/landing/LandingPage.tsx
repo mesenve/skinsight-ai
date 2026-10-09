@@ -249,8 +249,8 @@ function QuoteSlider() {
             {[
               "M 220 135 C 300 150 335 215 430 270",
               "M 790 135 C 715 145 685 210 600 262",
-              "M 295 205 C 355 220 405 240 470 270",
-              "M 710 205 C 650 220 605 240 540 270",
+              "M 295 415 C 355 390 405 340 470 300",
+              "M 710 415 C 650 395 605 345 540 304",
               "M 500 82 C 500 155 500 202 500 255",
             ].map((path, index) => (
               <motion.path
@@ -279,8 +279,8 @@ function QuoteSlider() {
                 "absolute z-10 w-44 overflow-hidden rounded-[1.35rem] border border-white/90 bg-white/45 p-2 shadow-[0_18px_45px_rgba(26,75,140,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-52 sm:p-2.5",
                 index === 0 && "left-3 top-16 rotate-[-4deg] sm:left-6 sm:top-14",
                 index === 1 && "right-3 top-16 rotate-[4deg] sm:right-6 sm:top-14",
-                index === 2 && "left-8 top-[34%] rotate-[3deg] sm:left-[12%] sm:top-[31%]",
-                index === 3 && "right-8 top-[34%] rotate-[-3deg] sm:right-[12%] sm:top-[31%]",
+                index === 2 && "right-8 bottom-16 rotate-[3deg] sm:right-[12%] sm:bottom-12",
+                index === 3 && "left-8 bottom-16 rotate-[-3deg] sm:left-[12%] sm:bottom-12",
                 index === 4 && "left-1/2 top-[42%] -translate-x-1/2 rotate-[-1deg]"
               )}
             >
