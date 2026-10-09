@@ -124,7 +124,7 @@ function RotatingGlobe() {
       <mesh>
         <sphereGeometry args={[1, 96, 96]} />
         <MeshTransmissionMaterial
-          color="#d2ecff"
+          color="#e0f3ff"
           transmission={0.96}
           roughness={0.3}
           thickness={0.58}
@@ -191,7 +191,7 @@ function ClinicianGlobe() {
       <directionalLight position={[4, 5, 4]} intensity={2.1} color="#ffffff" />
       <directionalLight position={[-4, 1, 2]} intensity={0.85} color="#a9e5ff" />
       <pointLight position={[0, 2, 3]} intensity={1.4} distance={6} color="#ffffff" />
-      <Environment preset="warehouse" environmentIntensity={0.2} />
+      <Environment preset="warehouse" environmentIntensity={0.1} />
       <RotatingGlobe />
     </Canvas>
   );
@@ -223,7 +223,7 @@ function QuoteSlider() {
               viewport={{ once: true, margin: "-70px" }}
               transition={{ duration: 0.65, delay: 0.18 + index * 0.18, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "absolute z-10 w-44 overflow-hidden rounded-[1.35rem] border border-white/90 bg-white/45 p-2 shadow-[0_18px_45px_rgba(26,75,140,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-52 sm:p-2.5",
+                "absolute z-10 w-44 overflow-hidden rounded-[1.35rem] border border-white/90 bg-white/65 p-2 shadow-[0_18px_45px_rgba(26,75,140,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl sm:w-52 sm:p-2.5",
                 index === 0 && "left-3 top-16 rotate-[-4deg] sm:left-6 sm:top-14",
                 index === 1 && "right-3 top-16 rotate-[4deg] sm:right-6 sm:top-14",
                 index === 2 && "right-8 bottom-16 rotate-[3deg] sm:right-[12%] sm:bottom-12",
@@ -231,7 +231,7 @@ function QuoteSlider() {
                 index === 4 && "left-1/2 top-[42%] -translate-x-1/2 rotate-[-1deg]"
               )}
             >
-              <div className="relative aspect-[1.12] overflow-hidden rounded-[1.05rem] border border-white/70 bg-white/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
+              <div className="relative aspect-[1.12] overflow-hidden rounded-[1.05rem] border border-white/70 bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
                 <Image
                   src={doctor.avatar}
                   alt=""
