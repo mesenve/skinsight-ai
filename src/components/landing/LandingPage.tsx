@@ -324,7 +324,7 @@ function QuoteSlider() {
               </div>
               <div className="px-1 pb-0.5 pt-1.5">
                 <div className="flex items-center gap-1">
-                  <p className="truncate text-[11px] font-semibold leading-tight text-navy">{doctor.name}</p>
+                  <p className="text-[13.2px] font-semibold leading-tight text-navy">{doctor.name}</p>
                   <Image
                     src="/icons/official-badge.png"
                     alt="Official clinician"
@@ -333,7 +333,7 @@ function QuoteSlider() {
                     className="h-3.5 w-3.5 shrink-0 object-contain"
                   />
                 </div>
-                <p className="mt-0.5 text-[9px] font-medium text-muted">{doctor.role}</p>
+                <p className="mt-0.5 text-[10.8px] font-medium text-muted">{doctor.role}</p>
               </div>
               </motion.article>
               );
